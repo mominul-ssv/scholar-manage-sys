@@ -1,0 +1,113 @@
+<%- include("student_partials/student_header") -%>
+
+<main class="main-dashboard pt-0">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col mt-2">
+                <div class="card">
+                    <!-- General Information -->
+                    <div class="card-header fw-bold text-center"><i class="bi bi-box-seam"></i> General Information</div>
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <% if (typeof foundStudent !== 'undefined' ) { %>
+                                <tr>
+                                    <th>Name:</th>
+                                    <td><%= foundStudent.firstName %> <%= foundStudent.lastName %></td>
+                                </tr>
+                                <tr>
+                                    <th>ID:</th>
+                                    <td><%= foundStudent.studentId %></td>
+                                </tr>
+                                <tr>
+                                    <th>Degree:</th>
+                                    <td><%= foundStudent.degree %> (<%= foundStudent.degreeShort %>)</td>
+                                </tr>
+                                <tr>
+                                    <th>Major:</th>
+                                    <td><%= foundStudent.major %></td>
+                                </tr>
+                                <tr>
+                                    <th>Credits:</th>
+                                    <td><%= foundStudent.credits %></td>
+                                </tr>
+                                <tr>
+                                    <th>Entry Semester:</th>
+                                    <td><%= foundStudent.entrySemester %></td>
+                                </tr>
+
+                                <tr>
+                                    <th>Registration Status:</th>
+                                    <% if(foundStudent.registrationStatus === true) { %>
+                                        <td>Enrolled</td>
+                                    <% } else { %>
+                                        <td>Unenrolled</td>
+                                    <% } %>
+                                </tr>
+                            <% } %>
+                        </table>
+                    </div>
+                    <!-- /General Information -->
+
+                    <!-- Academic Information -->
+                    <div class="card-header fw-bold text-center"><i class="bi bi-journal-text"></i> Academic Information</div>
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <% if (foundStudent !== 'undefined' ) { %>
+                                <tr>
+                                    <th>Current CGPA:</th>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th>Credits Passed:</th>
+                                    <td></td>
+                                </tr>
+                            <% } %>
+                        </table>
+                    </div>
+                    <!-- /Academic Information -->
+                </div>
+            </div>
+
+            <!-- Personal Information -->
+            <div class="col mt-2">
+                <div class="card">
+                    <div class="card-header fw-bold text-center"><i class="bi bi-journal-text"></i> Personal Information</div>
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <% if (typeof foundStudent !== 'undefined' ) { %>
+                                <tr>
+                                    <th>Cell Phone:</th>
+                                    <td><%= foundStudent.phone %></td>
+                                </tr>
+                                <tr>
+                                    <th>Email:</th>
+                                    <td><%= foundStudent.email %></td>
+                                </tr>
+                                <tr>
+                                    <th>Date of Birth:</th>
+                                    <td><%= foundStudent.dob %></td>
+                                </tr>
+                                <tr>
+                                    <th>Citizenship:</th>
+                                    <td><%= foundStudent.citizenship %></td>
+                                </tr>
+                                <tr>
+                                    <th>Mailing Address:</th>
+                                    <td><%= foundStudent.address %></td>
+                                </tr>
+                            <% } %>
+                        </table>
+                        <!-- Update Personal Information -->
+                        <div class="card-footer">
+                            <%- include("student-profile/student-update", {foundStudent: foundStudent}) %>
+                        </div>
+                        <!-- /Update Personal Information -->
+                    </div>
+                </div>
+            </div>
+            <!-- /Personal Information -->
+        </div>
+    </div>
+</main>
+
+<%- include("student_partials/student_footer") -%>

@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+        <!-- =====  BOOTSTRAP 5 (CDN) ===== -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+              rel="stylesheet"
+              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+              crossorigin="anonymous">
+
+        <!-- =====  CUSTOM CSS ===== -->
+        <link rel="stylesheet" href="css/login.css">
+
+        <title>Login Portal</title>
+    </head>
+
+    <body class="text-center">
+        <main class="form-custom">
+
+            <!-- Display Error Message -->
+            <% if (typeof error !== 'undefined' ) { %>
+                <% if (error.code === 'ERROR') { %>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <span><%= error.msg %></span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <% } %>
+            <% } %>
+            <!-- /Display Error Message -->
+
+            <!-- Login Card -->
+            <div class="card">
+
+                <!-- Nav Bar -->
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-student nav-link <%= navBarAnimation.student %>" data-bs-toggle="tab"
+                           href="#student">Student</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-faculty nav-link <%= navBarAnimation.faculty %>" data-bs-toggle="tab"
+                           href="#faculty">Faculty</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-admin nav-link <%= navBarAnimation.admin %>" data-bs-toggle="tab"
+                           href="#admin">Admin</a>
+                    </li>
+                </ul>
+                <!-- /Nav Bar -->
+
+                <!-- Nav Switch-->
+                <div class="tab-content">
+
+                    <!-- Student Login -->
+                    <div class="tab-pane <%= navBarAnimation.student %>" id="student">
+                        <form action="/" method="post">
+
+                            <!-- Logout Data (STUDENT) -->
+                            <input type="hidden" name="auth" value="student-auth">
+                            <!-- /Logout Data (STUDENT) -->
+
+                            <div class="text-center">
+                                <img class="mb-3 mt-4 img-thumbnail" src="/img/student.png" width="100" height="100"
+                                     alt="student-logo">
+                                <h1 class="h3 mb-3">Student Login</h1>
+                            </div>
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="floatingInput" placeholder="191XXXXXXX"
+                                       name="studentId" minlength="10" maxlength="10" required>
+                                <label for="floatingInput">ID</label>
+                            </div>
+                            <div class="form-floating">
+                                <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
+                                       name="studentPassword" required>
+                                <label for="floatingPassword">Password</label>
+                            </div>
+                            <button class="w-100 btn btn-lg btn-student" type="submit">Login</button>
+                        </form>
+
+                        <!-- Forgot Password? -->
+                        <div class="mt-3">
+                            <form action="/student-password-reset" method="get">
+                                <a class="color-purple fw-bold" type="button" onclick="this.parentNode.submit();">
+                                    Forgot Password?
+                                </a>
+                            </form>
+                        </div>
+                        <!-- /Forgot Password? -->
+
+                        <hr>
+
+                        <!-- Register -->
+                        <div class="mt-1">
+                            <form action="/student-register" method="get">
+                                <span>Not Registered?</span>
+                                <a class="register-text" type="button" onclick="this.parentNode.submit();">
+                                    Register Now!
+                                </a>
+                            </form>
+                        </div>
+                        <!-- /Register -->
+
+                    </div>
+                    <!-- /Student Login -->
+
+                    <!-- Faculty Login -->
+                    <div class="tab-pane <%= navBarAnimation.faculty %>" id="faculty">
+                        <form action="/" method="post">
+
+                            <!-- Logout Data (FACULTY) -->
+                            <input type="hidden" name="auth" value="faculty-auth">
+                            <!-- /Logout Data (FACULTY) -->
+
+                            <div class="text-center">
+                                <img class="mb-3 mt-4 img-thumbnail" src="/img/faculty.png" width="100" height="100"
+                                     alt="faculty-logo">
+                                <h1 class="h3 mb-3">Faculty Login</h1>
+                            </div>
+                            <div class="form-floating">
+                                <input type="email" class="form-control" id="floatingInput"
+                                       placeholder="name@example.com" name="facultyEmail" required>
+                                <label for="floatingInput">Email address</label>
+                            </div>
+                            <div class="form-floating">
+                                <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
+                                       name="facultyPassword" required>
+                                <label for="floatingPassword">Password</label>
+                            </div>
+                            <div class="visually-hidden">
+                                <input type="hidden" name="auth" value="faculty-auth">
+                            </div>
+                            <button class="mb-5 w-100 btn btn-lg btn-faculty" type="submit">Login</button>
+                        </form>
+                    </div>
+                    <!-- /Faculty Login -->
+
+                    <!-- Admin Login -->
+                    <div class="tab-pane <%= navBarAnimation.admin %> " id="admin">
+                        <form action="/" method="post">
+
+                            <!-- Logout Data (ADMIN) -->
+                            <input type="hidden" name="auth" value="admin-auth">
+                            <!-- /Logout Data (ADMIN) -->
+
+                            <div class="text-center">
+                                <img class="mb-3 mt-4 img-thumbnail" src="/img/admin.png" width="100" height="100"
+                                     alt="admin-logo">
+                                <h1 class="h3 mb-3">Admin Login</h1>
+                            </div>
+                            <div class="form-floating">
+                                <input type="email" class="form-control" id="floatingInput"
+                                       placeholder="name@example.com" name="adminEmail" required>
+                                <label for="floatingInput">Email address</label>
+                            </div>
+                            <div class="form-floating">
+                                <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
+                                       name="adminPassword" required>
+                                <label for="floatingPassword">Password</label>
+                            </div>
+                            <button class="mb-5 w-100 btn btn-lg btn-primary" type="submit">Login</button>
+                        </form>
+                    </div>
+                    <!-- /Admin Login -->
+                </div>
+                <!-- /Nav Switch -->
+            </div>
+            <!-- /Login Card -->
+        </main>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+                crossorigin="anonymous">
+        </script>
+    </body>
+</html>

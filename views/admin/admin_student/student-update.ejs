@@ -1,0 +1,104 @@
+<!-- UPDATE Student (Button) -->
+<button type="button"
+        class="btn btn-warning"
+        data-bs-toggle="modal"
+        data-bs-target="#updateStudent<%= student.studentId %>">
+    <i class="bi bi-pen"></i>
+</button>
+<!-- UPDATE Student (Button) -->
+
+<!-- UPDATE Student (Floating Form) -->
+<div class="modal fade" id="updateStudent<%= student.studentId %>" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog floating-card">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Update Student <i class="bi bi-pen"></i></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="row" action="/admin-student" method="post">
+
+                    <!-- CRUD Information -->
+                    <input type="hidden" name="CRUD" value="ADMIN_UPDATE_STUDENT">
+                    <input type="hidden" name="studentId" value="<%= student.studentId %>">
+                    <!-- /CRUD Information -->
+
+                    <div class="col-md-6">
+                        <label for="firstName" class="form-label">First Name</label>
+                        <input type="text"
+                               class="form-control"
+                               id="firstName"
+                               name="firstName"
+                               value="<%= student.firstName %>"
+                               placeholder="<%= student.firstName %>"
+                               required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="lastName" class="form-label">Last Name</label>
+                        <input type="text"
+                               class="form-control"
+                               id="lastName"
+                               name="lastName"
+                               value="<%= student.lastName %>"
+                               placeholder="<%= student.lastName %>"
+                               required>
+                    </div>
+                    <div class="col-md-12 mt-3">
+                        <label for="inputState" class="form-label">Program</label>
+                        <select id="inputState" class="form-select" name="program" required>
+                            <option value="">Choose...</option>
+                            <optgroup label="School of Engineering & Physical Sciences">
+                                <option value="b-arch">Bachelor of Architecture</option>
+                                <option value="bs-cee">BS in Civil & Environmental Engineering</option>
+                                <option value="bs-cse">BS in Computer Science & Engineering</option>
+                                <option value="bs-eee">BS in Electrical & Electronic Engineering
+                                </option>
+                                <option value="bs-ete">BS in Electronic & Telecommunication Engineering
+                                </option>
+                            </optgroup>
+                            <optgroup label="School of Business & Economics">
+                                <option value="bs-eco">BS in Economics</option>
+                                <option value="bs-bba-accounting">BBA Major in Accounting</option>
+                                <option value="bs-bba-economics">BBA Major in Economics</option>
+                                <option value="bs-bba-marketing">BBA Major in Marketing</option>
+                            </optgroup>
+                            <optgroup label="School of Humanities & Social Sciences">
+                                <option value="ba-eng">BA in English</option>
+                                <option value="b-llb">Bachelor of Laws (LLB Hons)</option>
+                            </optgroup>
+                            <optgroup label="School of Health & Life Sciences">
+                                <option value="bs-biology">BS in Biochemistry and Biotechnology</option>
+                                <option value="bs-microbiology">BS in Microbiology</option>
+                                <option value="b-pharma">BPharm Professional</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mt-3 mb-3">
+                        <label for="dob" class="form-label">Date of Birth</label>
+                        <input type="date"
+                               class="form-control"
+                               id="dob"
+                               name="dob"
+                               value="<%= student.dob %>"
+                               placeholder="<%= student.dob %>">
+                    </div>
+                    <div class="col-md-6 mt-3 mb-3">
+                        <label for="citizenship" class="form-label">Citizenship</label>
+                        <input type="text"
+                               class="form-control"
+                               id="citizenship"
+                               name="citizenship"
+                               value="<%= student.citizenship %>"
+                               placeholder="<%= student.citizenship %>">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-warning">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /UPDATE Student (Floating Form) -->

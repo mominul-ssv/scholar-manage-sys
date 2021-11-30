@@ -1,0 +1,111 @@
+html,
+body {
+    height: 100%;
+    font-family: "Lato", sans-serif;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    background-color: #f5f5f5;
+}
+
+:root {
+    --student-color: #b74fb7;
+    --faculty-color: #3eb769;
+    --admin-color: #0d6efd;
+}
+
+.color-purple {
+    color: var(--student-color);
+}
+
+.color-green {
+    color: var(--faculty-color);
+}
+
+.color-blue {
+    color: var(--admin-color);
+}
+
+.form-custom {
+    width: 100%;
+    max-width: 350px;
+    padding: 5px;
+    margin: auto;
+}
+
+.form-custom input {
+    margin-bottom: 10px;
+}
+
+.card {
+    padding: 25px;
+}
+
+.register-text {
+    color: grey;
+    font-weight: bold;
+}
+
+.btn-home {
+    background-color: var(--student-color);
+    color: white;
+    border-radius: 20px;
+}
+
+.nav-tabs .nav-student.active {
+    background-color: var(--student-color);
+    color: white;
+    border: 2px solid var(--student-color);
+    margin: 1px;
+}
+
+.nav-tabs .nav-student {
+    background-color: white;
+    color: var(--student-color);
+    border: 2px solid var(--student-color);
+    margin: 1px;
+}
+
+.btn-student {
+    background-color: var(--student-color);
+    color: white;
+}
+
+.nav-tabs .nav-faculty.active {
+    background-color: var(--faculty-color);
+    color: white;
+    border: 2px solid var(--faculty-color);
+    margin: 1px;
+}
+
+.nav-tabs .nav-faculty {
+    background-color: white;
+    color: var(--faculty-color);
+    border: 2px solid var(--faculty-color);
+    margin: 1px;
+}
+
+.btn-faculty {
+    background-color: var(--faculty-color);
+    color: white;
+}
+
+.nav-tabs .nav-admin.active {
+    background-color: var(--admin-color);
+    color: white;
+    border: 2px solid var(--admin-color);
+    margin: 1px;
+}
+
+.nav-tabs .nav-admin {
+    background-color: white;
+    color: var(--admin-color);
+    border: 2px solid var(--admin-color);
+    margin: 1px;
+}
+
+.nav-item {
+    width: calc(100% / 3);
+}

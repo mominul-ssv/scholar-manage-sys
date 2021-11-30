@@ -1,0 +1,102 @@
+<%- include("admin_partials/admin_header") -%>
+
+<main class="main-dashboard">
+    <div class="container-fluid">
+
+        <!-- Error Handling -->
+        <div class="row">
+            <div class="col-md-12">
+                <% if (typeof error !== 'undefined' ) { %>
+                    <% if (error.code === 'ERROR') { %>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <span><%= error.msg %></span>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <% } %>
+                <% } %>
+            </div>
+        </div>
+        <!-- /Error Handling -->
+
+        <!-- CREATE Student -->
+        <div class="row">
+            <div class="col-md-12">
+                <%- include("admin_student/student-create") -%>
+            </div>
+        </div>
+        <!-- /CREATE Student -->
+
+        <!-- Student Data Table -->
+        <div class="row">
+            <div class="col-md-12 mt-2">
+                <div class="card">
+
+                    <!-- Card Header -->
+                    <div class="card-header fw-bold table-responsive">Student List</div>
+                    <!-- /Card Header -->
+
+                    <!-- Card Body -->
+                    <div class="card-body table-responsive">
+
+                        <!-- Table -->
+                        <table class="table table-hover">
+
+                            <!-- Table Header -->
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Degree</th>
+                                    <th>Major</th>
+                                    <th>Entry Semester</th>
+                                    <th>Scholarship</th>
+                                    <th style="width: 0">Details</th>
+                                    <th style="width: 0">Update</th>
+                                    <th style="width: 0">Delete</th>
+                                </tr>
+                            </thead>
+                            <!-- /Table Header -->
+
+                            <!-- Table Body -->
+                            <tbody>
+                                <% if (typeof foundStudents !== 'undefined' ) { %>
+                                    <% foundStudents.forEach((student)=> { %>
+                                        <tr>
+                                            <td><%= student.studentId %></td>
+                                            <td><%= student.firstName %> <%= student.lastName %></td>
+                                            <td><%= student.degreeShort %></td>
+                                            <td><%= student.major %></td>
+                                            <td><%= student.entrySemester %></td>
+                                            <th>Active</th>
+                                            <td>
+                                                <button type="button" class="btn btn-success">
+                                                    <i class="bi bi-card-checklist"></i>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <!-- UPDATE Student -->
+                                                <%- include("admin_student/student-update", {student: student}) %>
+                                                <!-- /UPDATE Student -->
+                                            </td>
+                                            <td>
+                                                <!-- DELETE Student -->
+                                                <%- include("admin_student/student-delete", {student: student}) %>
+                                                <!-- /DELETE Student -->
+                                            </td>
+                                        </tr>
+                                    <% }); %>
+                                <% } %>
+                            </tbody>
+                            <!-- /Table Body -->
+                        </table>
+                        <!-- Table -->
+                    </div>
+                    <!-- /Card Header -->
+                </div>
+            </div>
+        </div>
+        <!-- /Student Data Table -->
+    </div>
+</main>
+
+<%- include("admin_partials/admin_footer") -%>

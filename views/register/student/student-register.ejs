@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+              rel="stylesheet"
+              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+              crossorigin="anonymous">
+        <link rel="stylesheet" href="css/login.css">
+        <title>Registration Portal</title>
+    </head>
+
+    <body class="text-center">
+
+        <!-- Main -->
+        <main class="form-custom">
+
+            <!-- Display Error Message -->
+            <% if (typeof error !== 'undefined' ) { %>
+                <% if (error.code === 'ERROR') { %>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <span><%= error.msg %></span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <% } %>
+            <% } %>
+            <!-- /Display Error Message -->
+
+            <!-- Registration Card (Student) -->
+            <div class="card">
+
+                <form action="/student-register" method="post">
+
+                    <div class="text-center">
+                        <h1 class="h3 card p-2 border-1 color-purple">Register Student</h1>
+                        <img class="mb-2 img-thumbnail" src="/img/student.png" width="100" height="100"
+                             alt="student-logo">
+                    </div>
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="191XXXXXXX"
+                               name="studentId" minlength="10" maxlength="10" required>
+                        <label for="floatingInput">ID</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="password" class="form-control" id="floatingPassword" placeholder="Enter Password"
+                               name="studentPassword" required>
+                        <label for="floatingPassword">Enter Password</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="password" class="form-control" id="floatingPassword" placeholder="Confirm Password"
+                               name="studentPasswordConfirm" required>
+                        <label for="floatingPassword">Confirm Password</label>
+                    </div>
+                    <button class="w-100 btn btn-lg btn-student" type="submit">Register</button>
+                </form>
+
+            </div>
+            <!-- /Registration Card (Student) -->
+
+            <!-- Go Back to Home -->
+            <div class="btn btn-home mt-4">
+                <form action="/" method="get">
+                    <a type="button" onclick="this.parentNode.submit();">Home</a>
+                </form>
+            </div>
+            <!-- /Go Back to Home -->
+
+        </main>
+        <!-- /Main -->
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+                crossorigin="anonymous">
+        </script>
+    </body>
+</html>

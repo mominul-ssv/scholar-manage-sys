@@ -1,0 +1,11 @@
+<!-- DELETE Student -->
+<form action="/admin-student" method="post">
+
+    <!-- CRUD Information -->
+    <input type="hidden" name="CRUD" value="ADMIN_DELETE_STUDENT">
+    <input type="hidden" name="studentId" value="<%= student.studentId %>">
+    <!-- /CRUD Information -->
+
+    <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+</form>
+<!-- /DELETE Student -->
