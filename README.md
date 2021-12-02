@@ -12,7 +12,7 @@ npm install
 
 ## Security
 
-Please contact with the project contributors for the config.env file. 
+Please contact with the project contributors for the **config.env** file. 
 
 ## Contributors
 1. Mominul Islam
