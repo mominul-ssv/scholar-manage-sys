@@ -194,7 +194,14 @@ exports.admin_faculty_post = (req, res) => {
                 break;
             // DELETE Faculty
             case 'ADMIN_DELETE_FACULTY': {
-
+                console.log("Success!");
+                Faculty.deleteOne({email: req.body.email}, (err) => {
+                    if (!err) {
+                        res.redirect('/admin-faculty');
+                    } else {
+                        console.log(err);
+                    }
+                });
             }
                 break;
             default:

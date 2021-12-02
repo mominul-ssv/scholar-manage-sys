@@ -1,14 +1,14 @@
-<!-- DELETE Student (Button) -->
+<!-- DELETE Faculty (Button) -->
 <button type="button"
         class="btn btn-danger"
         data-bs-toggle="modal"
-        data-bs-target="#deleteStudent<%= student.studentId %>"><i class="bi bi-trash2"></i>
+        data-bs-target="#deleteFaculty<%= faculty._id %>"><i class="bi bi-trash2"></i>
 </button>
-<!-- DELETE Student (Button) -->
+<!-- DELETE Faculty (Button) -->
 
-<!-- DELETE Student (Floating Form) -->
+<!-- DELETE Faculty (Floating Form) -->
 <div class="modal fade"
-     id="deleteStudent<%= student.studentId %>"
+     id="deleteFaculty<%= faculty._id %>"
      data-bs-backdrop="static"
      data-bs-keyboard="false"
      tabindex="-1"
@@ -18,16 +18,16 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Delete Student <i class="bi bi-trash2"></i></h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Delete Faculty <i class="bi bi-trash2"></i></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <div class="modal-body">
-                <form class="row" action="/admin-student" method="post">
+                <form class="row" action="/admin-faculty" method="post">
 
                     <!-- CRUD Information -->
-                    <input type="hidden" name="CRUD" value="ADMIN_DELETE_STUDENT">
-                    <input type="hidden" name="studentId" value="<%= student.studentId %>">
+                    <input type="hidden" name="CRUD" value="ADMIN_DELETE_FACULTY">
+                    <input type="hidden" name="email" value="<%= faculty.email %>">
                     <!-- /CRUD Information -->
 
                     <div class="text-center">
@@ -35,7 +35,7 @@
                         <h4 class="pt-2">Are you sure?</h4>
                         <p class="ps-5 pe-5 pt-2 pb-2 text-muted">
                             Do you really want to delete the faculty with email
-                            <label style="color: #b70c0c"><%= student.studentId %></label>?
+                            <label style="color: #b70c0c"><%= faculty.email %></label>?
                             This process cannot be undone.
                         </p>
                     </div>
@@ -50,4 +50,4 @@
         </div>
     </div>
 </div>
-<!-- /DELETE Student (Floating Form) -->
+<!-- /DELETE Faculty (Floating Form) -->

@@ -70,6 +70,21 @@
                                                     <span>Inactive</span>
                                                 <% } %>
                                             </td>
+                                            <td>
+                                                <button type="button" class="btn btn-success">
+                                                    <i class="bi bi-card-checklist"></i>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <!-- UPDATE Faculty -->
+                                                <%- include("admin-faculty/faculty-update.ejs", {faculty: faculty}) %>
+                                                <!-- /UPDATE Faculty -->
+                                            </td>
+                                            <td>
+                                                <!-- DELETE Faculty -->
+                                                <%- include("admin-faculty/faculty-delete.ejs", {faculty: faculty}) %>
+                                                <!-- /DELETE Faculty -->
+                                            </td>
                                         </tr>
                                     <% }); %>
                                 <% } %>
