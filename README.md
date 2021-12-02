@@ -4,7 +4,7 @@ Scholarship Management System
 
 ## Installation
 
-Use the package manager [npm](https://docs.npmjs.com/downloading-and-installing-packages-locally) to install the node modules.
+Use [npm](https://docs.npmjs.com/downloading-and-installing-packages-locally) (node package manager) to install the **node modules**.
 
 ```bash
 npm install 
