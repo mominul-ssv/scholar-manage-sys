@@ -18,7 +18,7 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Delete Student <i class="bi bi-trash2"></i></h5>
+                <h5 class="modal-title fw-bold text-muted" id="staticBackdropLabel">Delete Student <i class="bi bi-trash2"></i></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -32,12 +32,10 @@
 
                     <div class="text-center">
                         <img src="/img/cross.png" width="80" height="80" alt="faculty-logo">
-                        <h4 class="pt-2">Are you sure?</h4>
-                        <p class="ps-5 pe-5 pt-2 pb-2 text-muted">
-                            Do you really want to delete the faculty with email
+                        <h5 class="p-4 text-muted fw-bold">
+                            Do you really want to delete the faculty with id
                             <label style="color: #b70c0c"><%= student.studentId %></label>?
-                            This process cannot be undone.
-                        </p>
+                        </h5>
                     </div>
 
                     <div class="modal-footer">
