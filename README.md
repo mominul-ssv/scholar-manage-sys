@@ -10,6 +10,10 @@ Use the package manager [npm](https://docs.npmjs.com/downloading-and-installing-
 npm install 
 ```
 
+##Security
+
+Please contact with the project contributors for the config.env file. 
+
 ## Contributors
 1. Mominul Islam
 2. Shazia Mahazaben
