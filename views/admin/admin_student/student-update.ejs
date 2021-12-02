@@ -2,20 +2,26 @@
 <button type="button"
         class="btn btn-warning"
         data-bs-toggle="modal"
-        data-bs-target="#updateStudent<%= student.studentId %>">
-    <i class="bi bi-pen"></i>
+        data-bs-target="#updateStudent<%= student.studentId %>"><i class="bi bi-pen"></i>
 </button>
 <!-- UPDATE Student (Button) -->
 
 <!-- UPDATE Student (Floating Form) -->
-<div class="modal fade" id="updateStudent<%= student.studentId %>" data-bs-backdrop="static" data-bs-keyboard="false"
-     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade"
+     id="updateStudent<%= student.studentId %>"
+     data-bs-backdrop="static"
+     data-bs-keyboard="false"
+     tabindex="-1"
+     aria-labelledby="staticBackdropLabel"
+     aria-hidden="true">
     <div class="modal-dialog floating-card">
         <div class="modal-content">
+
             <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel">Update Student <i class="bi bi-pen"></i></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+
             <div class="modal-body">
                 <form class="row" action="/admin-student" method="post">
 
@@ -92,10 +98,12 @@
                                value="<%= student.citizenship %>"
                                placeholder="<%= student.citizenship %>">
                     </div>
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-warning">Update</button>
                     </div>
+
                 </form>
             </div>
         </div>

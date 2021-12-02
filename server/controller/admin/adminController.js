@@ -1,5 +1,6 @@
 const data = require('../../database/data.js');
 const Student = require('../../model/studentSchema.js');
+const Faculty = require('../../model/facultySchema.js');
 
 // ADMIN -------------------------------------------------------------------------------------------------- (Dashboard)
 exports.admin_dashboard_get = (req, res) => {
@@ -129,12 +130,75 @@ exports.admin_student_post = (req, res) => {
 exports.admin_faculty_get = (req, res) => {
     if (req.session.adminAuth === true) {
         const sidebarNav = {faculty: 'active'};
-        res.render('admin/admin-faculty', {sidebarNav});
+        // READ Faculty (P-2)
+        Faculty.find({}, (err, foundFaculty) => {
+            if (!err) {
+                if (req.session.msg === 'INVALID_EMAIL') {
+                    req.session.msg = 'NULL';
+                    const error = {code: 'ERROR', msg: 'Error! Email is already in use.'};
+                    res.render('admin/admin-faculty', {foundFaculty, sidebarNav, error});
+                } else {
+                    res.render('admin/admin-faculty', {foundFaculty, sidebarNav});
+                }
+            } else {
+                console.log(err);
+            }
+        });
     }
 }
 
 exports.admin_faculty_post = (req, res) => {
     if (req.session.adminAuth === true) {
-        res.redirect('/admin-faculty');
+
+        const {CRUD} = req.body;
+        console.log(CRUD);
+
+        switch (CRUD) {
+            // CREATE Faculty
+            case 'ADMIN_CREATE_FACULTY': {
+                const {firstName, lastName, email, university, dob, citizenship} = req.body;
+                Faculty.findOne({email: email}, async (err, foundFaculty) => {
+                    if (!err) {
+                        if (foundFaculty === null) {
+                            const faculty = new Faculty({
+                                firstName: firstName,
+                                lastName: lastName,
+                                email: email,
+                                university: university,
+                                dob: dob,
+                                citizenship: citizenship,
+                                registrationStatus: false,
+                                semesterStatus: false
+                            });
+                            await faculty.save();
+                            res.redirect('/admin-faculty');
+                        } else {
+                            req.session.msg = 'INVALID_EMAIL';
+                            res.redirect('/admin-faculty');
+                        }
+                    } else {
+                        console.log(err);
+                    }
+                });
+            }
+                break;
+            // READ Faculty (P-1)
+            case 'ADMIN_READ_FACULTY': {
+                res.redirect('/admin-faculty');
+            }
+                break;
+            // UPDATE Faculty
+            case 'ADMIN_UPDATE_FACULTY': {
+
+            }
+                break;
+            // DELETE Faculty
+            case 'ADMIN_DELETE_FACULTY': {
+
+            }
+                break;
+            default:
+                console.log("Error occurred in { admin_faculty_post }");
+        }
     }
 }

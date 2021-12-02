@@ -8,10 +8,12 @@ const logoutController = require('../controller/logout/logoutController');
 
 adminGenController.admin_generate();
 
+// ======================= Login Portal ======================= //
 router.route('/')
     .get(loginController.root_get)
     .post(loginController.root_post)
 
+// ======================= Admin Portal ======================= //
 router.route('/admin-dashboard')
     .get(adminController.admin_dashboard_get)
     .post(adminController.admin_dashboard_post)
@@ -24,6 +26,7 @@ router.route('/admin-faculty')
     .get(adminController.admin_faculty_get)
     .post(adminController.admin_faculty_post)
 
+// ======================= Student Portal ======================= //
 router.route('/student-register')
     .get(studentController.student_register_get)
     .post(studentController.student_register_post)
@@ -52,6 +55,7 @@ router.route('/student-scholarship')
     .get(studentController.student_scholarship_get)
     .post(studentController.student_scholarship_post)
 
+// ======================= Logout Portal ======================= //
 router.route('/logout')
     .post(logoutController.logout_post)
 

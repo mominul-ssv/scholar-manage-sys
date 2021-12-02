@@ -3,8 +3,86 @@
 <main class="main-dashboard">
     <div class="container-fluid">
 
+        <!-- Error Handling -->
+        <div class="row">
+            <div class="col-md-12">
+                <% if (typeof error !== 'undefined' ) { %>
+                    <% if (error.code === 'ERROR') { %>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <span><%= error.msg %></span>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <% } %>
+                <% } %>
+            </div>
+        </div>
+        <!-- /Error Handling -->
 
+        <!-- CREATE Faculty -->
+        <div class="row">
+            <div class="col-md-12">
+                <%- include("admin-faculty/faculty-create.ejs") -%>
+            </div>
+        </div>
+        <!-- /CREATE Faculty -->
 
+        <!-- Faculty Data Table -->
+        <div class="row">
+            <div class="col-md-12 mt-2">
+                <div class="card">
+
+                    <!-- Card Header -->
+                    <div class="card-header fw-bold table-responsive">Faculty List</div>
+                    <!-- /Card Header -->
+
+                    <!-- Card Body -->
+                    <div class="card-body table-responsive">
+
+                        <!-- Table -->
+                        <table class="table table-hover">
+
+                            <!-- Table Header -->
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>University</th>
+                                    <th>Status</th>
+                                    <th style="width: 0">Details</th>
+                                    <th style="width: 0">Update</th>
+                                    <th style="width: 0">Delete</th>
+                                </tr>
+                            </thead>
+                            <!-- /Table Header -->
+
+                            <!-- Table Body -->
+                            <tbody>
+                                <% if (typeof foundFaculty !== 'undefined' ) { %>
+                                    <% foundFaculty.forEach((faculty)=> { %>
+                                        <tr>
+                                            <td><%= faculty.firstName %> <%= faculty.lastName %></td>
+                                            <td><%= faculty.email %></td>
+                                            <td><%= faculty.university %></td>
+                                            <td>
+                                                <% if (faculty.semesterStatus === true) { %>
+                                                    <span>Active</span>
+                                                <% } else { %>
+                                                    <span>Inactive</span>
+                                                <% } %>
+                                            </td>
+                                        </tr>
+                                    <% }); %>
+                                <% } %>
+                            </tbody>
+                            <!-- /Table Body -->
+                        </table>
+                        <!-- Table -->
+                    </div>
+                    <!-- /Card Header -->
+                </div>
+            </div>
+        </div>
+        <!-- /Faculty Data Table -->
     </div>
 </main>
 
