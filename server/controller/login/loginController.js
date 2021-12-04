@@ -24,7 +24,9 @@ exports.root_post = async (req, res) => {
                         await bcrypt.compare(adminPassword, foundAdmin.password, async (error, result) => {
                             if (result === true) {
                                 req.session.adminAuth = true;
-                                res.redirect('/admin-dashboard');
+                                // Initial Admin Login
+                                const sidebarNav = {dashboard: 'active'};
+                                res.render('admin/admin-dashboard', {sidebarNav});
                             } else {
                                 const error = {code: 'ERROR', msg: 'Password is incorrect!'};
                                 res.render('login', {navBarAnimation, error});
@@ -51,7 +53,9 @@ exports.root_post = async (req, res) => {
                                 if (result === true) {
                                     req.session.studentAuth = true;
                                     req.session.studentLoginId = studentId;
-                                    res.redirect('/student-home');
+                                    // Initial Student Login
+                                    const sidebarNav = {home: 'active'};
+                                    res.render('student/student-home', {sidebarNav});
                                 } else {
                                     const error = {code: 'ERROR', msg: 'Password is incorrect!'};
                                     res.render('login', {navBarAnimation, error});

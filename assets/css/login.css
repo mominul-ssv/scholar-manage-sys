@@ -48,10 +48,26 @@ body {
     font-weight: bold;
 }
 
-.btn-home {
+.btn-home-student {
     background-color: var(--student-color);
     color: white;
     border-radius: 20px;
+}
+
+.btn-home-student:hover {
+    background-color: #a421a4;
+    color: white;
+}
+
+.btn-home-faculty {
+    background-color: var(--faculty-color);
+    color: white;
+    border-radius: 20px;
+}
+
+.btn-home-faculty:hover {
+    background-color: #168c40;
+    color: white;
 }
 
 .nav-tabs .nav-student.active {
@@ -70,6 +86,11 @@ body {
 
 .btn-student {
     background-color: var(--student-color);
+    color: white;
+}
+
+.btn-faculty {
+    background-color: var(--faculty-color);
     color: white;
 }
 

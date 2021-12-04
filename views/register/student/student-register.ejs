@@ -42,7 +42,6 @@
                              alt="student-logo">
                     </div>
                     <div class="form-floating">
-                        <label for="floatingInput">ID</label>
                         <input type="text"
                                class="form-control"
                                id="floatingInput"
@@ -51,24 +50,25 @@
                                minlength="10"
                                maxlength="10"
                                required>
+                        <label for="floatingInput">ID</label>
                     </div>
                     <div class="form-floating">
-                        <label for="floatingPassword">Enter Password</label>
                         <input type="password"
                                class="form-control"
                                id="floatingPassword"
                                placeholder="Enter Password"
                                name="studentPassword"
                                required>
+                        <label for="floatingPassword">Enter Password</label>
                     </div>
                     <div class="form-floating">
-                        <label for="floatingPassword">Confirm Password</label>
                         <input type="password"
                                class="form-control"
                                id="floatingPassword"
                                placeholder="Confirm Password"
                                name="studentPasswordConfirm"
                                required>
+                        <label for="floatingPassword">Confirm Password</label>
                     </div>
                     <button class="w-100 btn btn-lg btn-student" type="submit">Register</button>
                 </form>
@@ -77,9 +77,9 @@
             <!-- /Registration Card (Student) -->
 
             <!-- Go Back to Home -->
-            <div class="btn btn-home mt-4">
-                <form action="/" method="get">
-                    <a type="button" onclick="this.parentNode.submit();">Home</a>
+            <div class="mt-4">
+                <form class="mt-4" action="/" method="get">
+                    <button class="btn btn-home-student" type="submit">Home</button>
                 </form>
             </div>
             <!-- /Go Back to Home -->

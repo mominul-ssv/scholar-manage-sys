@@ -1,8 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const adminGenController = require('../controller/admin/adminGenController');
-const adminController = require('../controller/admin/adminController');
+
 const studentController = require('../controller/student/studentController');
+const studentRegController = require('../controller/student/studentRegController');
+
+const facultyController = require('../controller/faculty/facultyController');
+const facultyRegController = require('../controller/faculty/facultyRegController');
+
+const adminController = require('../controller/admin/adminController');
+const adminGenController = require('../controller/admin/adminGenController');
+
 const loginController = require('../controller/login/loginController');
 const logoutController = require('../controller/logout/logoutController');
 
@@ -13,27 +20,14 @@ router.route('/')
     .get(loginController.root_get)
     .post(loginController.root_post)
 
-// ======================= Admin Portal ======================= //
-router.route('/admin-dashboard')
-    .get(adminController.admin_dashboard_get)
-    .post(adminController.admin_dashboard_post)
-
-router.route('/admin-student')
-    .get(adminController.admin_student_get)
-    .post(adminController.admin_student_post)
-
-router.route('/admin-faculty')
-    .get(adminController.admin_faculty_get)
-    .post(adminController.admin_faculty_post)
-
 // ======================= Student Portal ======================= //
 router.route('/student-register')
-    .get(studentController.student_register_get)
-    .post(studentController.student_register_post)
+    .get(studentRegController.student_register_get)
+    .post(studentRegController.student_register_post)
 
 router.route('/student-password-reset')
-    .get(studentController.student_password_reset_get)
-    .get(studentController.student_password_reset_post)
+    .get(studentRegController.student_password_reset_get)
+    .get(studentRegController.student_password_reset_post)
 
 router.route('/student-home')
     .get(studentController.student_home_get)
@@ -54,6 +48,33 @@ router.route('/student-grades')
 router.route('/student-scholarship')
     .get(studentController.student_scholarship_get)
     .post(studentController.student_scholarship_post)
+
+// ======================= Faculty Portal ======================= //
+router.route('/faculty-register')
+    .get(facultyRegController.faculty_register_get)
+    .post(facultyRegController.faculty_register_post)
+
+router.route('/faculty-password-reset')
+    .get(facultyRegController.faculty_password_reset_get)
+    .get(facultyRegController.faculty_password_reset_post)
+
+router.route('/faculty-home')
+    .get(facultyController.faculty_home_get)
+    .post(facultyController.faculty_home_post)
+
+
+// ======================= Admin Portal ======================= //
+router.route('/admin-dashboard')
+    .get(adminController.admin_dashboard_get)
+    .post(adminController.admin_dashboard_post)
+
+router.route('/admin-student')
+    .get(adminController.admin_student_get)
+    .post(adminController.admin_student_post)
+
+router.route('/admin-faculty')
+    .get(adminController.admin_faculty_get)
+    .post(adminController.admin_faculty_post)
 
 // ======================= Logout Portal ======================= //
 router.route('/logout')
