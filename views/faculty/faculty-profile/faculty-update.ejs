@@ -3,15 +3,15 @@
     <button type="button"
             class="btn btn-warning"
             data-bs-toggle="modal"
-            data-bs-target="#updateStudent<%= foundStudent.studentId %>">
-        <i class="bi bi-pen"></i> Update Personal Information
+            data-bs-target="#updateStudent<%= foundFaculty._id %>">
+        <i class="bi bi-pen"></i> Update Faculty Information
     </button>
 </div>
 
 <!-- UPDATE Student (Button) -->
 
 <!-- UPDATE Student (Floating Form) -->
-<div class="modal fade" id="updateStudent<%= foundStudent.studentId %>" data-bs-backdrop="static" data-bs-keyboard="false"
+<div class="modal fade" id="updateStudent<%= foundFaculty._id %>" data-bs-backdrop="static" data-bs-keyboard="false"
      tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog floating-card">
         <div class="modal-content">
@@ -21,11 +21,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="row" action="/student-profile" method="post">
+                <form class="row" action="/faculty-profile" method="post">
 
                     <input type="hidden"
-                           name="studentId"
-                           value="<%= foundStudent.studentId %>">
+                           name="_id"
+                           value="<%= foundFaculty._id %>">
 
                     <div class="col-md-12">
                         <label for="phone" class="form-label">Cell Phone</label>
@@ -33,18 +33,8 @@
                                class="form-control"
                                id="phone"
                                name="phone"
-                               value="<%= foundStudent.phone %>"
-                               placeholder="<%= foundStudent.phone %>">
-                    </div>
-
-                    <div class="col-md-12 mt-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email"
-                               class="form-control"
-                               id="email"
-                               name="email"
-                               value="<%= foundStudent.email %>"
-                               placeholder="<%= foundStudent.email %>">
+                               value="<%= foundFaculty.phone %>"
+                               placeholder="<%= foundFaculty.phone %>">
                     </div>
 
                     <div class="col-md-6 mt-3">
@@ -53,8 +43,8 @@
                                class="form-control"
                                id="dob"
                                name="dob"
-                               value="<%= foundStudent.dob %>"
-                               placeholder="<%= foundStudent.dob %>">
+                               value="<%= foundFaculty.dob %>"
+                               placeholder="<%= foundFaculty.dob %>">
                     </div>
 
                     <div class="col-md-6 mt-3">
@@ -63,8 +53,8 @@
                                class="form-control"
                                id="citizenship"
                                name="citizenship"
-                               value="<%= foundStudent.citizenship %>"
-                               placeholder="<%= foundStudent.citizenship %>">
+                               value="<%= foundFaculty.citizenship %>"
+                               placeholder="<%= foundFaculty.citizenship %>">
                     </div>
 
                     <div class="col-md-12 mt-3 mb-4">
@@ -73,8 +63,8 @@
                                class="form-control"
                                id="address"
                                name="address"
-                               value="<%= foundStudent.address %>"
-                               placeholder="<%= foundStudent.address %>">
+                               value="<%= foundFaculty.address %>"
+                               placeholder="<%= foundFaculty.address %>">
                     </div>
 
                     <div class="modal-footer">

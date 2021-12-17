@@ -29,6 +29,7 @@ router.route('/student-password-reset')
     .get(studentRegController.student_password_reset_get)
     .get(studentRegController.student_password_reset_post)
 
+// ---------------------- Student Dashboard --------------------- //
 router.route('/student-home')
     .get(studentController.student_home_get)
     .post(studentController.student_home_post)
@@ -58,6 +59,7 @@ router.route('/faculty-password-reset')
     .get(facultyRegController.faculty_password_reset_get)
     .get(facultyRegController.faculty_password_reset_post)
 
+// ---------------------- Faculty Dashboard --------------------- //
 router.route('/faculty-home')
     .get(facultyController.faculty_home_get)
     .post(facultyController.faculty_home_post)

@@ -1,3 +1,87 @@
 <%- include("faculty-partials/faculty-header.ejs") -%>
 
+<main class="main-dashboard pt-0">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col mt-2">
+                <div class="card">
+                    <!-- General Information -->
+                    <div class="card-header fw-bold text-center"><i class="bi bi-box-seam"></i> General Information</div>
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <% if (typeof foundFaculty !== 'undefined' ) { %>
+                                <tr>
+                                    <th>Name:</th>
+                                    <td><%= foundFaculty.firstName %> <%= foundFaculty.lastName %></td>
+                                </tr>
+                                <tr>
+                                    <th>Email:</th>
+                                    <td><%= foundFaculty.email %></td>
+                                </tr>
+                                <tr>
+                                    <th>Education:</th>
+                                    <td><%= foundFaculty.university %></td>
+                                </tr>
+                                <tr>
+                                    <th>Status:</th>
+                                    <% if(foundFaculty.semesterStatus === true) { %>
+                                        <td>Active</td>
+                                    <% } else { %>
+                                        <td>Inactive</td>
+                                    <% } %>
+                                </tr>
+                                <tr>
+                                    <th>Semester:</th>
+                                    <td><%= foundFaculty.semester %></td>
+                                </tr>
+                                <tr>
+                                    <th>Courses:</th>
+                                    <td><%= foundFaculty.courses %></td>
+                                </tr>
+                            <% } %>
+                        </table>
+                    </div>
+                    <!-- /General Information -->
+                </div>
+            </div>
+
+            <!-- Personal Information -->
+            <div class="col mt-2">
+                <div class="card">
+                    <div class="card-header fw-bold text-center"><i class="bi bi-journal-text"></i> Personal Information</div>
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <% if (typeof foundFaculty !== 'undefined' ) { %>
+                                <tr>
+                                    <th>Cell Phone:</th>
+                                    <td><%= foundFaculty.phone %></td>
+                                </tr>
+                                <tr>
+                                    <th>Date of Birth:</th>
+                                    <td><%= foundFaculty.dob %></td>
+                                </tr>
+                                <tr>
+                                    <th>Citizenship:</th>
+                                    <td><%= foundFaculty.citizenship %></td>
+                                </tr>
+                                <tr>
+                                    <th>Mailing Address:</th>
+                                    <td><%= foundFaculty.address %></td>
+                                </tr>
+                            <% } %>
+                        </table>
+                        <!-- Update Personal Information -->
+                        <div class="card-footer">
+                            <%- include("faculty-profile/faculty-update", {foundFaculty: foundFaculty}) %>
+                        </div>
+                        <!-- /Update Personal Information -->
+                    </div>
+                </div>
+            </div>
+            <!-- /Personal Information -->
+
+        </div>
+    </div>
+</main>
+
 <%- include("faculty-partials/faculty-footer.ejs") -%>

@@ -1,24 +1,53 @@
 // FACULTY ----------------------------------------------------------------------------------------------------- (Home)
+const Faculty = require("../../model/facultySchema.js");
+const Student = require("../../model/studentSchema.js");
 exports.faculty_home_get = (req, res) => {
-    const sidebarNav = {home: 'active'};
-    res.render('faculty/faculty-home', {sidebarNav});
+    if (req.session.facultyAuth === true) {
+        const sidebarNav = {home: 'active'};
+        res.render('faculty/faculty-home', {sidebarNav});
+    }
 }
 
 exports.faculty_home_post = (req, res) => {
-    res.redirect('/faculty-home');
+    if (req.session.facultyAuth === true) {
+        res.redirect('/faculty-home');
+    }
 }
 
 // FACULTY -------------------------------------------------------------------------------------------------- (Profile)
 exports.faculty_profile_get = (req, res) => {
     if (req.session.facultyAuth === true) {
-        const sidebarNav = {profile: 'active'};
-        res.render('faculty/faculty-courses', {sidebarNav});
+        // READ Faculty (Student-Auth)
+        Faculty.findOne({email: req.session.facultyEmail}, (err, foundFaculty) => {
+            if (!err) {
+                const sidebarNav = {profile: 'active'};
+                res.render('faculty/faculty-profile', {foundFaculty, sidebarNav});
+            } else {
+                console.log(err);
+            }
+        });
     }
 }
 
 exports.faculty_profile_post = (req, res) => {
     if (req.session.facultyAuth === true) {
-        res.redirect('/faculty-profile');
+        const {_id, phone, dob, citizenship, address} = req.body;
+        Faculty.updateOne(
+            {_id: _id},
+            {
+                $set: {
+                    phone: phone,
+                    dob: dob,
+                    citizenship: citizenship,
+                    address: address
+                }
+            }, (err) => {
+                if (!err) {
+                    res.redirect('/faculty-profile');
+                } else {
+                    console.log(err);
+                }
+            });
     }
 }
 
