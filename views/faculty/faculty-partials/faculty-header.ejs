@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+    <head>
+        <!-- =====  BOOTSTRAP 5 ICONS ===== -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+
+        <!-- =====  BOOTSTRAP 5 ===== -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+              rel="stylesheet"
+              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+              crossorigin="anonymous">
+
+        <!-- =====  CUSTOM CSS ===== -->
+        <link rel="stylesheet" href="css/faculty.css">
+
+        <title>Faculty Portal</title>
+    </head>
+
+    <body>
+
+        <!-- Navbar -->
+        <div class="navbar-spacing">
+            <nav class="navbar color-purple m-1">
+
+                <!-- Sidebar Trigger Button -->
+                <button class="navbar-toggle-button navbar-toggler text-light"
+                        type="button"
+                        data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasExample"
+                        aria-controls="offcanvasExample">
+                    <span class="data-bs-target="></span>
+                    <i class="bi bi-toggles text-light"></i>
+                </button>
+                <!-- /Sidebar Trigger Button -->
+
+                <!-- Text -->
+                <a class="navbar-brand ms-auto text-light navbar-text" href="#">Faculty</a>
+                <!-- /Text -->
+
+                <!-- Logout -->
+                <form action="/logout" method="post">
+
+                    <!-- CRUD Information -->
+                    <input type="hidden" name="auth" value="faculty-auth">
+                    <!-- /CRUD Information -->
+
+                    <button class="navbar-brand btn btn-danger btn-style" type="submit">
+                        <i class="bi bi-power"></i>
+                    </button>
+                </form>
+                <!-- /Logout -->
+            </nav>
+        </div>
+        <!-- /Navbar -->
+
+        <!-- Sidebar -->
+        <div class="offcanvas offcanvas-start color-purple text-white fw-bold sidebar-nav m-1"
+             tabindex="-1"
+             id="offcanvasExample"
+             aria-labelledby="offcanvasExampleLabel">
+
+            <div class="offcanvas-body">
+
+                <!-- Home -->
+                <ul class="nav nav-pills" id="pills-tab" role="tablist">
+
+                    <li class="nav-item mb-3 mt-5" role="presentation">
+                        <form action="/faculty-home" method="post">
+                            <a class="nav-link <%= sidebarNav.home %>"
+                               id="pills-home-tab"
+                               data-bs-toggle="pill"
+                               data-bs-target="#pills-home"
+                               type="button"
+                               role="tab"
+                               aria-controls="pills-home"
+                               aria-selected="true"
+                               onclick="this.parentNode.submit();">
+                                <span class="pe-1"><i class="bi bi-grid-fill"></i></span>
+                                <span>Home</span>
+                            </a>
+                        </form>
+                    </li>
+                    <!-- /Home -->
+
+                    <!-- Profile -->
+                    <li class="nav-item mb-3" role="presentation">
+                        <form action="/faculty-profile" method="post">
+                            <a class="nav-link <%= sidebarNav.profile %>"
+                               id="pills-home-tab"
+                               data-bs-toggle="pill"
+                               data-bs-target="#pills-home"
+                               type="button"
+                               role="tab"
+                               aria-controls="pills-home"
+                               aria-selected="true"
+                               onclick="this.parentNode.submit();">
+                                <span class="pe-1"><i class="bi bi-person-circle"></i></span>
+                                <span>Profile</span>
+                            </a>
+                        </form>
+                    </li>
+                    <!-- /Profile -->
+
+                    <!-- Courses -->
+                    <li class="nav-item mb-3" role="presentation">
+                        <form action="/faculty-courses" method="post">
+                            <a class="nav-link <%= sidebarNav.courses %>"
+                               id="pills-home-tab"
+                               data-bs-toggle="pill"
+                               data-bs-target="#pills-home"
+                               type="button"
+                               role="tab"
+                               aria-controls="pills-home"
+                               aria-selected="true"
+                               onclick="this.parentNode.submit();">
+                                <span class="pe-1"><i class="bi bi-window-stack"></i></span>
+                                <span>Courses</span>
+                            </a>
+                        </form>
+                    </li>
+                    <!-- /Courses -->
+
+                    <!-- Grades -->
+                    <li class="nav-item mb-3" role="presentation">
+                        <form action="/faculty-grades" method="post">
+                            <a class="nav-link <%= sidebarNav.grades %>"
+                               id="pills-home-tab"
+                               data-bs-toggle="pill"
+                               data-bs-target="#pills-home"
+                               type="button"
+                               role="tab"
+                               aria-controls="pills-home"
+                               aria-selected="true"
+                               onclick="this.parentNode.submit();">
+                                <span class="pe-1"><i class="bi bi-clipboard-data"></i></span>
+                                <span>Grades</span>
+                            </a>
+                        </form>
+                    </li>
+                    <!-- /Grades -->
+
+                </ul>
+            </div>
+        </div>
+        <!-- /Sidebar -->

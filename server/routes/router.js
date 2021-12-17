@@ -62,6 +62,18 @@ router.route('/faculty-home')
     .get(facultyController.faculty_home_get)
     .post(facultyController.faculty_home_post)
 
+router.route('/faculty-profile')
+    .get(facultyController.faculty_profile_get)
+    .post(facultyController.faculty_profile_post)
+
+router.route('/faculty-courses')
+    .get(facultyController.faculty_courses_get)
+    .post(facultyController.faculty_courses_post)
+
+router.route('/faculty-grades')
+    .get(facultyController.faculty_grades_get)
+    .post(facultyController.faculty_grades_post)
+
 
 // ======================= Admin Portal ======================= //
 router.route('/admin-dashboard')

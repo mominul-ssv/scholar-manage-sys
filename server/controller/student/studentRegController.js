@@ -7,10 +7,14 @@ exports.student_register_get = (req, res) => {
 }
 
 exports.student_register_post = async (req, res) => {
+
     const {studentId, studentPassword, studentPasswordConfirm} = req.body;
+
     if (studentPassword !== studentPasswordConfirm) {
+
         const error = {code: 'ERROR', msg: 'Password mismatch!'};
         res.render('register/student/student-register', {error});
+
     } else {
         // READ Student
         Student.findOne({studentId: studentId}, async (err, foundStudent) => {

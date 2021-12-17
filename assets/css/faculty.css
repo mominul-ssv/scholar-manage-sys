@@ -1,0 +1,136 @@
+body,
+button {
+    font-family: Verdana, sans-serif;
+    background: rgb(246, 249, 253);
+}
+
+ul {
+    list-style: none
+}
+
+:root {
+    --offcanvas-width: 226px;
+    --navbar-width: 230px;
+    --borderRadius: 10px;
+}
+
+.color-purple {
+    background: #2ba962;
+    padding: 0.5em;
+    border: 3px solid rgb(106, 225, 147);
+    border-radius: var(--borderRadius);
+}
+
+/* ===== Main ===== */
+.main-dashboard {
+    padding-left: 4px;
+    padding-top: 7px;
+    padding-right: 3px;
+}
+/* ===== /Main ===== */
+
+/* ===== Floating Card ===== */
+.floating-card {
+    padding-top: 50px;
+    width: 40%;
+    font-weight: bold;
+}
+/* ===== /Floating Card ===== */
+
+/* ===== Navbar (Top) ===== */
+.navbar-spacing {
+    padding: 0 0 0 0 ;
+    margin: 0 0 0 0;
+}
+
+.navbar-text {
+    color: white;
+    font-weight: bold;
+    font-size: 25px;
+    text-transform: uppercase;
+    padding: 0;
+}
+
+.navbar-toggle-button {
+    visibility: visible;
+}
+
+.btn-style {
+    color: white;
+    background-color: rgb(199, 39, 33);
+    border: 2px solid;
+    border-radius: var(--borderRadius);;
+    padding: 0 10px 0 10px;
+}
+/* ===== /Navbar (Top) ===== */
+
+/* ===== Sidebar ===== */
+.sidebar-nav {
+    color: white;
+    font-weight: bold;
+    font-size: 17px;
+    width: var(--offcanvas-width);
+}
+
+.nav-pills .nav-link.active {
+    color: white;
+    background-color: rgb(6, 121, 46);
+    border-radius: var(--borderRadius);
+}
+
+.nav-pills .nav-link {
+    color: white;
+    border-radius: var(--borderRadius);
+}
+
+.nav-item {
+    border-radius: var(--borderRadius);
+}
+
+.nav-item:hover {
+    color: white;
+    background-color: rgb(6, 121, 46);
+    border-radius: var(--borderRadius);
+    transition: 0.7s;
+}
+/* ===== /Sidebar ===== */
+
+/* ===== Card ===== */
+.card {
+    border: 2px solid rgba(0,0,0,.125);
+}
+
+.card-header {
+    border: 2px solid rgba(0,0,0,.125);
+    border-bottom: 0;
+    margin: 5px 5px 0;
+}
+
+.card-body {
+    border: 2px solid rgba(0,0,0,.125);
+    margin: 0 5px 5px;
+}
+/* ===== /Card ===== */
+
+@media (min-width: 992px) {
+    body {
+        overflow: auto !important;
+    }
+
+    main {
+        margin-left: var(--offcanvas-width);
+    }
+
+    .sidebar-nav {
+        transform: none;
+        visibility: visible !important;
+    }
+
+    .navbar-spacing {
+        padding-left: var(--navbar-width);
+    }
+
+    .navbar-toggle-button {
+        visibility: hidden;
+    }
+}

@@ -1,4 +1,4 @@
-<%- include("admin_partials/admin_header") -%>
+<%- include("admin-partials/admin-header.ejs") -%>
 
 <main class="main-dashboard">
     <div class="container-fluid">
@@ -21,7 +21,7 @@
         <!-- CREATE Student -->
         <div class="row">
             <div class="col-md-12">
-                <%- include("admin_student/student-create.ejs") -%>
+                <%- include("admin-student/student-create.ejs") -%>
             </div>
         </div>
         <!-- /CREATE Student -->
@@ -75,12 +75,12 @@
                                             </td>
                                             <td>
                                                 <!-- UPDATE Student -->
-                                                <%- include("admin_student/student-update.ejs", {student: student}) %>
+                                                <%- include("admin-student/student-update.ejs", {student: student}) %>
                                                 <!-- /UPDATE Student -->
                                             </td>
                                             <td>
                                                 <!-- DELETE Student -->
-                                                <%- include("admin_student/student-delete.ejs", {student: student}) %>
+                                                <%- include("admin-student/student-delete.ejs", {student: student}) %>
                                                 <!-- /DELETE Student -->
                                             </td>
                                         </tr>
@@ -99,4 +99,4 @@
     </div>
 </main>
 
-<%- include("admin_partials/admin_footer") -%>
+<%- include("admin-partials/admin-footer.ejs") -%>

@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const Admin = require('../../model/adminSchema.js');
 const Student = require('../../model/studentSchema.js');
+const Faculty = require('../../model/facultySchema.js');
 
 exports.root_get = (req, res) => {
     const navBarAnimation = {student: 'active'};
@@ -74,8 +75,38 @@ exports.root_post = async (req, res) => {
                 }
             });
             break;
+
         // Login Validation --------------------------------------------------------------------------------- (FACULTY)
         case 'faculty-auth':
+            Faculty.findOne({email: facultyEmail}, async (err, foundFaculty) => {
+                if (!err) {
+                    const navBarAnimation = {faculty: 'active'};
+                    if (foundFaculty !== null) {
+                        if (foundFaculty.registrationStatus === true) {
+                            await bcrypt.compare(facultyPassword, foundFaculty.password, async (error, result) => {
+                                if (result === true) {
+                                    req.session.facultyAuth = true;
+                                    req.session.facultyEmail = facultyEmail;
+                                    // Initial Faculty Login
+                                    const sidebarNav = {home: 'active'};
+                                    res.render('faculty/faculty-home', {sidebarNav});
+                                } else {
+                                    const error = {code: 'ERROR', msg: 'Password is incorrect!'};
+                                    res.render('login', {navBarAnimation, error});
+                                }
+                            });
+                        } else {
+                            const error = {code: 'ERROR', msg: 'Faculty is not registered!'};
+                            res.render('login', {navBarAnimation, error});
+                        }
+                    } else {
+                        const error = {code: 'ERROR', msg: 'Faculty email is invalid!'};
+                        res.render('login', {navBarAnimation, error});
+                    }
+                } else {
+                    console.log(err);
+                }
+            });
             break;
         default:
             console.log("Error Occurred in { root_post }");
