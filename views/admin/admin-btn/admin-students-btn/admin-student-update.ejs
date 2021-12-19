@@ -1,15 +1,14 @@
-<!-- CREATE Student (Button) -->
+<!-- UPDATE Student (Button) -->
 <button type="button"
-        class="btn btn-primary"
+        class="btn btn-warning"
         data-bs-toggle="modal"
-        data-bs-target="#createStudent">
-    <i class="bi bi-person-workspace"></i> New Student <i class="bi bi-plus-lg"></i>
+        data-bs-target="#updateStudent<%= student.studentId %>"><i class="bi bi-pen"></i>
 </button>
-<!-- /CREATE Student (Button) -->
+<!-- UPDATE Student (Button) -->
 
-<!-- CREATE Student (Floating Form) -->
+<!-- UPDATE Student (Floating Form) -->
 <div class="modal fade"
-     id="createStudent"
+     id="updateStudent<%= student.studentId %>"
      data-bs-backdrop="static"
      data-bs-keyboard="false"
      tabindex="-1"
@@ -19,15 +18,16 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h5 class="modal-title fw-bold" id="staticBackdropLabel">New Student <i class="bi bi-plus-lg"></i></h5>
+                <h5 class="modal-title fw-bold" id="staticBackdropLabel">Update Student <i class="bi bi-pen"></i></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <div class="modal-body">
-                <form class="row" action="/admin-student" method="post">
+                <form class="row" action="/admin-students" method="post">
 
                     <!-- CRUD Information -->
-                    <input type="hidden" name="CRUD" value="ADMIN_CREATE_STUDENT">
+                    <input type="hidden" name="CRUD" value="ADMIN_UPDATE_STUDENT">
+                    <input type="hidden" name="studentId" value="<%= student.studentId %>">
                     <!-- /CRUD Information -->
 
                     <div class="col-md-6">
@@ -36,7 +36,8 @@
                                class="form-control"
                                id="firstName"
                                name="firstName"
-                               placeholder="Thomas"
+                               value="<%= student.firstName %>"
+                               placeholder="<%= student.firstName %>"
                                required>
                     </div>
                     <div class="col-md-6">
@@ -45,27 +46,8 @@
                                class="form-control"
                                id="lastName"
                                name="lastName"
-                               placeholder="Edison"
-                               required>
-                    </div>
-                    <div class="col-md-6 mt-3">
-                        <label for="studentId" class="form-label">ID</label>
-                        <input type="text"
-                               class="form-control"
-                               id="studentId"
-                               name="studentId"
-                               placeholder="191XXXXXXX"
-                               minlength="10"
-                               maxlength="10"
-                               required>
-                    </div>
-                    <div class="col-md-6 mt-3">
-                        <label for="semester" class="form-label">Semester</label>
-                        <input type="text"
-                               class="form-control"
-                               id="semester"
-                               name="entrySemester"
-                               placeholder="Fall 2021"
+                               value="<%= student.lastName %>"
+                               placeholder="<%= student.lastName %>"
                                required>
                     </div>
                     <div class="col-md-12 mt-3">
@@ -104,7 +86,8 @@
                                class="form-control"
                                id="dob"
                                name="dob"
-                               placeholder="Fall 2021">
+                               value="<%= student.dob %>"
+                               placeholder="<%= student.dob %>">
                     </div>
                     <div class="col-md-6 mt-3 mb-3">
                         <label for="citizenship" class="form-label">Citizenship</label>
@@ -112,12 +95,13 @@
                                class="form-control"
                                id="citizenship"
                                name="citizenship"
-                               placeholder="Bangladeshi">
+                               value="<%= student.citizenship %>"
+                               placeholder="<%= student.citizenship %>">
                     </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Register</button>
+                        <button type="submit" class="btn btn-warning">Update</button>
                     </div>
 
                 </form>
@@ -125,4 +109,4 @@
         </div>
     </div>
 </div>
-<!-- /CREATE Student (Floating Form) -->
+<!-- /UPDATE Student (Floating Form) -->

@@ -1,14 +1,15 @@
-<!-- UPDATE Student (Button) -->
+<!-- CREATE Student (Button) -->
 <button type="button"
-        class="btn btn-warning"
+        class="btn btn-primary"
         data-bs-toggle="modal"
-        data-bs-target="#updateStudent<%= student.studentId %>"><i class="bi bi-pen"></i>
+        data-bs-target="#createStudent">
+    <i class="bi bi-person-workspace"></i> New Student <i class="bi bi-plus-lg"></i>
 </button>
-<!-- UPDATE Student (Button) -->
+<!-- /CREATE Student (Button) -->
 
-<!-- UPDATE Student (Floating Form) -->
+<!-- CREATE Student (Floating Form) -->
 <div class="modal fade"
-     id="updateStudent<%= student.studentId %>"
+     id="createStudent"
      data-bs-backdrop="static"
      data-bs-keyboard="false"
      tabindex="-1"
@@ -18,16 +19,15 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h5 class="modal-title fw-bold" id="staticBackdropLabel">Update Student <i class="bi bi-pen"></i></h5>
+                <h5 class="modal-title fw-bold" id="staticBackdropLabel">New Student <i class="bi bi-plus-lg"></i></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <div class="modal-body">
-                <form class="row" action="/admin-student" method="post">
+                <form class="row" action="/admin-students" method="post">
 
                     <!-- CRUD Information -->
-                    <input type="hidden" name="CRUD" value="ADMIN_UPDATE_STUDENT">
-                    <input type="hidden" name="studentId" value="<%= student.studentId %>">
+                    <input type="hidden" name="CRUD" value="ADMIN_CREATE_STUDENT">
                     <!-- /CRUD Information -->
 
                     <div class="col-md-6">
@@ -36,8 +36,7 @@
                                class="form-control"
                                id="firstName"
                                name="firstName"
-                               value="<%= student.firstName %>"
-                               placeholder="<%= student.firstName %>"
+                               placeholder="Thomas"
                                required>
                     </div>
                     <div class="col-md-6">
@@ -46,8 +45,27 @@
                                class="form-control"
                                id="lastName"
                                name="lastName"
-                               value="<%= student.lastName %>"
-                               placeholder="<%= student.lastName %>"
+                               placeholder="Edison"
+                               required>
+                    </div>
+                    <div class="col-md-6 mt-3">
+                        <label for="studentId" class="form-label">ID</label>
+                        <input type="text"
+                               class="form-control"
+                               id="studentId"
+                               name="studentId"
+                               placeholder="191XXXXXXX"
+                               minlength="10"
+                               maxlength="10"
+                               required>
+                    </div>
+                    <div class="col-md-6 mt-3">
+                        <label for="semester" class="form-label">Semester</label>
+                        <input type="text"
+                               class="form-control"
+                               id="semester"
+                               name="entrySemester"
+                               placeholder="Fall 2021"
                                required>
                     </div>
                     <div class="col-md-12 mt-3">
@@ -86,8 +104,7 @@
                                class="form-control"
                                id="dob"
                                name="dob"
-                               value="<%= student.dob %>"
-                               placeholder="<%= student.dob %>">
+                               placeholder="Fall 2021">
                     </div>
                     <div class="col-md-6 mt-3 mb-3">
                         <label for="citizenship" class="form-label">Citizenship</label>
@@ -95,13 +112,12 @@
                                class="form-control"
                                id="citizenship"
                                name="citizenship"
-                               value="<%= student.citizenship %>"
-                               placeholder="<%= student.citizenship %>">
+                               placeholder="Bangladeshi">
                     </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-warning">Update</button>
+                        <button type="submit" class="btn btn-primary">Register</button>
                     </div>
 
                 </form>
@@ -109,4 +125,4 @@
         </div>
     </div>
 </div>
-<!-- /UPDATE Student (Floating Form) -->
+<!-- /CREATE Student (Floating Form) -->

@@ -1,16 +1,16 @@
 const Student = require('../../model/studentSchema.js');
 
 // STUDENT ----------------------------------------------------------------------------------------------------- (Home)
-exports.student_home_get = (req, res) => {
+exports.student_dashboard_get = (req, res) => {
     if (req.session.studentAuth === true) {
         const sidebarNav = {home: 'active'};
-        res.render('student/student-home', {sidebarNav});
+        res.render('student/student-dashboard', {sidebarNav});
     }
 }
 
-exports.student_home_post = (req, res) => {
+exports.student_dashboard_post = (req, res) => {
     if (req.session.studentAuth === true) {
-        res.redirect('/student-home');
+        res.redirect('/student-dashboard');
     }
 }
 

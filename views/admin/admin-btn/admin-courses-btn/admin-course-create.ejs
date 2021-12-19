@@ -1,0 +1,64 @@
+<!-- CREATE Course (Button) -->
+<button type="button"
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#createStudent">
+    <i class="bi bi-window-stack"></i> Create Course <i class="bi bi-plus-lg"></i>
+</button>
+<!-- /CREATE Course (Button) -->
+
+<!-- CREATE Course (Floating Form) -->
+<div class="modal fade"
+     id="createStudent"
+     data-bs-backdrop="static"
+     data-bs-keyboard="false"
+     tabindex="-1"
+     aria-labelledby="staticBackdropLabel"
+     aria-hidden="true">
+    <div class="modal-dialog floating-card">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="staticBackdropLabel">Create Course <i class="bi bi-plus-lg"></i>
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <form class="row" action="/admin-courses" method="post">
+
+                    <!-- CRUD Information -->
+                    <input type="hidden" name="CRUD" value="ADMIN_CREATE_COURSE">
+                    <!-- /CRUD Information -->
+
+                    <div class="col-12 mb-3">
+                        <label for="courseCode" class="form-label">Course Code</label>
+                        <input type="text"
+                               class="form-control"
+                               id="courseCode"
+                               name="courseCode"
+                               placeholder="CSE327"
+                               required>
+                    </div>
+
+                    <div class="col-12 mb-4">
+                        <label for="courseDetails" class="form-label">Course Details</label>
+                        <input type="text"
+                               class="form-control"
+                               id="courseDetails"
+                               name="courseDetails"
+                               placeholder="Software Engineering"
+                               required>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /CREATE Course (Floating Form) -->

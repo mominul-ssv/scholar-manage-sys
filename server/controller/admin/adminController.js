@@ -1,6 +1,7 @@
 const data = require('../../database/data.js');
 const Student = require('../../model/studentSchema.js');
 const Faculty = require('../../model/facultySchema.js');
+const Course = require('../../model/courseSchema.js');
 
 // ADMIN -------------------------------------------------------------------------------------------------- (Dashboard)
 exports.admin_dashboard_get = (req, res) => {
@@ -17,18 +18,18 @@ exports.admin_dashboard_post = (req, res) => {
 }
 
 // ADMIN ---------------------------------------------------------------------------------------------------- (Student)
-exports.admin_student_get = async (req, res) => {
+exports.admin_students_get = async (req, res) => {
     if (req.session.adminAuth === true) {
-        const sidebarNav = {student: 'active'};
         // READ Student (P-2)
+        const sidebarNav = {student: 'active'};
         Student.find({}, (err, foundStudents) => {
             if (!err) {
-                if (req.session.msg === 'INVALID_SID') {
+                if (req.session.msg === 'DUPLICATE_SID') {
                     req.session.msg = 'NULL';
-                    const error = {code: 'ERROR', msg: 'Error! Student ID is already in use.'};
-                    res.render('admin/admin-student', {foundStudents, sidebarNav, error});
+                    const error = {code: 'ERROR', msg: 'Student ID is already in use!'};
+                    res.render('admin/admin-students', {foundStudents, sidebarNav, error});
                 } else {
-                    res.render('admin/admin-student', {foundStudents, sidebarNav});
+                    res.render('admin/admin-students', {foundStudents, sidebarNav});
                 }
             } else {
                 console.log(err);
@@ -37,11 +38,15 @@ exports.admin_student_get = async (req, res) => {
     }
 }
 
-exports.admin_student_post = (req, res) => {
+exports.admin_students_post = (req, res) => {
     if (req.session.adminAuth === true) {
+
+        // Console Log
         const {CRUD} = req.body;
         console.log(CRUD);
+
         switch (CRUD) {
+
             // CREATE Student
             case 'ADMIN_CREATE_STUDENT': {
                 const {firstName, lastName, studentId, entrySemester, program, dob, citizenship} = req.body;
@@ -62,10 +67,10 @@ exports.admin_student_post = (req, res) => {
                                 registrationStatus: false
                             });
                             await student.save();
-                            res.redirect('/admin-student');
+                            res.redirect('/admin-students');
                         } else {
-                            req.session.msg = 'INVALID_SID';
-                            res.redirect('/admin-student');
+                            req.session.msg = 'DUPLICATE_SID';
+                            res.redirect('/admin-students');
                         }
                     } else {
                         console.log(err);
@@ -73,15 +78,17 @@ exports.admin_student_post = (req, res) => {
                 });
             }
                 break;
+
             // READ Student (P-1)
             case 'ADMIN_READ_STUDENT': {
-                res.redirect('/admin-student');
+                res.redirect('/admin-students');
             }
                 break;
+
             // UPDATE Student
             case 'ADMIN_UPDATE_STUDENT': {
                 const {firstName, lastName, program, dob, citizenship} = req.body;
-                Student.findOne({studentId: req.body.studentId}, async (err, foundStudent) => {
+                Student.findOne({studentId: req.body.studentId}, async (err) => {
                     if (!err) {
                         Student.updateOne(
                             {studentId: req.body.studentId},
@@ -98,7 +105,7 @@ exports.admin_student_post = (req, res) => {
                                 }
                             }, (err) => {
                                 if (!err) {
-                                    res.redirect('/admin-student');
+                                    res.redirect('/admin-students');
                                 } else {
                                     console.log(err);
                                 }
@@ -113,7 +120,7 @@ exports.admin_student_post = (req, res) => {
             case 'ADMIN_DELETE_STUDENT': {
                 Student.deleteOne({studentId: req.body.studentId}, (err) => {
                     if (!err) {
-                        res.redirect('/admin-student');
+                        res.redirect('/admin-students');
                     } else {
                         console.log(err);
                     }
@@ -121,24 +128,24 @@ exports.admin_student_post = (req, res) => {
             }
                 break;
             default:
-                console.log("Error occurred in { admin_student_post }");
+                console.log("Error occurred in { admin_students_post }");
         }
     }
 }
 
 // ADMIN ---------------------------------------------------------------------------------------------------- (Faculty)
-exports.admin_faculty_get = (req, res) => {
+exports.admin_faculties_get = (req, res) => {
     if (req.session.adminAuth === true) {
-        const sidebarNav = {faculty: 'active'};
         // READ Faculty (P-2)
-        Faculty.find({}, (err, foundFaculty) => {
+        const sidebarNav = {faculty: 'active'};
+        Faculty.find({}, (err, foundFaculties) => {
             if (!err) {
-                if (req.session.msg === 'INVALID_EMAIL') {
+                if (req.session.msg === 'DUPLICATE_EMAIL') {
                     req.session.msg = 'NULL';
-                    const error = {code: 'ERROR', msg: 'Error! Email is already in use.'};
-                    res.render('admin/admin-faculty', {foundFaculty, sidebarNav, error});
+                    const error = {code: 'ERROR', msg: 'Email is already in use!'};
+                    res.render('admin/admin-faculties', {foundFaculties, sidebarNav, error});
                 } else {
-                    res.render('admin/admin-faculty', {foundFaculty, sidebarNav});
+                    res.render('admin/admin-faculties', {foundFaculties, sidebarNav});
                 }
             } else {
                 console.log(err);
@@ -147,13 +154,14 @@ exports.admin_faculty_get = (req, res) => {
     }
 }
 
-exports.admin_faculty_post = (req, res) => {
+exports.admin_faculties_post = (req, res) => {
     if (req.session.adminAuth === true) {
 
         const {CRUD} = req.body;
         console.log(CRUD);
 
         switch (CRUD) {
+
             // CREATE Faculty
             case 'ADMIN_CREATE_FACULTY': {
                 const {firstName, lastName, email, university, dob, citizenship} = req.body;
@@ -171,10 +179,10 @@ exports.admin_faculty_post = (req, res) => {
                                 semesterStatus: false
                             });
                             await faculty.save();
-                            res.redirect('/admin-faculty');
+                            res.redirect('/admin-faculties');
                         } else {
-                            req.session.msg = 'INVALID_EMAIL';
-                            res.redirect('/admin-faculty');
+                            req.session.msg = 'DUPLICATE_EMAIL';
+                            res.redirect('/admin-faculties');
                         }
                     } else {
                         console.log(err);
@@ -182,22 +190,50 @@ exports.admin_faculty_post = (req, res) => {
                 });
             }
                 break;
+
             // READ Faculty (P-1)
             case 'ADMIN_READ_FACULTY': {
-                res.redirect('/admin-faculty');
+                res.redirect('/admin-faculties');
             }
                 break;
+
             // UPDATE Faculty
             case 'ADMIN_UPDATE_FACULTY': {
-
+                const {firstName, lastName, email, university, dob, citizenship} = req.body;
+                Faculty.findOne({email: email}, async (err, foundFaculty) => {
+                    if (!err) {
+                        Faculty.updateOne(
+                            {email: email},
+                            {
+                                $set: {
+                                    firstName: firstName,
+                                    lastName: lastName,
+                                    email: email,
+                                    university: university,
+                                    dob: dob,
+                                    citizenship: citizenship,
+                                    registrationStatus: foundFaculty.registrationStatus,
+                                    semesterStatus: foundFaculty.semesterStatus
+                                }
+                            }, (err) => {
+                                if (!err) {
+                                    res.redirect('/admin-faculties');
+                                } else {
+                                    console.log(err);
+                                }
+                            });
+                    } else {
+                        console.log(err);
+                    }
+                });
             }
                 break;
+
             // DELETE Faculty
             case 'ADMIN_DELETE_FACULTY': {
-                console.log("Success!");
                 Faculty.deleteOne({email: req.body.email}, (err) => {
                     if (!err) {
-                        res.redirect('/admin-faculty');
+                        res.redirect('/admin-faculties');
                     } else {
                         console.log(err);
                     }
@@ -205,7 +241,109 @@ exports.admin_faculty_post = (req, res) => {
             }
                 break;
             default:
-                console.log("Error occurred in { admin_faculty_post }");
+                console.log("Error occurred in { admin_faculties_post }");
+        }
+    }
+}
+
+// ADMIN ---------------------------------------------------------------------------------------------------- (Courses)
+exports.admin_courses_get = (req, res) => {
+    if (req.session.adminAuth === true) {
+        // READ Course (P-2)
+        const sidebarNav = {courses: 'active'};
+        Course.find({}, (err, foundCourses) => {
+            if (!err) {
+                if (req.session.msg === 'DUPLICATE_COURSE') {
+                    req.session.msg = 'NULL';
+                    const error = {code: 'ERROR', msg: 'Course already exists!'};
+                    res.render('admin/admin-courses', {foundCourses, sidebarNav, error});
+                } else {
+                    res.render('admin/admin-courses', {foundCourses, sidebarNav});
+                }
+            } else {
+                console.log(err);
+            }
+        });
+    }
+}
+
+exports.admin_courses_post = (req, res) => {
+    if (req.session.adminAuth === true) {
+
+        // Console Log
+        const {CRUD} = req.body;
+        console.log(CRUD);
+
+        switch (CRUD) {
+
+            // CREATE Course
+            case 'ADMIN_CREATE_COURSE': {
+                const {courseCode, courseDetails} = req.body;
+                Course.findOne({courseCode: courseCode}, async (err, foundCourse) => {
+                    if (!err) {
+                        if (foundCourse === null) {
+                            const course = new Course({
+                                courseCode: courseCode,
+                                courseDetails: courseDetails
+                            });
+                            await course.save();
+                            res.redirect('/admin-courses');
+                        } else {
+                            req.session.msg = 'DUPLICATE_COURSE';
+                            res.redirect('/admin-courses');
+                        }
+                    } else {
+                        console.log(err);
+                    }
+                });
+            }
+                break;
+
+            // READ Course (P-1)
+            case 'ADMIN_READ_COURSE': {
+                res.redirect('/admin-courses');
+            }
+                break;
+
+            // UPDATE Course
+            case 'ADMIN_UPDATE_COURSE': {
+                const {courseCode, courseDetails} = req.body;
+                Course.findOne({courseCode: courseCode}, async (err) => {
+                    if (!err) {
+                        Course.updateOne(
+                            {courseCode: courseCode},
+                            {
+                                $set: {
+                                    courseCode: courseCode,
+                                    courseDetails: courseDetails
+                                }
+                            }, (err) => {
+                                if (!err) {
+                                    res.redirect('/admin-courses');
+                                } else {
+                                    console.log(err);
+                                }
+                            });
+                    } else {
+                        console.log(err);
+                    }
+                });
+            }
+                break;
+
+            // DELETE Course
+            case 'ADMIN_DELETE_COURSE': {
+                Course.deleteOne({courseCode: req.body.courseCode}, (err) => {
+                    if (!err) {
+                        res.redirect('/admin-courses');
+                    } else {
+                        console.log(err);
+                    }
+                });
+            }
+                break;
+            default:
+                console.log("Error occurred in { admin_courses_post }");
         }
     }
 }

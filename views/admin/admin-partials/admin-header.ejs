@@ -89,7 +89,7 @@
                     </li>
 
                     <li class="nav-item mb-3" role="presentation">
-                        <form action="/admin-student" method="post">
+                        <form action="/admin-students" method="post">
 
                             <!-- CRUD Information -->
                             <input type="hidden" name="CRUD" value="ADMIN_READ_STUDENT">
@@ -105,13 +105,13 @@
                                aria-selected="true"
                                onclick="this.parentNode.submit();">
                                 <span class="pe-1"><i class="bi bi-person-workspace"></i></span>
-                                <span>Student</span>
+                                <span>Students</span>
                             </a>
                         </form>
                     </li>
 
                     <li class="nav-item mb-3" role="presentation">
-                        <form action="/admin-faculty" method="post">
+                        <form action="/admin-faculties" method="post">
 
                             <!-- CRUD Information -->
                             <input type="hidden" name="CRUD" value="ADMIN_READ_FACULTY">
@@ -127,7 +127,29 @@
                                aria-selected="true"
                                onclick="this.parentNode.submit();">
                                 <span class="pe-1"><i class="bi bi-mortarboard"></i></span>
-                                <span>Faculty</span>
+                                <span>Faculties</span>
+                            </a>
+                        </form>
+                    </li>
+
+                    <li class="nav-item mb-3" role="presentation">
+                        <form action="/admin-courses" method="post">
+
+                            <!-- CRUD Information -->
+                            <input type="hidden" name="CRUD" value="ADMIN_READ_COURSE">
+                            <!-- /CRUD Information -->
+
+                            <a class="nav-link <%= sidebarNav.courses %>"
+                               id="pills-home-tab"
+                               data-bs-toggle="pill"
+                               data-bs-target="#pills-home"
+                               type="button"
+                               role="tab"
+                               aria-controls="pills-home"
+                               aria-selected="true"
+                               onclick="this.parentNode.submit();">
+                                <span class="pe-1"><i class="bi bi-window-stack"></i></span>
+                                <span>Courses</span>
                             </a>
                         </form>
                     </li>

@@ -30,9 +30,9 @@ router.route('/student-password-reset')
     .get(studentRegController.student_password_reset_post)
 
 // ---------------------- Student Dashboard --------------------- //
-router.route('/student-home')
-    .get(studentController.student_home_get)
-    .post(studentController.student_home_post)
+router.route('/student-dashboard')
+    .get(studentController.student_dashboard_get)
+    .post(studentController.student_dashboard_post)
 
 router.route('/student-profile')
     .get(studentController.student_profile_get)
@@ -60,9 +60,9 @@ router.route('/faculty-password-reset')
     .get(facultyRegController.faculty_password_reset_post)
 
 // ---------------------- Faculty Dashboard --------------------- //
-router.route('/faculty-home')
-    .get(facultyController.faculty_home_get)
-    .post(facultyController.faculty_home_post)
+router.route('/faculty-dashboard')
+    .get(facultyController.faculty_dashboard_get)
+    .post(facultyController.faculty_dashboard_post)
 
 router.route('/faculty-profile')
     .get(facultyController.faculty_profile_get)
@@ -82,13 +82,17 @@ router.route('/admin-dashboard')
     .get(adminController.admin_dashboard_get)
     .post(adminController.admin_dashboard_post)
 
-router.route('/admin-student')
-    .get(adminController.admin_student_get)
-    .post(adminController.admin_student_post)
+router.route('/admin-students')
+    .get(adminController.admin_students_get)
+    .post(adminController.admin_students_post)
 
-router.route('/admin-faculty')
-    .get(adminController.admin_faculty_get)
-    .post(adminController.admin_faculty_post)
+router.route('/admin-faculties')
+    .get(adminController.admin_faculties_get)
+    .post(adminController.admin_faculties_post)
+
+router.route('/admin-courses')
+    .get(adminController.admin_courses_get)
+    .post(adminController.admin_courses_post)
 
 // ======================= Logout Portal ======================= //
 router.route('/logout')

@@ -13,8 +13,7 @@ let adminSchema = new Schema({
     token: {
         type: String,
         required: true
-    },
-    name: String
+    }
 });
 
 module.exports = mongoose.model('Admin', adminSchema);

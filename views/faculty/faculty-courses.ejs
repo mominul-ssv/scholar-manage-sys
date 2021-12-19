@@ -1,3 +1,29 @@
 <%- include("faculty-partials/faculty-header.ejs") -%>
 
+<main class="main-dashboard pt-0">
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- ADD Courses -->
+            <div class="row">
+                <div class="col mt-2">
+                    <%- include("faculty-btn/faculty-courses-btn/faculty-courses-add.ejs") -%>
+                </div>
+            </div>
+            <!-- /ADD Courses -->
+
+            <div class="col mt-2">
+                <div class="card">
+                    <div class="card-header fw-bold text-center"><i class="bi bi-calendar-range"></i> Fall 2021</div>
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <!-- Table Content -->
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
 <%- include("faculty-partials/faculty-footer.ejs") -%>

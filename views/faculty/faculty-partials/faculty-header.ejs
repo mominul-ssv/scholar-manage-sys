@@ -66,7 +66,7 @@
                 <ul class="nav nav-pills" id="pills-tab" role="tablist">
 
                     <li class="nav-item mb-3 mt-5" role="presentation">
-                        <form action="/faculty-home" method="post">
+                        <form action="/faculty-dashboard" method="post">
                             <a class="nav-link <%= sidebarNav.home %>"
                                id="pills-home-tab"
                                data-bs-toggle="pill"
@@ -105,6 +105,11 @@
                     <!-- Courses -->
                     <li class="nav-item mb-3" role="presentation">
                         <form action="/faculty-courses" method="post">
+
+                            <!-- CRUD Information -->
+                            <input type="hidden" name="CRUD" value="FACULTY_READ_COURSE">
+                            <!-- /CRUD Information -->
+
                             <a class="nav-link <%= sidebarNav.courses %>"
                                id="pills-home-tab"
                                data-bs-toggle="pill"

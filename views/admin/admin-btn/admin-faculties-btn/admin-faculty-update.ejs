@@ -1,0 +1,99 @@
+<!-- UPDATE Faculty (Button) -->
+<button type="button"
+        class="btn btn-warning"
+        data-bs-toggle="modal"
+        data-bs-target="#updateFaculty<%= faculty._id %>"><i class="bi bi-pen"></i>
+</button>
+<!-- UPDATE Faculty (Button) -->
+
+<!-- UPDATE Faculty (Floating Form) -->
+<div class="modal fade"
+     id="updateFaculty<%= faculty._id %>"
+     data-bs-backdrop="static"
+     data-bs-keyboard="false"
+     tabindex="-1"
+     aria-labelledby="staticBackdropLabel"
+     aria-hidden="true">
+    <div class="modal-dialog floating-card">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold text-muted" id="staticBackdropLabel">Update Faculty <i class="bi bi-pen"></i></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <form class="row" action="/admin-faculties" method="post">
+
+                    <!-- CRUD Information -->
+                    <input type="hidden" name="CRUD" value="ADMIN_UPDATE_FACULTY">
+                    <!-- /CRUD Information -->
+
+                    <div class="col-md-6">
+                        <label for="firstName" class="form-label">First Name</label>
+                        <input type="text"
+                               class="form-control"
+                               id="firstName"
+                               name="firstName"
+                               value="<%= faculty.firstName %>"
+                               placeholder="<%= faculty.firstName %>"
+                               required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="lastName" class="form-label">Last Name</label>
+                        <input type="text"
+                               class="form-control"
+                               id="lastName"
+                               name="lastName"
+                               value="<%= faculty.lastName %>"
+                               placeholder="<%= faculty.lastName %>"
+                               required>
+                    </div>
+                    <div class="col-md-12 mt-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email"
+                               class="form-control"
+                               id="email"
+                               name="email"
+                               value="<%= faculty.email %>"
+                               placeholder="<%= faculty.email %>"
+                               required>
+                    </div>
+                    <div class="col-md-12 mt-3">
+                        <label for="university" class="form-label">University</label>
+                        <input type="text"
+                               class="form-control"
+                               id="university"
+                               name="university"
+                               value="<%= faculty.university %>"
+                               placeholder="<%= faculty.university %>"
+                               required>
+                    </div>
+                    <div class="col-md-6 mt-3 mb-3">
+                        <label for="dob" class="form-label">Date of Birth</label>
+                        <input type="date"
+                               class="form-control"
+                               id="dob"
+                               value="<%= faculty.dob %>"
+                               placeholder="<%= faculty.dob %>">
+                    </div>
+                    <div class="col-md-6 mt-3 mb-3">
+                        <label for="citizenship" class="form-label">Citizenship</label>
+                        <input type="text"
+                               class="form-control"
+                               id="citizenship"
+                               name="citizenship"
+                               value="<%= faculty.citizenship %>"
+                               placeholder="<%= faculty.citizenship %>">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-warning">Update</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /UPDATE Faculty (Floating Form) -->

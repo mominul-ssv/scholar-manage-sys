@@ -40,15 +40,20 @@ let facultySchema = new Schema({
     address: {
         type: String
     },
-    courses: {
-        type: [String]
-    },
-    sections: {
-        type: [Number]
-    },
-    semester: {
-        type: String
-    },
+    course: [{
+        courseCode: {
+            type: String,
+            required: true
+        },
+        courseDetails: {
+            type: String,
+            required: true
+        },
+        courseSemester: {
+            type: String,
+            required: true
+        }
+    }],
     initial: {
         type: String
     }

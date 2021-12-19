@@ -56,7 +56,7 @@ exports.root_post = async (req, res) => {
                                     req.session.studentLoginId = studentId;
                                     // Initial Student Login
                                     const sidebarNav = {home: 'active'};
-                                    res.render('student/student-home', {sidebarNav});
+                                    res.render('student/student-dashboard', {sidebarNav});
                                 } else {
                                     const error = {code: 'ERROR', msg: 'Password is incorrect!'};
                                     res.render('login', {navBarAnimation, error});
@@ -89,7 +89,7 @@ exports.root_post = async (req, res) => {
                                     req.session.facultyEmail = facultyEmail;
                                     // Initial Faculty Login
                                     const sidebarNav = {home: 'active'};
-                                    res.render('faculty/faculty-home', {sidebarNav});
+                                    res.render('faculty/faculty-dashboard', {sidebarNav});
                                 } else {
                                     const error = {code: 'ERROR', msg: 'Password is incorrect!'};
                                     res.render('login', {navBarAnimation, error});
