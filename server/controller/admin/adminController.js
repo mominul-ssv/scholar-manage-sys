@@ -116,6 +116,7 @@ exports.admin_students_post = (req, res) => {
                 });
             }
                 break;
+
             // DELETE Student
             case 'ADMIN_DELETE_STUDENT': {
                 Student.deleteOne({studentId: req.body.studentId}, (err) => {
@@ -127,6 +128,15 @@ exports.admin_students_post = (req, res) => {
                 });
             }
                 break;
+
+            // DETAILS Student
+            case 'ADMIN_STUDENT_DETAILS': {
+                const sidebarNav = {student: 'active'};
+                const foundStudent = req.body.student;
+                res.render('admin/admin-btn/admin-students-btn/admin-student-details', {foundStudent, sidebarNav});
+            }
+                break;
+
             default:
                 console.log("Error occurred in { admin_students_post }");
         }

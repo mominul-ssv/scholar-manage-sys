@@ -48,7 +48,7 @@
                                     <th>Name</th>
                                     <th>Degree</th>
                                     <th>Major</th>
-                                    <th>Entry Semester</th>
+                                    <th>Registration Status</th>
                                     <th>Scholarship</th>
                                     <th style="width: 0">Details</th>
                                     <th style="width: 0">Update</th>
@@ -66,12 +66,28 @@
                                             <td><%= student.firstName %> <%= student.lastName %></td>
                                             <td><%= student.degreeShort %></td>
                                             <td><%= student.major %></td>
-                                            <td><%= student.entrySemester %></td>
+                                            <td>
+                                                <% if (student.registrationStatus === true) { %>
+                                                    <span style="color: green; font-weight: bold">Registered</span>
+                                                <% } else { %>
+                                                    <span style="color: red; font-weight: bold">Unregistered</span>
+                                                <% } %>
+                                            </td>
                                             <th>NULL</th>
                                             <td>
-                                                <button type="button" class="btn btn-success">
-                                                    <i class="bi bi-card-checklist"></i>
-                                                </button>
+                                                <form action="/admin-students" method="post">
+
+                                                    <!-- CRUD Information -->
+                                                    <input type="hidden" name="CRUD" value="ADMIN_STUDENT_DETAILS">
+                                                    <input type="hidden" name="student" value="<%= student %>">
+                                                    <!-- /CRUD Information -->
+
+                                                    <button type="button"
+                                                            class="btn btn-outline-info"
+                                                            onclick="this.parentNode.submit();">
+                                                        <i class="bi bi-fullscreen-exit"></i>
+                                                    </button>
+                                                </form>
                                             </td>
                                             <td>
                                                 <!-- UPDATE Student -->
