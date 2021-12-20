@@ -47,7 +47,8 @@
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>University</th>
-                                    <th>Status</th>
+                                    <th>Registration Status</th>
+                                    <th>Semester Status</th>
                                     <th style="width: 0">Details</th>
                                     <th style="width: 0">Update</th>
                                     <th style="width: 0">Delete</th>
@@ -64,16 +65,23 @@
                                             <td><%= faculty.email %></td>
                                             <td><%= faculty.university %></td>
                                             <td>
-                                                <% if (faculty.semesterStatus === true) { %>
-                                                    <span>Active</span>
+                                                <% if (faculty.registrationStatus === true) { %>
+                                                    <span style="color: green; font-weight: bold">Registered</span>
                                                 <% } else { %>
-                                                    <span>Inactive</span>
+                                                    <span style="color: red; font-weight: bold">Unregistered</span>
                                                 <% } %>
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-success">
-                                                    <i class="bi bi-card-checklist"></i>
-                                                </button>
+                                                <% if (faculty.semesterStatus === true) { %>
+                                                    <span style="color: green; font-weight: bold">Active</span>
+                                                <% } else { %>
+                                                    <span style="color: red; font-weight: bold">Inactive</span>
+                                                <% } %>
+                                            </td>
+                                            <td>
+                                                <!-- DETAILS Faculty -->
+                                                <%- include("admin-btn/admin-faculties-btn/admin-faculty-details.ejs", {faculty: faculty}) -%>
+                                                <!-- /DETAILS Faculty -->
                                             </td>
                                             <td>
                                                 <!-- UPDATE Faculty -->

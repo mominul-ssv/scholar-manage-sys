@@ -1,0 +1,77 @@
+<!-- DETAILS Faculty (Button) -->
+<button type="button"
+        class="btn btn-success"
+        data-bs-toggle="modal"
+        data-bs-target="#adminDetailsFaculty<%= faculty._id %>"><i class="bi bi-fullscreen-exit"></i>
+</button>
+<!-- DETAILS Faculty (Button) -->
+
+<!-- DETAILS Faculty (Floating Form) -->
+<div class="modal fade"
+     id="adminDetailsFaculty<%= faculty._id %>"
+     data-bs-backdrop="static"
+     data-bs-keyboard="false"
+     tabindex="-1"
+     aria-labelledby="staticBackdropLabel"
+     aria-hidden="true">
+    <div class="modal-dialog floating-card">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold text-muted" id="staticBackdropLabel">Faculty Details
+                    <i class="bi bi-fullscreen-exit"></i></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <table class="table table-hover table-responsive table-striped">
+                            <tr>
+                                <th>Name:</th>
+                                <td><%= faculty.firstName %> <%= faculty.lastName %></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th>University:</th>
+                                <td><%= faculty.university %></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th>Email:</th>
+                                <td><%= faculty.email %></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th>Cell Phone:</th>
+                                <td><%= faculty.phone %></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th>Date of Birth:</th>
+                                <td><%= faculty.dob %></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th>Citizenship:</th>
+                                <td><%= faculty.citizenship %></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th>Mailing Address:</th>
+                                <td><%= faculty.address %></td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /DETAILS Faculty (Floating Form) -->

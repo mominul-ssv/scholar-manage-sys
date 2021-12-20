@@ -2,6 +2,7 @@ body,
 button {
     font-family: Verdana, sans-serif;
     background: rgb(246, 249, 253);
+    padding-bottom: 10px;
 }
 
 ul {

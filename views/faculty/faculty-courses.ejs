@@ -7,7 +7,10 @@
             <!-- ADD Courses -->
             <div class="row">
                 <div class="col mt-2">
-                    <%- include("faculty-btn/faculty-courses-btn/faculty-course-add.ejs") -%>
+                    <% if (typeof foundFaculty !== 'undefined' ) { %>
+                        <% facultyActive = foundFaculty.semesterStatus %>
+                    <% } %>
+                    <%- include("faculty-btn/faculty-courses-btn/faculty-course-add.ejs", {facultyActive: facultyActive}) -%>
                 </div>
             </div>
             <!-- /ADD Courses -->
@@ -36,7 +39,7 @@
                                         <tr>
                                             <td><%= course.courseCode %></td>
                                             <td><%= course.courseDetails %></td>
-                                            <td><%= course.courseSemester%></td>
+                                            <td><%= course.courseSemester %></td>
                                             <td>
                                                 <!-- DELETE Course -->
                                                 <%- include("faculty-btn/faculty-courses-btn/faculty-course-delete.ejs", {course: course}) -%>

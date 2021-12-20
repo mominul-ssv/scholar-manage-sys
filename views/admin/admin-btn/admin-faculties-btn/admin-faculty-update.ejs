@@ -39,6 +39,7 @@
                                placeholder="<%= faculty.firstName %>"
                                required>
                     </div>
+
                     <div class="col-md-6">
                         <label for="lastName" class="form-label">Last Name</label>
                         <input type="text"
@@ -49,6 +50,7 @@
                                placeholder="<%= faculty.lastName %>"
                                required>
                     </div>
+
                     <div class="col-md-12 mt-3">
                         <label for="email" class="form-label">Email</label>
                         <input type="email"
@@ -59,7 +61,8 @@
                                placeholder="<%= faculty.email %>"
                                required>
                     </div>
-                    <div class="col-md-12 mt-3">
+
+                    <div class="col-md-12 mt-3 mb-4">
                         <label for="university" class="form-label">University</label>
                         <input type="text"
                                class="form-control"
@@ -69,23 +72,7 @@
                                placeholder="<%= faculty.university %>"
                                required>
                     </div>
-                    <div class="col-md-6 mt-3 mb-3">
-                        <label for="dob" class="form-label">Date of Birth</label>
-                        <input type="date"
-                               class="form-control"
-                               id="dob"
-                               value="<%= faculty.dob %>"
-                               placeholder="<%= faculty.dob %>">
-                    </div>
-                    <div class="col-md-6 mt-3 mb-3">
-                        <label for="citizenship" class="form-label">Citizenship</label>
-                        <input type="text"
-                               class="form-control"
-                               id="citizenship"
-                               name="citizenship"
-                               value="<%= faculty.citizenship %>"
-                               placeholder="<%= faculty.citizenship %>">
-                    </div>
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-warning">Update</button>

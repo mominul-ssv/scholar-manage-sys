@@ -164,7 +164,7 @@ exports.admin_faculties_post = (req, res) => {
 
             // CREATE Faculty
             case 'ADMIN_CREATE_FACULTY': {
-                const {firstName, lastName, email, university, dob, citizenship} = req.body;
+                const {firstName, lastName, email, university} = req.body;
                 Faculty.findOne({email: email}, async (err, foundFaculty) => {
                     if (!err) {
                         if (foundFaculty === null) {
@@ -173,8 +173,6 @@ exports.admin_faculties_post = (req, res) => {
                                 lastName: lastName,
                                 email: email,
                                 university: university,
-                                dob: dob,
-                                citizenship: citizenship,
                                 registrationStatus: false,
                                 semesterStatus: false
                             });
@@ -199,7 +197,7 @@ exports.admin_faculties_post = (req, res) => {
 
             // UPDATE Faculty
             case 'ADMIN_UPDATE_FACULTY': {
-                const {firstName, lastName, email, university, dob, citizenship} = req.body;
+                const {firstName, lastName, email, university} = req.body;
                 Faculty.findOne({email: email}, async (err, foundFaculty) => {
                     if (!err) {
                         Faculty.updateOne(
@@ -210,8 +208,6 @@ exports.admin_faculties_post = (req, res) => {
                                     lastName: lastName,
                                     email: email,
                                     university: university,
-                                    dob: dob,
-                                    citizenship: citizenship,
                                     registrationStatus: foundFaculty.registrationStatus,
                                     semesterStatus: foundFaculty.semesterStatus
                                 }

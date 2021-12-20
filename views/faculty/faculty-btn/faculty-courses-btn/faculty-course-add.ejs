@@ -1,5 +1,13 @@
 <!-- CREATE Course (Button) -->
+<% isDisabled = 'disabled' %>
+<% if (facultyActive === true) { %>
+    <% isDisabled = '' %>
+<% } else { %>
+    <% isDisabled = 'disabled' %>
+<% } %>
+
 <button type="button"
+        <%= isDisabled %>
         class="btn btn-primary"
         data-bs-toggle="modal"
         data-bs-target="#facultyAddStudent">
