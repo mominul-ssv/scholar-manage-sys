@@ -86,6 +86,11 @@
                     <!-- Profile -->
                     <li class="nav-item mb-3" role="presentation">
                         <form action="/faculty-profile" method="post">
+
+                            <!-- CRUD Information -->
+                            <input type="hidden" name="CRUD" value="FACULTY_READ_PROFILE">
+                            <!-- /CRUD Information -->
+
                             <a class="nav-link <%= sidebarNav.profile %>"
                                id="pills-home-tab"
                                data-bs-toggle="pill"
@@ -107,7 +112,7 @@
                         <form action="/faculty-courses" method="post">
 
                             <!-- CRUD Information -->
-                            <input type="hidden" name="CRUD" value="FACULTY_READ_COURSE">
+                            <input type="hidden" name="CRUD" value="FACULTY_READ_PROFILE">
                             <!-- /CRUD Information -->
 
                             <a class="nav-link <%= sidebarNav.courses %>"

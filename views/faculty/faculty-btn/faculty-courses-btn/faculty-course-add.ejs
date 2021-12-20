@@ -2,14 +2,14 @@
 <button type="button"
         class="btn btn-primary"
         data-bs-toggle="modal"
-        data-bs-target="#createStudent">
+        data-bs-target="#facultyAddStudent">
     <i class="bi bi-window-stack"></i> Add Course <i class="bi bi-plus-lg"></i>
 </button>
 <!-- /CREATE Course (Button) -->
 
 <!-- CREATE Course (Floating Form) -->
 <div class="modal fade"
-     id="createStudent"
+     id="facultyAddStudent"
      data-bs-backdrop="static"
      data-bs-keyboard="false"
      tabindex="-1"
@@ -38,6 +38,7 @@
                                 <% foundCourses.forEach((course)=> { %>
                                     <option value="<%= course.courseCode %>">
                                         <%= course.courseCode %>
+                                        <%= course.courseDetails %>
                                     </option>
                                 <% }); %>
                             <% } %>

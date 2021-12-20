@@ -1,0 +1,51 @@
+<!-- DELETE Course (Button) -->
+<button type="button"
+        class="btn btn-danger"
+        data-bs-toggle="modal"
+        data-bs-target="#facultyDeleteCourse<%= course._id %>"><i class="bi bi-trash2"></i>
+</button>
+<!-- DELETE Course (Button) -->
+
+<!-- DELETE Course (Floating Form) -->
+<div class="modal fade"
+     id="facultyDeleteCourse<%= course._id %>"
+     data-bs-backdrop="static"
+     data-bs-keyboard="false"
+     tabindex="-1"
+     aria-labelledby="staticBackdropLabel"
+     aria-hidden="true">
+    <div class="modal-dialog floating-card">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold text-muted" id="staticBackdropLabel">Delete Course <i class="bi bi-trash2"></i></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <form class="row" action="/faculty-courses" method="post">
+
+                    <!-- CRUD Information -->
+                    <input type="hidden" name="CRUD" value="FACULTY_DELETE_COURSE">
+                    <input type="hidden" name="_id" value="<%= course._id %>">
+                    <!-- /CRUD Information -->
+
+                    <div class="text-center">
+                        <img src="/img/cross.png" width="80" height="80" alt="course-logo">
+                        <h5 class="p-4 text-muted fw-bold">
+                            Do you really want to delete
+                            <label style="color: #b70c0c"><%= course.courseCode %></label> course?
+                        </h5>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /DELETE Course (Floating Form) -->

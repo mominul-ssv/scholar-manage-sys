@@ -3,7 +3,7 @@
     <button type="button"
             class="btn btn-warning"
             data-bs-toggle="modal"
-            data-bs-target="#updateStudent<%= foundFaculty._id %>">
+            data-bs-target="#facultyUpdateProfile<%= foundFaculty._id %>">
         <i class="bi bi-pen"></i> Update Faculty Information
     </button>
 </div>
@@ -11,7 +11,7 @@
 <!-- UPDATE Student (Button) -->
 
 <!-- UPDATE Student (Floating Form) -->
-<div class="modal fade" id="updateStudent<%= foundFaculty._id %>" data-bs-backdrop="static" data-bs-keyboard="false"
+<div class="modal fade" id="facultyUpdateProfile<%= foundFaculty._id %>" data-bs-backdrop="static" data-bs-keyboard="false"
      tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog floating-card">
         <div class="modal-content">
@@ -23,9 +23,10 @@
             <div class="modal-body">
                 <form class="row" action="/faculty-profile" method="post">
 
-                    <input type="hidden"
-                           name="_id"
-                           value="<%= foundFaculty._id %>">
+                    <!-- CRUD Information -->
+                    <input type="hidden" name="CRUD" value="FACULTY_UPDATE_PROFILE">
+                    <input type="hidden" name="_id" value="<%= foundFaculty._id %>">
+                    <!-- /CRUD Information -->
 
                     <div class="col-md-12">
                         <label for="phone" class="form-label">Cell Phone</label>

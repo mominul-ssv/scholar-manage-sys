@@ -3,6 +3,7 @@
 <main class="main-dashboard pt-0">
     <div class="container-fluid">
         <div class="row">
+            <!-- General Information -->
             <div class="col mt-2">
                 <div class="card">
                     <!-- General Information -->
@@ -13,30 +14,49 @@
                                 <tr>
                                     <th>Name:</th>
                                     <td><%= foundFaculty.firstName %> <%= foundFaculty.lastName %></td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <th>Email:</th>
                                     <td><%= foundFaculty.email %></td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <th>Education:</th>
                                     <td><%= foundFaculty.university %></td>
+                                    <td></td>
                                 </tr>
                                 <tr>
-                                    <th>Status:</th>
+                                    <th>Registation Status:</th>
+                                    <% if(foundFaculty.registrationStatus === true) { %>
+                                        <td>Active</td>
+                                    <% } else { %>
+                                        <td>Inactive</td>
+                                    <% } %>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th>Semester Status:</th>
                                     <% if(foundFaculty.semesterStatus === true) { %>
                                         <td>Active</td>
                                     <% } else { %>
                                         <td>Inactive</td>
                                     <% } %>
-                                </tr>
-                                <tr>
-                                    <th>Semester:</th>
-                                    <td><%= foundFaculty.semester %></td>
-                                </tr>
-                                <tr>
-                                    <th>Courses:</th>
-                                    <td><%= foundFaculty.courses %></td>
+                                    <td>
+                                        <form action="/faculty-profile" method="post">
+
+                                            <!-- CRUD Information -->
+                                            <input type="hidden" name="CRUD" value="FACULTY_UPDATE_PROFILE_STATUS">
+                                            <input type="hidden" name="_id" value="<%= foundFaculty._id %>">
+                                            <!-- /CRUD Information -->
+
+                                            <button type="button"
+                                                    class="btn btn-dark"
+                                                    onclick="this.parentNode.submit();">
+                                                <i class="bi bi-toggles2"></i>
+                                            </button>
+                                        </form>
+                                    </td>
                                 </tr>
                             <% } %>
                         </table>
@@ -44,6 +64,7 @@
                     <!-- /General Information -->
                 </div>
             </div>
+            <!-- /General Information -->
 
             <!-- Personal Information -->
             <div class="col mt-2">

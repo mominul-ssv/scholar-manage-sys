@@ -20,7 +20,7 @@ exports.admin_dashboard_post = (req, res) => {
 // ADMIN ---------------------------------------------------------------------------------------------------- (Student)
 exports.admin_students_get = async (req, res) => {
     if (req.session.adminAuth === true) {
-        // READ Student (P-2)
+        // READ Student
         const sidebarNav = {student: 'active'};
         Student.find({}, (err, foundStudents) => {
             if (!err) {
@@ -79,7 +79,7 @@ exports.admin_students_post = (req, res) => {
             }
                 break;
 
-            // READ Student (P-1)
+            // READ Student
             case 'ADMIN_READ_STUDENT': {
                 res.redirect('/admin-students');
             }
@@ -136,7 +136,7 @@ exports.admin_students_post = (req, res) => {
 // ADMIN ---------------------------------------------------------------------------------------------------- (Faculty)
 exports.admin_faculties_get = (req, res) => {
     if (req.session.adminAuth === true) {
-        // READ Faculty (P-2)
+        // READ Faculty
         const sidebarNav = {faculty: 'active'};
         Faculty.find({}, (err, foundFaculties) => {
             if (!err) {
@@ -191,7 +191,7 @@ exports.admin_faculties_post = (req, res) => {
             }
                 break;
 
-            // READ Faculty (P-1)
+            // READ Faculty
             case 'ADMIN_READ_FACULTY': {
                 res.redirect('/admin-faculties');
             }
@@ -249,7 +249,7 @@ exports.admin_faculties_post = (req, res) => {
 // ADMIN ---------------------------------------------------------------------------------------------------- (Courses)
 exports.admin_courses_get = (req, res) => {
     if (req.session.adminAuth === true) {
-        // READ Course (P-2)
+        // READ Course
         const sidebarNav = {courses: 'active'};
         Course.find({}, (err, foundCourses) => {
             if (!err) {
@@ -299,7 +299,7 @@ exports.admin_courses_post = (req, res) => {
             }
                 break;
 
-            // READ Course (P-1)
+            // READ Course
             case 'ADMIN_READ_COURSE': {
                 res.redirect('/admin-courses');
             }
@@ -307,27 +307,22 @@ exports.admin_courses_post = (req, res) => {
 
             // UPDATE Course
             case 'ADMIN_UPDATE_COURSE': {
-                const {courseCode, courseDetails} = req.body;
-                Course.findOne({courseCode: courseCode}, async (err) => {
-                    if (!err) {
-                        Course.updateOne(
-                            {courseCode: courseCode},
-                            {
-                                $set: {
-                                    courseCode: courseCode,
-                                    courseDetails: courseDetails
-                                }
-                            }, (err) => {
-                                if (!err) {
-                                    res.redirect('/admin-courses');
-                                } else {
-                                    console.log(err);
-                                }
-                            });
-                    } else {
-                        console.log(err);
-                    }
-                });
+                const {_id, courseCode, courseDetails} = req.body;
+                Course.updateOne(
+                    {_id: _id},
+                    {
+                        $set: {
+                            courseCode: courseCode,
+                            courseDetails: courseDetails
+                        }
+                    }, (err) => {
+                        if (!err) {
+                            res.redirect('/admin-courses');
+                        } else {
+                            console.log(err);
+                        }
+                    });
+
             }
                 break;
 

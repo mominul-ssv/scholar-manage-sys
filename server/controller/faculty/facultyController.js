@@ -31,23 +31,63 @@ exports.faculty_profile_get = (req, res) => {
 
 exports.faculty_profile_post = (req, res) => {
     if (req.session.facultyAuth === true) {
-        const {_id, phone, dob, citizenship, address} = req.body;
-        Faculty.updateOne(
-            {_id: _id},
-            {
-                $set: {
-                    phone: phone,
-                    dob: dob,
-                    citizenship: citizenship,
-                    address: address
-                }
-            }, (err) => {
-                if (!err) {
-                    res.redirect('/faculty-profile');
-                } else {
-                    console.log(err);
-                }
-            });
+
+        const {CRUD} = req.body;
+        console.log(CRUD);
+
+        switch (CRUD) {
+
+            case 'FACULTY_READ_PROFILE': {
+                res.redirect('/faculty-profile');
+            }
+                break;
+
+            case 'FACULTY_UPDATE_PROFILE': {
+                const {_id, phone, dob, citizenship, address} = req.body;
+                Faculty.updateOne(
+                    {_id: _id},
+                    {
+                        $set: {
+                            phone: phone,
+                            dob: dob,
+                            citizenship: citizenship,
+                            address: address
+                        }
+                    }, (err) => {
+                        if (!err) {
+                            res.redirect('/faculty-profile');
+                        } else {
+                            console.log(err);
+                        }
+                    });
+            }
+                break;
+
+            case 'FACULTY_UPDATE_PROFILE_STATUS': {
+
+                Faculty.findOne({email: req.session.facultyEmail}, (err, foundFaculty) => {
+                    if (!err) {
+                        Faculty.updateOne(
+                            {_id: req.body._id},
+                            {
+                                $set: {
+                                    semesterStatus: !foundFaculty.semesterStatus
+                                }
+                            }, (err) => {
+                                if (!err) {
+                                    res.redirect('/faculty-profile');
+                                } else {
+                                    console.log(err);
+                                }
+                            });
+                    } else {
+                        console.log(err);
+                    }
+                });
+
+            }
+                break;
+        }
     }
 }
 
@@ -56,8 +96,14 @@ exports.faculty_courses_get = (req, res) => {
     if (req.session.facultyAuth === true) {
         Course.find({}, (err, foundCourses) => {
             if (!err) {
-                const sidebarNav = {courses: 'active'};
-                res.render('faculty/faculty-courses', {foundCourses, sidebarNav});
+                Faculty.findOne({email: req.session.facultyEmail}, (err, foundFaculty) => {
+                    if (!err) {
+                        const sidebarNav = {courses: 'active'};
+                        res.render('faculty/faculty-courses', {foundFaculty, foundCourses, sidebarNav});
+                    } else {
+                        console.log(err);
+                    }
+                });
             } else {
                 console.log(err);
             }
@@ -68,67 +114,75 @@ exports.faculty_courses_get = (req, res) => {
 exports.faculty_courses_post = (req, res) => {
     if (req.session.facultyAuth === true) {
 
-            const {CRUD} = req.body;
-            console.log(CRUD);
+        const {CRUD} = req.body;
+        console.log(CRUD);
 
-            switch (CRUD) {
+        switch (CRUD) {
 
-                // ADD Course
-                case 'FACULTY_ADD_COURSE': {
-                    const {courseCode, courseSemester} = req.body;
-                    console.log(req.body);
-                    Faculty.findOne({email: req.session.facultyEmail}, (err, foundFaculty) => {
+            // ADD Course
+            case 'FACULTY_ADD_COURSE': {
+                const {courseCode, courseSemester} = req.body;
+                Faculty.findOne({email: req.session.facultyEmail}, (err, foundFaculty) => {
+                    if (!err) {
+                        Course.findOne({courseCode: courseCode}, (err, foundCourse) => {
+                            if (!err) {
+                                console.log(foundFaculty);
+                                Faculty.updateOne(
+                                    {_id: foundFaculty._id},
+                                    {
+                                        $push: {
+                                            course: [{
+                                                courseCode: courseCode,
+                                                courseDetails: foundCourse.courseDetails,
+                                                courseSemester: courseSemester
+                                            }]
+                                        }
+                                    }, (err) => {
+                                        if (!err) {
+                                            res.redirect('/faculty-courses');
+                                        } else {
+                                            console.log(err);
+                                        }
+                                    });
+                            } else {
+                                console.log(err);
+                            }
+                        });
+                    } else {
+                        console.log(err);
+                    }
+                });
+            }
+                break;
+
+            // READ Course
+            case 'FACULTY_READ_COURSE': {
+                res.redirect('/faculty-courses');
+            }
+                break;
+
+            // DELETE Course
+            case 'FACULTY_DELETE_COURSE': {
+                Faculty.updateOne(
+                    {email: req.session.facultyEmail},
+                    {
+                        $pull: {
+                            course: {
+                                _id: req.body._id
+                            }
+                        }
+                    }, (err) => {
                         if (!err) {
-                            Course.findOne({courseCode: courseCode}, (err, foundCourse) => {
-                                if (!err) {
-                                    Faculty.updateOne(
-                                        {_id: foundFaculty._id},
-                                        {
-                                            $push: {
-                                                course: [{
-                                                    courseCode: courseCode,
-                                                    courseDetails: foundCourse.courseDetails,
-                                                    courseSemester: courseSemester
-                                                }]
-                                            }
-                                        }, (err) => {
-                                            if (!err) {
-                                                res.redirect('/faculty-courses');
-                                            } else {
-                                                console.log(err);
-                                            }
-                                        });
-                                } else {
-                                    console.log(err);
-                                }
-                            });
+                            res.redirect('/faculty-courses');
                         } else {
                             console.log(err);
                         }
                     });
-                }
-                    break;
-
-                // READ Course (P-1)
-                case 'FACULTY_READ_COURSE': {
-                    res.redirect('/faculty-courses');
-                }
-                    break;
-
-                // UPDATE Course
-                case 'FACULTY_UPDATE_COURSE': {
-
-                }
-                    break;
-
-                // DELETE Course
-                case 'FACULTY_DELETE_COURSE': {
-
-                }
-                    break;
-                default:
-                    console.log("Error occurred in { faculty_courses_post }");
             }
+                break;
+            default:
+                console.log("Error occurred in { faculty_courses_post }");
+        }
     }
 }
 

@@ -7,17 +7,47 @@
             <!-- ADD Courses -->
             <div class="row">
                 <div class="col mt-2">
-                    <%- include("faculty-btn/faculty-courses-btn/faculty-courses-add.ejs") -%>
+                    <%- include("faculty-btn/faculty-courses-btn/faculty-course-add.ejs") -%>
                 </div>
             </div>
             <!-- /ADD Courses -->
 
             <div class="col mt-2">
                 <div class="card">
-                    <div class="card-header fw-bold text-center"><i class="bi bi-calendar-range"></i> Fall 2021</div>
+                    <div class="card-header fw-bold text-center">Courses</div>
                     <div class="card-body">
                         <table class="table table-hover">
-                            <!-- Table Content -->
+
+                            <!-- Table Header -->
+                            <thead>
+                                <tr>
+                                    <th>Course Code</th>
+                                    <th>Course Details</th>
+                                    <th>Semester</th>
+                                    <th style="width: 0">Delete</th>
+                                </tr>
+                            </thead>
+                            <!-- /Table Header -->
+
+                            <!-- Table Body -->
+                            <tbody>
+                                <% if (typeof foundFaculty !== 'undefined' ) { %>
+                                    <% foundFaculty.course.forEach((course)=> { %>
+                                        <tr>
+                                            <td><%= course.courseCode %></td>
+                                            <td><%= course.courseDetails %></td>
+                                            <td><%= course.courseSemester%></td>
+                                            <td>
+                                                <!-- DELETE Course -->
+                                                <%- include("faculty-btn/faculty-courses-btn/faculty-course-delete.ejs", {course: course}) -%>
+                                                <!-- /DELETE Course -->
+                                            </td>
+                                        </tr>
+                                    <% }); %>
+                                <% } %>
+                            </tbody>
+                            <!-- /Table Body -->
+
                         </table>
                     </div>
                 </div>

@@ -7,8 +7,9 @@ let courseSchema = new Schema({
         required: true
     },
     courseDetails: {
-        type: String
-    },
+        type: String,
+        required: true
+    }
 });
 
 module.exports = mongoose.model('Course', courseSchema);
