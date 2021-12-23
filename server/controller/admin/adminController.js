@@ -20,20 +20,19 @@ exports.admin_dashboard_post = (req, res) => {
 // ADMIN ---------------------------------------------------------------------------------------------------- (Student)
 exports.admin_students_get = async (req, res) => {
     if (req.session.adminAuth === true) {
-        // READ Student
+
         const sidebarNav = {student: 'active'};
+
         Student.find({}, (err, foundStudents) => {
             if (!err) {
                 if (req.session.msg === 'DUPLICATE_SID') {
+
                     req.session.msg = 'NULL';
                     const error = {code: 'ERROR', msg: 'Student ID is already in use!'};
                     res.render('admin/admin-students', {foundStudents, sidebarNav, error});
-                } else {
-                    res.render('admin/admin-students', {foundStudents, sidebarNav});
-                }
-            } else {
-                console.log(err);
-            }
+
+                } else res.render('admin/admin-students', {foundStudents, sidebarNav});
+            } else console.log(err);
         });
     }
 }
@@ -41,7 +40,6 @@ exports.admin_students_get = async (req, res) => {
 exports.admin_students_post = (req, res) => {
     if (req.session.adminAuth === true) {
 
-        // Console Log
         const {CRUD} = req.body;
         console.log(CRUD);
 
@@ -72,9 +70,7 @@ exports.admin_students_post = (req, res) => {
                             req.session.msg = 'DUPLICATE_SID';
                             res.redirect('/admin-students');
                         }
-                    } else {
-                        console.log(err);
-                    }
+                    } else console.log(err);
                 });
             }
                 break;
@@ -106,13 +102,9 @@ exports.admin_students_post = (req, res) => {
                             }, (err) => {
                                 if (!err) {
                                     res.redirect('/admin-students');
-                                } else {
-                                    console.log(err);
-                                }
+                                } else console.log(err);
                             });
-                    } else {
-                        console.log(err);
-                    }
+                    } else console.log(err);
                 });
             }
                 break;
@@ -122,9 +114,7 @@ exports.admin_students_post = (req, res) => {
                 Student.deleteOne({studentId: req.body.studentId}, (err) => {
                     if (!err) {
                         res.redirect('/admin-students');
-                    } else {
-                        console.log(err);
-                    }
+                    } else console.log(err);
                 });
             }
                 break;
@@ -146,20 +136,19 @@ exports.admin_students_post = (req, res) => {
 // ADMIN ---------------------------------------------------------------------------------------------------- (Faculty)
 exports.admin_faculties_get = (req, res) => {
     if (req.session.adminAuth === true) {
-        // READ Faculty
+
         const sidebarNav = {faculty: 'active'};
+
         Faculty.find({}, (err, foundFaculties) => {
             if (!err) {
                 if (req.session.msg === 'DUPLICATE_EMAIL') {
+
                     req.session.msg = 'NULL';
                     const error = {code: 'ERROR', msg: 'Email is already in use!'};
                     res.render('admin/admin-faculties', {foundFaculties, sidebarNav, error});
-                } else {
-                    res.render('admin/admin-faculties', {foundFaculties, sidebarNav});
-                }
-            } else {
-                console.log(err);
-            }
+
+                } else res.render('admin/admin-faculties', {foundFaculties, sidebarNav});
+            } else console.log(err);
         });
     }
 }
@@ -192,9 +181,7 @@ exports.admin_faculties_post = (req, res) => {
                             req.session.msg = 'DUPLICATE_EMAIL';
                             res.redirect('/admin-faculties');
                         }
-                    } else {
-                        console.log(err);
-                    }
+                    } else console.log(err);
                 });
             }
                 break;
@@ -224,13 +211,9 @@ exports.admin_faculties_post = (req, res) => {
                             }, (err) => {
                                 if (!err) {
                                     res.redirect('/admin-faculties');
-                                } else {
-                                    console.log(err);
-                                }
+                                } else console.log(err);
                             });
-                    } else {
-                        console.log(err);
-                    }
+                    } else console.log(err);
                 });
             }
                 break;
@@ -240,12 +223,11 @@ exports.admin_faculties_post = (req, res) => {
                 Faculty.deleteOne({email: req.body.email}, (err) => {
                     if (!err) {
                         res.redirect('/admin-faculties');
-                    } else {
-                        console.log(err);
-                    }
+                    } else console.log(err);
                 });
             }
                 break;
+
             default:
                 console.log("Error occurred in { admin_faculties_post }");
         }
@@ -255,20 +237,19 @@ exports.admin_faculties_post = (req, res) => {
 // ADMIN ---------------------------------------------------------------------------------------------------- (Courses)
 exports.admin_courses_get = (req, res) => {
     if (req.session.adminAuth === true) {
-        // READ Course
+
         const sidebarNav = {courses: 'active'};
+
         Course.find({}, (err, foundCourses) => {
             if (!err) {
                 if (req.session.msg === 'DUPLICATE_COURSE') {
+
                     req.session.msg = 'NULL';
                     const error = {code: 'ERROR', msg: 'Course already exists!'};
                     res.render('admin/admin-courses', {foundCourses, sidebarNav, error});
-                } else {
-                    res.render('admin/admin-courses', {foundCourses, sidebarNav});
-                }
-            } else {
-                console.log(err);
-            }
+
+                } else res.render('admin/admin-courses', {foundCourses, sidebarNav});
+            } else console.log(err);
         });
     }
 }
@@ -276,7 +257,6 @@ exports.admin_courses_get = (req, res) => {
 exports.admin_courses_post = (req, res) => {
     if (req.session.adminAuth === true) {
 
-        // Console Log
         const {CRUD} = req.body;
         console.log(CRUD);
 
@@ -298,9 +278,7 @@ exports.admin_courses_post = (req, res) => {
                             req.session.msg = 'DUPLICATE_COURSE';
                             res.redirect('/admin-courses');
                         }
-                    } else {
-                        console.log(err);
-                    }
+                    } else console.log(err);
                 });
             }
                 break;
@@ -324,9 +302,7 @@ exports.admin_courses_post = (req, res) => {
                     }, (err) => {
                         if (!err) {
                             res.redirect('/admin-courses');
-                        } else {
-                            console.log(err);
-                        }
+                        } else console.log(err);
                     });
 
             }
@@ -337,12 +313,11 @@ exports.admin_courses_post = (req, res) => {
                 Course.deleteOne({courseCode: req.body.courseCode}, (err) => {
                     if (!err) {
                         res.redirect('/admin-courses');
-                    } else {
-                        console.log(err);
-                    }
+                    } else console.log(err);
                 });
             }
                 break;
+
             default:
                 console.log("Error occurred in { admin_courses_post }");
         }

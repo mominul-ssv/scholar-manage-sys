@@ -1,5 +1,6 @@
 const Faculty = require("../../model/facultySchema.js");
 const Course = require("../../model/courseSchema.js");
+const Semester = require("../../model/semesterSchema.js");
 
 // FACULTY ----------------------------------------------------------------------------------------------------- (Home)
 exports.faculty_dashboard_get = (req, res) => {
@@ -18,6 +19,7 @@ exports.faculty_dashboard_post = (req, res) => {
 // FACULTY -------------------------------------------------------------------------------------------------- (Profile)
 exports.faculty_profile_get = (req, res) => {
     if (req.session.facultyAuth === true) {
+
         Faculty.findOne({email: req.session.facultyEmail}, (err, foundFaculty) => {
             if (!err) {
                 const sidebarNav = {profile: 'active'};
@@ -56,9 +58,7 @@ exports.faculty_profile_post = (req, res) => {
                     }, (err) => {
                         if (!err) {
                             res.redirect('/faculty-profile');
-                        } else {
-                            console.log(err);
-                        }
+                        } else console.log(err);
                     });
             }
                 break;
@@ -76,17 +76,15 @@ exports.faculty_profile_post = (req, res) => {
                             }, (err) => {
                                 if (!err) {
                                     res.redirect('/faculty-profile');
-                                } else {
-                                    console.log(err);
-                                }
+                                } else console.log(err);
                             });
-                    } else {
-                        console.log(err);
-                    }
+                    } else console.log(err);
                 });
-
             }
                 break;
+
+            default:
+                console.log("Error occurred in { faculty_profile_post }");
         }
     }
 }
@@ -98,15 +96,20 @@ exports.faculty_courses_get = (req, res) => {
             if (!err) {
                 Faculty.findOne({email: req.session.facultyEmail}, (err, foundFaculty) => {
                     if (!err) {
-                        const sidebarNav = {courses: 'active'};
-                        res.render('faculty/faculty-courses', {foundFaculty, foundCourses, sidebarNav});
-                    } else {
-                        console.log(err);
-                    }
+                        Semester.find({}, (err, foundSemesters) => {
+                            if (!err) {
+                                const sidebarNav = {courses: 'active'};
+                                res.render('faculty/faculty-courses', {
+                                    foundSemesters,
+                                    foundFaculty,
+                                    foundCourses,
+                                    sidebarNav
+                                });
+                            } else console.log(err);
+                        });
+                    } else console.log(err);
                 });
-            } else {
-                console.log(err);
-            }
+            } else console.log(err);
         });
     }
 }
@@ -126,31 +129,43 @@ exports.faculty_courses_post = (req, res) => {
                     if (!err) {
                         Course.findOne({courseCode: courseCode}, (err, foundCourse) => {
                             if (!err) {
-                                console.log(foundFaculty);
-                                Faculty.updateOne(
-                                    {_id: foundFaculty._id},
-                                    {
-                                        $push: {
-                                            course: [{
-                                                courseCode: courseCode,
-                                                courseDetails: foundCourse.courseDetails,
-                                                courseSemester: courseSemester
-                                            }]
-                                        }
-                                    }, (err) => {
-                                        if (!err) {
+                                Semester.findOne({semesterName: courseSemester}, async (err, foundSemester) => {
+                                    if (!err) {
+                                        if (foundSemester === null) {
+                                            const semester = new Semester({
+                                                semesterName: courseSemester,
+                                                semesterDetails: [{
+                                                    courseCode: courseCode,
+                                                    courseDetails: foundCourse.courseDetails,
+                                                    courseFacultyFirstName: foundFaculty.firstName,
+                                                    courseFacultyLastName: foundFaculty.lastName
+                                                }]
+                                            });
+                                            await semester.save();
                                             res.redirect('/faculty-courses');
                                         } else {
-                                            console.log(err);
+                                            Semester.updateOne(
+                                                {_id: foundSemester._id},
+                                                {
+                                                    $push: {
+                                                        semesterDetails: [{
+                                                            courseCode: courseCode,
+                                                            courseDetails: foundCourse.courseDetails,
+                                                            courseFacultyFirstName: foundFaculty.firstName,
+                                                            courseFacultyLastName: foundFaculty.lastName
+                                                        }]
+                                                    }
+                                                }, (err) => {
+                                                    if (!err) {
+                                                        res.redirect('/faculty-courses');
+                                                    } else console.log(err);
+                                                });
                                         }
-                                    });
-                            } else {
-                                console.log(err);
-                            }
+                                    } else console.log(err);
+                                });
+                            } else console.log(err);
                         });
-                    } else {
-                        console.log(err);
-                    }
+                    } else console.log(err);
                 });
             }
                 break;
@@ -163,23 +178,33 @@ exports.faculty_courses_post = (req, res) => {
 
             // DELETE Course
             case 'FACULTY_DELETE_COURSE': {
-                Faculty.updateOne(
-                    {email: req.session.facultyEmail},
+                const {semester_id, course_id} = req.body;
+                Semester.updateOne(
+                    {_id: semester_id},
                     {
                         $pull: {
-                            course: {
-                                _id: req.body._id
+                            semesterDetails: {
+                                _id: course_id
                             }
                         }
                     }, (err) => {
                         if (!err) {
-                            res.redirect('/faculty-courses');
-                        } else {
-                            console.log(err);
-                        }
+                            Semester.findOne({_id: semester_id}, (err, foundSemester) => {
+                                if (!err) {
+                                    if (foundSemester.semesterDetails.length === 0) {
+                                        Semester.deleteOne({_id: semester_id}, (err) => {
+                                            if (!err) {
+                                                res.redirect('/faculty-courses');
+                                            } else console.log(err);
+                                        });
+                                    } else res.redirect('/faculty-courses');
+                                } else console.log(err);
+                            });
+                        } else console.log(err);
                     });
             }
                 break;
+
             default:
                 console.log("Error occurred in { faculty_courses_post }");
         }
