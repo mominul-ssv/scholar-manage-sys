@@ -105,6 +105,11 @@
                     <!-- Courses -->
                     <li class="nav-item mb-3" role="presentation">
                         <form action="/student-courses" method="post">
+
+                            <!-- CRUD Information -->
+                            <input type="hidden" name="CRUD" value="STUDENT_READ_COURSE">
+                            <!-- /CRUD Information -->
+
                             <a class="nav-link <%= sidebarNav.courses %>"
                                id="pills-home-tab"
                                data-bs-toggle="pill"

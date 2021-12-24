@@ -1,14 +1,14 @@
-<!-- DELETE Course (Button) -->
+<!-- DROP Course (Button) -->
 <button type="button"
         class="btn btn-danger"
         data-bs-toggle="modal"
-        data-bs-target="#facultyDeleteCourse<%= info[1]._id %>"><i class="bi bi-trash2"></i>
+        data-bs-target="#studentDropCourse<%= info[1]._id %>"><i class="bi bi-x-circle"></i>
 </button>
-<!-- DELETE Course (Button) -->
+<!-- DROP Course (Button) -->
 
-<!-- DELETE Course (Floating Form) -->
+<!-- DROP Course (Floating Form) -->
 <div class="modal fade"
-     id="facultyDeleteCourse<%= info[1]._id %>"
+     id="studentDropCourse<%= info[1]._id %>"
      data-bs-backdrop="static"
      data-bs-keyboard="false"
      tabindex="-1"
@@ -18,31 +18,30 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h5 class="modal-title fw-bold text-muted" id="staticBackdropLabel">Delete Course <i class="bi bi-trash2"></i></h5>
+                <h5 class="modal-title fw-bold text-muted" id="staticBackdropLabel">Drop Course</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <div class="modal-body">
-                <form class="row" action="/faculty-courses" method="post">
+                <form class="row" action="/student-courses" method="post">
 
                     <!-- CRUD Information -->
-                    <input type="hidden" name="CRUD" value="FACULTY_DELETE_COURSE">
-                    <input type="hidden" name="semester_id" value="<%= info[0]._id %>">
-                    <input type="hidden" name="course_id" value="<%= info[1]._id %>">
+                    <input type="hidden" name="CRUD" value="STUDENT_DROP_COURSE">
+                    <input type="hidden" name="semesterName" value="<%= info[0].semesterName %>">
                     <input type="hidden" name="courseCode" value="<%= info[1].courseCode %>">
                     <!-- /CRUD Information -->
 
                     <div class="text-center">
                         <img src="/img/cross.png" width="80" height="80" alt="course-logo">
                         <h5 class="p-4 text-muted fw-bold">
-                            Do you really want to delete
+                            Do you really want to drop
                             <label style="color: #b70c0c"><%= info[1].courseCode %></label> course?
                         </h5>
                     </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-danger">Drop</button>
                     </div>
 
                 </form>
@@ -50,4 +49,4 @@
         </div>
     </div>
 </div>
-<!-- /DELETE Course (Floating Form) -->
+<!-- /DROP Course (Floating Form) -->

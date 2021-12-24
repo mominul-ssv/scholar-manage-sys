@@ -4,21 +4,6 @@
     <div class="container-fluid">
         <div class="row">
 
-            <!-- Error Handling -->
-            <div class="row">
-                <div class="col-md-12">
-                    <% if (typeof error !== 'undefined' ) { %>
-                        <% if (error.code === 'ERROR') { %>
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <span><%= error.msg %></span>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        <% } %>
-                    <% } %>
-                </div>
-            </div>
-            <!-- /Error Handling -->
-
             <!-- ADD Courses -->
             <div class="row">
                 <div class="col mt-2">
@@ -30,6 +15,7 @@
             </div>
             <!-- /ADD Courses -->
 
+            <!-- Tables -->
             <% if (typeof foundSemesters !== 'undefined') { %>
                 <% foundSemesters.forEach((semester) => { %>
                     <div class="col-12 mt-2">
@@ -51,16 +37,18 @@
                                     <!-- Table Body -->
                                     <tbody>
                                         <% semester.semesterDetails.forEach((details)=> { %>
-                                            <tr>
-                                                <td><%= details.courseCode %></td>
-                                                <td><%= details.courseDetails %></td>
-                                                <td>
-                                                    <!-- DELETE Course -->
-                                                    <% const info = [semester, details]%>
-                                                    <%- include("faculty-btn/faculty-courses-btn/faculty-course-delete.ejs", {info: info}) -%>
-                                                    <!-- /DELETE Course -->
-                                                </td>
-                                            </tr>
+                                            <% if (details.courseFacultyEmail === foundFaculty.email) { %>
+                                                <tr>
+                                                    <td><%= details.courseCode %></td>
+                                                    <td><%= details.courseDetails %></td>
+                                                    <td>
+                                                        <!-- DELETE Course -->
+                                                        <% const info = [semester, details] %>
+                                                        <%- include("faculty-btn/faculty-courses-btn/faculty-course-delete.ejs", {info: info}) -%>
+                                                        <!-- /DELETE Course -->
+                                                    </td>
+                                                </tr>
+                                            <% } %>
                                         <% }); %>
                                     </tbody>
                                     <!-- /Table Body -->
@@ -70,6 +58,8 @@
                     </div>
                 <% }); %>
             <% } %>
+            <!-- /Tables -->
+
         </div>
     </div>
 </main>

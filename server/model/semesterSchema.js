@@ -23,23 +23,10 @@ let semesterSchema = new Schema({
             type: String,
             required: true
         },
-        courseStudents: [{
-            studentId: {
-                type: String,
-                required: true
-            },
-            firstName: {
-                type: String,
-                required: true
-            },
-            lastName: {
-                type: String,
-                required: true
-            },
-            studentGrade: {
-                type: String
-            }
-        }]
+        courseFacultyEmail: {
+            type: String,
+            required: true
+        }
     }]
 });
 

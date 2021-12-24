@@ -1,6 +1,7 @@
 const Faculty = require("../../model/facultySchema.js");
 const Course = require("../../model/courseSchema.js");
 const Semester = require("../../model/semesterSchema.js");
+const Grade = require("../../model/gradeSchema.js");
 
 // FACULTY ----------------------------------------------------------------------------------------------------- (Home)
 exports.faculty_dashboard_get = (req, res) => {
@@ -138,7 +139,8 @@ exports.faculty_courses_post = (req, res) => {
                                                     courseCode: courseCode,
                                                     courseDetails: foundCourse.courseDetails,
                                                     courseFacultyFirstName: foundFaculty.firstName,
-                                                    courseFacultyLastName: foundFaculty.lastName
+                                                    courseFacultyLastName: foundFaculty.lastName,
+                                                    courseFacultyEmail: foundFaculty.email
                                                 }]
                                             });
                                             await semester.save();
@@ -152,7 +154,8 @@ exports.faculty_courses_post = (req, res) => {
                                                             courseCode: courseCode,
                                                             courseDetails: foundCourse.courseDetails,
                                                             courseFacultyFirstName: foundFaculty.firstName,
-                                                            courseFacultyLastName: foundFaculty.lastName
+                                                            courseFacultyLastName: foundFaculty.lastName,
+                                                            courseFacultyEmail: foundFaculty.email
                                                         }]
                                                     }
                                                 }, (err) => {
@@ -178,7 +181,7 @@ exports.faculty_courses_post = (req, res) => {
 
             // DELETE Course
             case 'FACULTY_DELETE_COURSE': {
-                const {semester_id, course_id} = req.body;
+                const {semester_id, course_id, courseCode} = req.body;
                 Semester.updateOne(
                     {_id: semester_id},
                     {
@@ -191,13 +194,22 @@ exports.faculty_courses_post = (req, res) => {
                         if (!err) {
                             Semester.findOne({_id: semester_id}, (err, foundSemester) => {
                                 if (!err) {
+
+                                    // Deleting associated students who have taken the course
+                                    Grade.deleteMany({courseCode: courseCode, courseFacultyEmail: req.session.facultyEmail}, (err) => {
+                                        if (err) console.log(err);
+                                    });
+
+                                    // Deleting Semester if no courses exists
                                     if (foundSemester.semesterDetails.length === 0) {
                                         Semester.deleteOne({_id: semester_id}, (err) => {
                                             if (!err) {
                                                 res.redirect('/faculty-courses');
                                             } else console.log(err);
                                         });
-                                    } else res.redirect('/faculty-courses');
+                                    } else {
+                                        res.redirect('/faculty-courses');
+                                    }
                                 } else console.log(err);
                             });
                         } else console.log(err);
