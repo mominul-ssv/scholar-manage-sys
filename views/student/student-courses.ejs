@@ -3,95 +3,59 @@
 <main class="main-dashboard pt-0">
     <div class="container-fluid">
         <div class="row">
+            <div class="col-12 mt-2">
+                <div class="card pt-1">
+                    <div class="card-body">
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Course Code</th>
+                                    <th>Course Details</th>
+                                    <th>Course Faculty</th>
+                                    <th>Course Semester</th>
+                                    <th>Status</th>
+                                    <th style="width: 0">Take</th>
+                                    <th style="width: 0">Drop</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if (typeof foundGrades !== 'undefined') { %>
+                                    <% foundGrades.forEach((grade) => { %>
+                                        <tr>
+                                            <td><%= grade.courseCode %></td>
+                                            <td><%= grade.courseDetails %></td>
+                                            <td><%= grade.courseFacultyFirstName %> <%= grade.courseFacultyLastName %></td>
+                                            <td><%= grade.semesterName %></td>
+                                            <td></td>
+                                            <td>
+                                                <form action="/student-courses" method="post">
 
-            <!-- TAKE Course -->
-            <div class="row">
-                <div class="col mt-2">
-                    <!-- Tables -->
-                    <% if (typeof foundSemesters !== 'undefined') { %>
-                        <% foundSemesters.forEach((semester) => { %>
-                            <div class="col-12 mt-2">
-                                <div class="card">
-                                    <div class="card-header fw-bold text-center"><%= semester.semesterName %></div>
-                                    <div class="card-body">
-                                        <table class="table table-hover table-striped">
+                                                    <!-- CRUD Information -->
+                                                    <input type="hidden" name="CRUD" value="STUDENT_TAKE_COURSE">
+                                                    <input type="hidden" name="_id" value="<%= grade._id %>">
+                                                    <!-- /CRUD Information -->
 
-                                            <!-- Table Header -->
-                                            <thead>
-                                                <tr>
-                                                    <th>Course Code</th>
-                                                    <th>Course Details</th>
-                                                    <th>Course Faculty</th>
-                                                    <th>Status</th>
-                                                    <th style="width: 0">Take</th>
-                                                    <th style="width: 0">Drop</th>
-                                                </tr>
-                                            </thead>
-                                            <!-- /Table Header -->
-
-                                            <!-- Table Body -->
-                                            <tbody>
-                                                <% semester.semesterDetails.forEach((details) => { %>
-                                                    <tr>
-                                                        <td><%= details.courseCode %></td>
-                                                        <td><%= details.courseDetails %></td>
-                                                        <td><%= details.courseFacultyFirstName %> <%= details.courseFacultyLastName %></td>
-                                                        <td>
-                                                            <% if (typeof notAvailable !== 'undefined') { %>
-                                                                <% notAvailable.forEach((availability) => { %>
-                                                                    <% if (availability[0] === details.courseCode && availability[1] === semester.semesterName) { %>
-                                                                        <p style="color: green; font-weight: bold">
-                                                                            Active</p>
-                                                                    <% } %>
-                                                                <% }); %>
-                                                            <% } %>
-                                                        </td>
-
-                                                        <td>
-                                                            <form action="/student-courses" method="post">
-
-                                                                <!-- CRUD Information -->
-                                                                <input type="hidden" name="CRUD" value="STUDENT_TAKE_COURSE">
-                                                                <input type="hidden" name="semesterName" value="<%= semester.semesterName %>">
-                                                                <input type="hidden" name="courseCode" value="<%= details.courseCode %>">
-                                                                <input type="hidden" name="courseDetails" value="<%= details.courseDetails %>">
-                                                                <input type="hidden" name="courseFacultyEmail" value="<%= details.courseFacultyEmail %>">
-                                                                <input type="hidden" name="courseFacultyFirstName" value="<%= details.courseFacultyFirstName %>">
-                                                                <input type="hidden" name="courseFacultyLastName" value="<%= details.courseFacultyLastName %>">
-                                                                <!-- /CRUD Information -->
-
-                                                                <button class="navbar-brand btn btn-success"
-                                                                        type="submit">
-                                                                    <i class="bi bi-plus-circle-dotted"></i>
-                                                                </button>
-
-                                                            </form>
-                                                        </td>
-
-                                                        <td>
-                                                            <!-- DROP Course -->
-                                                            <% const info = [semester, details] %>
-                                                            <%- include("student-btn/student-courses-btn/student-course-drop.ejs", {info: info}) -%>
-                                                            <!-- /DROP Course -->
-                                                        </td>
-                                                    </tr>
-                                                <% }); %>
-                                            </tbody>
-                                            <!-- /Table Body -->
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        <% }); %>
-                    <% } %>
-                    <!-- /Tables -->
+                                                    <button class="btn btn-success"
+                                                            type="submit">
+                                                        <i class="bi bi-plus-circle-dotted"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                            <td>
+                                                <!-- DELETE Courses -->
+                                                <%- include("student-btn/student-courses-btn/student-course-drop.ejs", {grade: grade}) -%>
+                                                <!-- /DELETE Courses -->
+                                            </td>
+                                        </tr>
+                                    <% }); %>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <!-- /TAKE Course -->
-
         </div>
     </div>
 </main>
-
 
 <%- include("student-partials/student-footer.ejs") -%>

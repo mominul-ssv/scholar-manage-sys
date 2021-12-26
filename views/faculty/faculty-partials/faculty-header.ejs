@@ -112,7 +112,7 @@
                         <form action="/faculty-courses" method="post">
 
                             <!-- CRUD Information -->
-                            <input type="hidden" name="CRUD" value="FACULTY_READ_COURSE">
+                            <input type="hidden" name="CRUD" value="FACULTY_READ_COURSES">
                             <!-- /CRUD Information -->
 
                             <a class="nav-link <%= sidebarNav.courses %>"
@@ -134,6 +134,11 @@
                     <!-- Grades -->
                     <li class="nav-item mb-3" role="presentation">
                         <form action="/faculty-grades" method="post">
+
+                            <!-- CRUD Information -->
+                            <input type="hidden" name="CRUD" value="FACULTY_READ_GRADES">
+                            <!-- /CRUD Information -->
+
                             <a class="nav-link <%= sidebarNav.grades %>"
                                id="pills-home-tab"
                                data-bs-toggle="pill"

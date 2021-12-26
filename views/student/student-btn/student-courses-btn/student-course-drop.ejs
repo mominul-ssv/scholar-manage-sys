@@ -2,13 +2,13 @@
 <button type="button"
         class="btn btn-danger"
         data-bs-toggle="modal"
-        data-bs-target="#studentDropCourse<%= info[1]._id %>"><i class="bi bi-x-circle"></i>
+        data-bs-target="#studentDropCourse<%= grade._id %>"><i class="bi bi-x-circle"></i>
 </button>
 <!-- DROP Course (Button) -->
 
 <!-- DROP Course (Floating Form) -->
 <div class="modal fade"
-     id="studentDropCourse<%= info[1]._id %>"
+     id="studentDropCourse<%= grade._id %>"
      data-bs-backdrop="static"
      data-bs-keyboard="false"
      tabindex="-1"
@@ -27,15 +27,14 @@
 
                     <!-- CRUD Information -->
                     <input type="hidden" name="CRUD" value="STUDENT_DROP_COURSE">
-                    <input type="hidden" name="semesterName" value="<%= info[0].semesterName %>">
-                    <input type="hidden" name="courseCode" value="<%= info[1].courseCode %>">
+                    <input type="hidden" name="_id" value="<%= grade._id %>">
                     <!-- /CRUD Information -->
 
                     <div class="text-center">
                         <img src="/img/cross.png" width="80" height="80" alt="course-logo">
                         <h5 class="p-4 text-muted fw-bold">
                             Do you really want to drop
-                            <label style="color: #b70c0c"><%= info[1].courseCode %></label> course?
+                            <label style="color: #b70c0c"><%= grade.courseCode %></label> course?
                         </h5>
                     </div>
 

@@ -1,5 +1,4 @@
 const Student = require('../../model/studentSchema.js');
-const Semester = require("../../model/semesterSchema.js");
 const Grade = require("../../model/gradeSchema.js");
 
 // STUDENT ----------------------------------------------------------------------------------------------------- (Home)
@@ -52,34 +51,10 @@ exports.student_profile_post = (req, res) => {
 // STUDENT -------------------------------------------------------------------------------------------------- (Courses)
 exports.student_courses_get = (req, res) => {
     if (req.session.studentAuth === true) {
-        Student.findOne({studentId: req.session.studentLoginId}, (err, foundStudent) => {
+        Grade.find({}, (err, foundGrades) => {
             if (!err) {
-                Semester.find({}, (err, foundSemesters) => {
-                    if (!err) {
-                        Grade.find({}, (err, foundGrades) => {
-                            if (!err) {
-
-                                const notAvailable = [];
-
-                                foundSemesters.forEach((semester) => {
-                                    semester.semesterDetails.forEach((details) => {
-                                        foundGrades.forEach((grade) => {
-                                            if (grade.courseCode === details.courseCode
-                                                && grade.courseStudentId === foundStudent.studentId.toString()
-                                                && grade.semesterName === semester.semesterName) {
-                                                notAvailable.push([grade.courseCode, grade.semesterName]);
-                                            }
-                                        })
-                                    });
-                                });
-
-                                const sidebarNav = {courses: 'active'};
-                                res.render('student/student-courses', {foundSemesters, notAvailable, sidebarNav});
-                            } else console.log(err);
-                        });
-                    } else console.log(err);
-                });
-
+                const sidebarNav = {courses: 'active'};
+                res.render('student/student-courses', {foundGrades, sidebarNav});
             } else console.log(err);
         });
     }
@@ -93,64 +68,29 @@ exports.student_courses_post = (req, res) => {
 
         switch (CRUD) {
 
-            // TAKE course
             case 'STUDENT_TAKE_COURSE': {
-
-                const {
-                    semesterName,
-                    courseCode,
-                    courseDetails,
-                    courseFacultyEmail,
-                    courseFacultyFirstName,
-                    courseFacultyLastName
-                } = req.body;
-
-                Student.findOne({studentId: req.session.studentLoginId}, (err, foundStudent) => {
-                    if (!err) {
-                        Grade.findOne(
-                            {
-                                semesterName: semesterName,
-                                courseCode: courseCode,
-                                courseStudentId: foundStudent.studentId
-                            }, async (err, found) => {
-                                if (!err) {
-                                    if (found === null) {
-                                        const grade = new Grade({
-                                            semesterName: semesterName,
-                                            courseCode: courseCode,
-                                            courseDetails: courseDetails,
-                                            courseFacultyEmail: courseFacultyEmail,
-                                            courseFacultyFirstName: courseFacultyFirstName,
-                                            courseFacultyLastName: courseFacultyLastName,
+                Student.findOne(
+                    {studentId: req.session.studentLoginId},
+                    (err, foundStudent) => {
+                        if (!err) {
+                            Grade.updateOne(
+                                {_id: req.body._id},
+                                {
+                                    $push: {
+                                        courseStudent: {
                                             courseStudentId: foundStudent.studentId,
                                             courseStudentFirstName: foundStudent.firstName,
-                                            courseStudentLastName: foundStudent.lastName
-                                        });
-                                        await grade.save();
-                                        res.redirect('/student-courses');
-                                    } else {
-                                        res.redirect('/student-courses');
+                                            courseStudentLastName: foundStudent.lastName,
+                                            courseStudentStatus: true
+                                        }
                                     }
-                                } else console.log(err);
-                            });
-                    } else console.log(err);
-                });
-            }
-                break;
-
-            // TAKE course
-            case 'STUDENT_DROP_COURSE': {
-                const {semesterName, courseCode} = req.body;
-                Grade.deleteOne(
-                    {
-                        semesterName: semesterName,
-                        courseCode: courseCode,
-                        courseStudentId: req.session.studentLoginId
-                    }, (err) => {
-                    if (!err) {
-                        res.redirect('/student-courses');
-                    } else console.log(err);
-                });
+                                }, (err) => {
+                                    if (!err) {
+                                        res.redirect('/student-courses');
+                                    } else console.log(err);
+                                });
+                        } else console.log(err);
+                    });
             }
                 break;
 
@@ -158,6 +98,29 @@ exports.student_courses_post = (req, res) => {
                 res.redirect('/student-courses');
             }
                 break;
+
+            case 'STUDENT_DROP_COURSE': {
+                Grade.findOneAndUpdate(
+                    {_id: req.body._id},
+                    {
+                        $pull: {
+                            courseStudent: {
+                                courseStudentId: req.session.studentLoginId
+                            }
+                        }
+                    },
+                    (err, found) => {
+                        if (!err) {
+                            console.log(found);
+                            res.redirect('/student-courses');
+                        } else console.log(err);
+                    });
+            }
+                break;
+
+            default:
+                console.log("Error occurred in { student_courses_post }");
+
         }
     }
 }

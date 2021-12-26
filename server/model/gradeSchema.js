@@ -3,44 +3,43 @@ const Schema = mongoose.Schema;
 
 let gradeSchema = new Schema({
     semesterName: {
-        type: String,
-        required: true
+        type: String
     },
     courseCode: {
-        type: String,
-        required: true
+        type: String
     },
     courseDetails: {
-        type: String,
-        required: true
+        type: String
     },
     courseFacultyEmail: {
-        type: String,
-        required: true
+        type: String
     },
     courseFacultyFirstName: {
-        type: String,
-        required: true
+        type: String
     },
     courseFacultyLastName: {
-        type: String,
-        required: true
-    },
-    courseStudentId: {
-        type: String,
-        required: true
-    },
-    courseStudentFirstName: {
-        type: String,
-        required: true
-    },
-    courseStudentLastName: {
-        type: String,
-        required: true
-    },
-    courseStudentGrade: {
         type: String
-    }
+    },
+    courseFacultyStatus: {
+        type: Boolean
+    },
+    courseStudent: [{
+        courseStudentId: {
+            type: String
+        },
+        courseStudentFirstName: {
+            type: String
+        },
+        courseStudentLastName: {
+            type: String
+        },
+        courseStudentStatus: {
+            type: Boolean
+        },
+        courseStudentGrade: {
+            type: String
+        }
+    }]
 });
 
 module.exports = mongoose.model('Grade', gradeSchema);

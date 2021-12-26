@@ -1,6 +1,6 @@
-<!-- CREATE Course (Button) -->
+<!-- ADD Course (Button) -->
 <% isDisabled = 'disabled' %>
-<% if (facultyActive === true) { %>
+<% if (foundFaculty.semesterStatus === true) { %>
     <% isDisabled = '' %>
 <% } else { %>
     <% isDisabled = 'disabled' %>
@@ -13,9 +13,9 @@
         data-bs-target="#facultyAddStudent">
     <i class="bi bi-window-stack"></i> Add Course <i class="bi bi-plus-lg"></i>
 </button>
-<!-- /CREATE Course (Button) -->
+<!-- /ADD Course (Button) -->
 
-<!-- CREATE Course (Floating Form) -->
+<!-- ADD Course (Floating Form) -->
 <div class="modal fade"
      id="facultyAddStudent"
      data-bs-backdrop="static"
@@ -36,6 +36,9 @@
 
                     <!-- CRUD Information -->
                     <input type="hidden" name="CRUD" value="FACULTY_ADD_COURSE">
+                    <input type="hidden" name="email" value="<%= foundFaculty.email %>">
+                    <input type="hidden" name="firstName" value="<%= foundFaculty.firstName %>">
+                    <input type="hidden" name="lastName" value="<%= foundFaculty.lastName %>">
                     <!-- /CRUD Information -->
 
                     <div class="col-12 mt-3">
@@ -73,4 +76,4 @@
         </div>
     </div>
 </div>
-<!-- /CREATE Course (Floating Form) -->
+<!-- /ADD Course (Floating Form) -->
