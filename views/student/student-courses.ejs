@@ -26,7 +26,24 @@
                                             <td><%= grade.courseDetails %></td>
                                             <td><%= grade.courseFacultyFirstName %> <%= grade.courseFacultyLastName %></td>
                                             <td><%= grade.semesterName %></td>
-                                            <td></td>
+
+                                            <td>
+                                                <% let status = false %>
+                                                <% grade.courseStudent.forEach((course) => { %>
+                                                    <% if(course.courseStudentId === studentId) { %>
+                                                        <span style="color: green; font-weight: bold">
+                                                            Unlocked <i class="bi bi-unlock-fill"></i>
+                                                        </span>
+                                                        <% status = true %>
+                                                    <% } %>
+                                                <% }); %>
+                                                <% if (status === false) { %>
+                                                    <span style="color: red; font-weight: bold">
+                                                        Locked <i class="bi bi-lock-fill"></i>
+                                                    </span>
+                                                <% } %>
+                                            </td>
+
                                             <td>
                                                 <form action="/student-courses" method="post">
 

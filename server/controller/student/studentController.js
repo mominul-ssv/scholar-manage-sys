@@ -54,7 +54,8 @@ exports.student_courses_get = (req, res) => {
         Grade.find({}, (err, foundGrades) => {
             if (!err) {
                 const sidebarNav = {courses: 'active'};
-                res.render('student/student-courses', {foundGrades, sidebarNav});
+                const studentId = req.session.studentLoginId;
+                res.render('student/student-courses', {foundGrades,studentId, sidebarNav});
             } else console.log(err);
         });
     }
@@ -73,22 +74,32 @@ exports.student_courses_post = (req, res) => {
                     {studentId: req.session.studentLoginId},
                     (err, foundStudent) => {
                         if (!err) {
-                            Grade.updateOne(
-                                {_id: req.body._id},
-                                {
-                                    $push: {
-                                        courseStudent: {
-                                            courseStudentId: foundStudent.studentId,
-                                            courseStudentFirstName: foundStudent.firstName,
-                                            courseStudentLastName: foundStudent.lastName,
-                                            courseStudentStatus: true
-                                        }
-                                    }
-                                }, (err) => {
+                            Grade.findOne(
+                                {_id: req.body._id, 'courseStudent.courseStudentId': req.session.studentLoginId},
+                                (err, foundGrade) => {
                                     if (!err) {
-                                        res.redirect('/student-courses');
+                                        if (foundGrade === null) {
+                                            Grade.updateOne(
+                                                {_id: req.body._id},
+                                                {
+                                                    $push: {
+                                                        courseStudent: {
+                                                            courseStudentId: foundStudent.studentId,
+                                                            courseStudentFirstName: foundStudent.firstName,
+                                                            courseStudentLastName: foundStudent.lastName,
+                                                            courseStudentStatus: true
+                                                        }
+                                                    }
+                                                }, (err) => {
+                                                    if (!err) {
+                                                        res.redirect('/student-courses');
+                                                    } else console.log(err);
+                                                });
+                                        } else {
+                                            res.redirect('/student-courses');
+                                        }
                                     } else console.log(err);
-                                });
+                            });
                         } else console.log(err);
                     });
             }
