@@ -196,6 +196,25 @@ exports.faculty_grades_get = (req, res) => {
 
 exports.faculty_grades_post = (req, res) => {
     if (req.session.facultyAuth === true) {
-        res.redirect('/faculty-grades');
+
+        const {CRUD} = req.body;
+        console.log(CRUD);
+
+        switch (CRUD) {
+
+            case 'FACULTY_READ_GRADES': {
+                res.redirect('/faculty-grades');
+            }
+                break;
+
+            case 'FACULTY_STUDENT_GRADES': {
+                const sidebarNav = {grades: 'active'};
+                res.render('faculty/faculty-btn/faculty-grades-btn/faculty-grade-student.ejs', {sidebarNav});
+            }
+                break;
+
+            default:
+                console.log("Error occurred in { admin_students_post }");
+        }
     }
 }

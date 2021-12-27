@@ -22,7 +22,21 @@
                                             <td><%= grade.courseCode %></td>
                                             <td><%= grade.courseDetails %></td>
                                             <td><%= grade.semesterName %></td>
-                                            <td></td>
+                                            <td>
+                                                <form action="/faculty-grades" method="post">
+
+                                                    <!-- CRUD Information -->
+                                                    <input type="hidden" name="CRUD" value="FACULTY_STUDENT_GRADES">
+                                                    <input type="hidden" name="_id" value="<%= grade._id %>">
+                                                    <!-- /CRUD Information -->
+
+                                                    <button type="button"
+                                                            class="btn btn-outline-dark border-success"
+                                                            onclick="this.parentNode.submit();">
+                                                        <i class="bi bi-fullscreen-exit"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
                                         </tr>
                                     <% }); %>
                                 <% } %>
