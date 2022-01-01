@@ -87,7 +87,8 @@ exports.student_courses_post = (req, res) => {
                                                             courseStudentId: foundStudent.studentId,
                                                             courseStudentFirstName: foundStudent.firstName,
                                                             courseStudentLastName: foundStudent.lastName,
-                                                            courseStudentStatus: true
+                                                            courseStudentStatus: true,
+                                                            courseStudentGradeStatus: false
                                                         }
                                                     }
                                                 }, (err) => {

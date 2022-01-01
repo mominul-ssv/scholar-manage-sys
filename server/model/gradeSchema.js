@@ -38,6 +38,9 @@ let gradeSchema = new Schema({
         },
         courseStudentGrade: {
             type: String
+        },
+        courseStudentGradeStatus: {
+            type: Boolean
         }
     }]
 });

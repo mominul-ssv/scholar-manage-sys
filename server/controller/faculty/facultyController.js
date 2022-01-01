@@ -208,13 +208,52 @@ exports.faculty_grades_post = (req, res) => {
                 break;
 
             case 'FACULTY_STUDENT_GRADES': {
-                const sidebarNav = {grades: 'active'};
-                res.render('faculty/faculty-btn/faculty-grades-btn/faculty-grade-student.ejs', {sidebarNav});
+                Grade.findOne(
+                    {_id: req.body._id},
+                    (err, found) => {
+                        if (!err) {
+                            const sidebarNav = {grades: 'active'};
+                            res.render('faculty/faculty-btn/faculty-grades-btn/faculty-grade-student.ejs', {
+                                found,
+                                sidebarNav
+                            });
+                        } else console.log(err);
+                    });
+            }
+                break;
+
+            case 'FACULTY_STUDENT_GRADES_CHANGE': {
+
+                console.log(req.body);
+
+                Grade.updateOne(
+                    {_id: req.body._id, 'courseStudent.courseStudentId': req.body.courseStudentId},
+                    {
+                        $set: {
+                            'courseStudent.$.courseStudentGrade': req.body.letterGrade,
+                            'courseStudent.$.courseStudentGradeStatus': true
+
+                        }
+                    }, (err) => {
+                        if (!err) {
+                            Grade.findOne(
+                                {_id: req.body._id},
+                                (err, found) => {
+                                    if (!err) {
+                                        const sidebarNav = {grades: 'active'};
+                                        res.render('faculty/faculty-btn/faculty-grades-btn/faculty-grade-student.ejs', {
+                                            found,
+                                            sidebarNav
+                                        });
+                                    } else console.log(err);
+                                });
+                        } else console.log(err);
+                    });
             }
                 break;
 
             default:
-                console.log("Error occurred in { admin_students_post }");
+                console.log("Error occurred in { faculty_grades_post }");
         }
     }
 }

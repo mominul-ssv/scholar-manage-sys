@@ -2,10 +2,89 @@
 
 <main class="main-dashboard">
     <div class="container-fluid">
-        <p class="fw-bold text-center" style="color: #2ba956; padding-top: 200px; font-size: 50px">
-            Grades!
-        </p>
+        <div class="row">
+            <div class="col-12 mt-2">
+                <div class="card pt-1">
+
+                    <div class="card-header fw-bold text-center">
+                        <% if (typeof found !== 'undefined') { %>
+                        <div class="row">
+                            <div class="col-6" style="text-align: left">Semester: <%= found.semesterName %></div>
+                            <div class="col-6" style="text-align: right">Course Code: <%= found.courseCode %></div>
+                        </div>
+                        <% } %>
+                    </div>
+
+                    <div class="card-body">
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Student ID</th>
+                                    <th>Name</th>
+                                    <th>Grade</th>
+                                    <th>Change</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if (typeof found !== 'undefined') { %>
+                                    <% found.courseStudent.forEach((student) => { %>
+                                        <tr>
+                                            <td><%= student.courseStudentId %></td>
+                                            <td><%= student.courseStudentFirstName %> <%= student.courseStudentLastName %></td>
+                                            <td><%= student.courseStudentGrade %></td>
+                                            <td>
+                                                <form action="/faculty-grades" method="post">
+                                                    <div class="row">
+
+                                                        <div class="col-9">
+                                                            <label hidden for="inputState" class="form-label"></label>
+                                                            <select id="inputState" class="form-select" name="letterGrade" required>
+                                                                <option value="">Choose...</option>
+                                                                <option value="A">A</option>
+                                                                <option value="A-">A-</option>
+                                                                <option value="B+">B+</option>
+                                                                <option value="B">B</option>
+                                                                <option value="B-">B-</option>
+                                                                <option value="C+">C+</option>
+                                                                <option value="C">C</option>
+                                                                <option value="C-">C-</option>
+                                                                <option value="D+">D+</option>
+                                                                <option value="D">D</option>
+                                                                <option value="F">F</option>
+                                                                <option value="I">I</option>
+                                                                <option value="W">W</option>
+                                                                <option value="R">R</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col-3">
+                                                            <!-- CRUD Information -->
+                                                            <input type="hidden" name="CRUD" value="FACULTY_STUDENT_GRADES_CHANGE">
+                                                            <input type="hidden" name="_id" value="<%= found._id %>">
+                                                            <input type="hidden" name="courseStudentId" value="<%= student.courseStudentId %>">
+                                                            <!-- /CRUD Information -->
+
+                                                            <button type="submit"
+                                                                    class="btn btn-warning">
+                                                                <i class="bi bi-arrow-counterclockwise"></i>
+                                                            </button>
+                                                        </div>
+
+                                                    </div>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    <% }); %>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </main>
+
 
 <%- include("../../faculty-partials/faculty-footer.ejs") -%>
