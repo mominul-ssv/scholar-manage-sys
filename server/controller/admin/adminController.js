@@ -2,6 +2,7 @@ const data = require('../../database/data.js');
 const Student = require('../../model/studentSchema.js');
 const Faculty = require('../../model/facultySchema.js');
 const Course = require('../../model/courseSchema.js');
+const Scholarship = require('../../model/scholarshipSchema.js');
 
 // ADMIN -------------------------------------------------------------------------------------------------- (Dashboard)
 exports.admin_dashboard_get = (req, res) => {
@@ -64,7 +65,15 @@ exports.admin_students_post = (req, res) => {
                                 citizenship: citizenship,
                                 registrationStatus: false
                             });
+
+                            const scholarship = new Scholarship({
+                                studentId: studentId,
+                                cgpa: '0.00',
+                                creditsCompleted: '0'
+                            });
+
                             await student.save();
+                            await scholarship.save();
                             res.redirect('/admin-students');
                         } else {
                             req.session.msg = 'DUPLICATE_SID';

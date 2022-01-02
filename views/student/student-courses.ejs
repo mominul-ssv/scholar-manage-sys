@@ -56,7 +56,7 @@
 
                                                     <% let gradeStatus = '' %>
                                                     <% grade.courseStudent.forEach((course) => { %>
-                                                        <% if(course.courseStudentGradeStatus === true) { %>
+                                                        <% if(course.courseStudentGradeStatus === true && course.courseStudentId === studentId) { %>
                                                             <% gradeStatus = 'disabled' %>
                                                         <% } %>
                                                     <% }); %>

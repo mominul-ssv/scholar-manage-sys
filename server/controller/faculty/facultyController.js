@@ -24,9 +24,7 @@ exports.faculty_profile_get = (req, res) => {
             if (!err) {
                 const sidebarNav = {profile: 'active'};
                 res.render('faculty/faculty-profile', {foundFaculty, sidebarNav});
-            } else {
-                console.log(err);
-            }
+            } else console.log(err);
         });
     }
 }
@@ -247,61 +245,48 @@ exports.faculty_grades_post = (req, res) => {
                                         {studentId: courseStudentId},
                                         async (err, foundScholarship) => {
                                             if (!err) {
-                                                if (foundScholarship === null) {
-                                                    const scholarship = new Scholarship({
-                                                        studentId: courseStudentId,
-                                                        courseCompleted: {
-                                                            courseCode: foundGrade.courseCode,
-                                                            courseDetails: foundGrade.courseDetails,
-                                                            courseCredit: foundGrade.courseCredit,
-                                                            courseGrade: letterGrade
-                                                        }
-                                                    });
-                                                    await scholarship.save();
-                                                    refresh();
-                                                } else {
-                                                    // Searching for the course in the collection
-                                                    let objStatus = false;
-                                                    foundScholarship.courseCompleted.forEach((found) => {
-                                                        if (found.courseCode === foundGrade.courseCode) {
-                                                            objStatus = true;
-                                                        }
-                                                    });
 
-                                                    if (objStatus === true) {
-                                                        Scholarship.updateOne(
-                                                            {
-                                                                studentId: courseStudentId,
-                                                                'courseCompleted.courseCode': foundGrade.courseCode
-                                                            },
-                                                            {
-                                                                $set: {
-                                                                    'courseCompleted.$.courseGrade': letterGrade,
-                                                                }
-                                                            },
-                                                            (err) => {
-                                                                if (!err) {
-                                                                    refresh();
-                                                                } else console.log(err);
-                                                            });
-                                                    } else if (objStatus === false) {
-                                                        Scholarship.updateOne(
-                                                            {studentId: courseStudentId},
-                                                            {
-                                                                $push: {
-                                                                    courseCompleted: {
-                                                                        courseCode: foundGrade.courseCode,
-                                                                        courseDetails: foundGrade.courseDetails,
-                                                                        courseCredit: foundGrade.courseCredit,
-                                                                        courseGrade: letterGrade
-                                                                    }
-                                                                }
-                                                            }, (err) => {
-                                                                if (!err) {
-                                                                    refresh();
-                                                                } else console.log(err);
-                                                            });
+                                                // Searching for the course in the collection
+                                                let objStatus = false;
+                                                foundScholarship.courseCompleted.forEach((found) => {
+                                                    if (found.courseCode === foundGrade.courseCode) {
+                                                        objStatus = true;
                                                     }
+                                                });
+
+                                                if (objStatus === true) {
+                                                    Scholarship.updateOne(
+                                                        {
+                                                            studentId: courseStudentId,
+                                                            'courseCompleted.courseCode': foundGrade.courseCode
+                                                        },
+                                                        {
+                                                            $set: {
+                                                                'courseCompleted.$.courseGrade': letterGrade,
+                                                            }
+                                                        },
+                                                        (err) => {
+                                                            if (!err) {
+                                                                refresh();
+                                                            } else console.log(err);
+                                                        });
+                                                } else if (objStatus === false) {
+                                                    Scholarship.updateOne(
+                                                        {studentId: courseStudentId},
+                                                        {
+                                                            $push: {
+                                                                courseCompleted: {
+                                                                    courseCode: foundGrade.courseCode,
+                                                                    courseDetails: foundGrade.courseDetails,
+                                                                    courseCredit: foundGrade.courseCredit,
+                                                                    courseGrade: letterGrade
+                                                                }
+                                                            }
+                                                        }, (err) => {
+                                                            if (!err) {
+                                                                refresh();
+                                                            } else console.log(err);
+                                                        });
                                                 }
                                             } else console.log(err);
                                         });
@@ -321,8 +306,11 @@ exports.faculty_grades_post = (req, res) => {
                                         if (!err) {
                                             if (foundScholarship !== null) {
                                                 let sumGradePoint = 0.0;
+                                                let sumCredit = 0;
                                                 let count = 0;
                                                 let pureCGPA = 0.0;
+
+                                                // Convert later grade to grade point
                                                 foundScholarship.courseCompleted.forEach((found) => {
                                                     let gradePoint;
                                                     switch (found.courseGrade) {
@@ -370,9 +358,14 @@ exports.faculty_grades_post = (req, res) => {
                                                             gradePoint = 0.0;
                                                         }
                                                     }
+                                                    // Count CGPA
                                                     sumGradePoint = sumGradePoint + gradePoint;
                                                     count++;
+
+                                                    // Count credit
+                                                    sumCredit = sumCredit + parseInt(found.courseCredit);
                                                 });
+
                                                 if (count !== 0) {
 
                                                     pureCGPA = sumGradePoint / count;
@@ -382,7 +375,8 @@ exports.faculty_grades_post = (req, res) => {
                                                         {studentId: courseStudentId},
                                                         {
                                                             $set: {
-                                                                cgpa: pureCGPA
+                                                                cgpa: pureCGPA,
+                                                                creditsCompleted: sumCredit
                                                             }
                                                         },
                                                         (err) => {
