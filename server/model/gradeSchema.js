@@ -11,6 +11,9 @@ let gradeSchema = new Schema({
     courseDetails: {
         type: String
     },
+    courseCredit: {
+        type: String
+    },
     courseFacultyEmail: {
         type: String
     },

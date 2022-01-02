@@ -34,18 +34,9 @@ let studentSchema = new Schema({
     credits: {
         type: Number
     },
-    creditsPassed: {
-        type: Number
-    },
     entrySemester: {
         type: String,
         required: true
-    },
-    currentSemester: {
-        type: String
-    },
-    cgpa: {
-        type: Number
     },
     phone: {
         type: String
@@ -60,9 +51,6 @@ let studentSchema = new Schema({
         type: String
     },
     address: {
-        type: String
-    },
-    financialAid: {
         type: String
     }
 });

@@ -9,6 +9,10 @@ let courseSchema = new Schema({
     courseDetails: {
         type: String,
         required: true
+    },
+    courseCredit: {
+        type: String,
+        required: true
     }
 });
 

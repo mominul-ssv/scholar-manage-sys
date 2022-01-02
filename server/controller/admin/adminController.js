@@ -264,13 +264,14 @@ exports.admin_courses_post = (req, res) => {
 
             // CREATE Course
             case 'ADMIN_CREATE_COURSE': {
-                const {courseCode, courseDetails} = req.body;
+                const {courseCode, courseDetails, courseCredit} = req.body;
                 Course.findOne({courseCode: courseCode}, async (err, foundCourse) => {
                     if (!err) {
                         if (foundCourse === null) {
                             const course = new Course({
                                 courseCode: courseCode,
-                                courseDetails: courseDetails
+                                courseDetails: courseDetails,
+                                courseCredit: courseCredit
                             });
                             await course.save();
                             res.redirect('/admin-courses');
@@ -291,13 +292,14 @@ exports.admin_courses_post = (req, res) => {
 
             // UPDATE Course
             case 'ADMIN_UPDATE_COURSE': {
-                const {_id, courseCode, courseDetails} = req.body;
+                const {_id, courseCode, courseDetails, courseCredit} = req.body;
                 Course.updateOne(
                     {_id: _id},
                     {
                         $set: {
                             courseCode: courseCode,
-                            courseDetails: courseDetails
+                            courseDetails: courseDetails,
+                            courseCredit: courseCredit
                         }
                     }, (err) => {
                         if (!err) {

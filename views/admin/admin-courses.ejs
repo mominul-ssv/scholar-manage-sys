@@ -36,7 +36,8 @@
                         <thead>
                             <tr>
                                 <th>Course Code</th>
-                                <th style="width: 70%">Course Details</th>
+                                <th>Course Details</th>
+                                <th>Course Credit</th>
                                 <th style="width: 0">Update</th>
                                 <th style="width: 0">Delete</th>
                             </tr>
@@ -50,6 +51,7 @@
                                     <tr>
                                         <td><%= course.courseCode %></td>
                                         <td><%= course.courseDetails %></td>
+                                        <td><%= course.courseCredit %></td>
                                         <td>
                                             <!-- UPDATE Course -->
                                             <%- include("admin-btn/admin-courses-btn/admin-course-update.ejs", {course: course}) -%>

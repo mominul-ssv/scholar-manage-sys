@@ -57,10 +57,10 @@
                     </div>
                     <div class="card-body">
                         <table class="table table-hover">
-                            <% if (foundStudent !== 'undefined' ) { %>
+                            <% if (foundScholarship !== 'undefined' ) { %>
                                 <tr>
                                     <th>Current CGPA:</th>
-                                    <td></td>
+                                    <td><%= foundScholarship.cgpa %></td>
                                 </tr>
                                 <tr>
                                     <th>Credits Passed:</th>

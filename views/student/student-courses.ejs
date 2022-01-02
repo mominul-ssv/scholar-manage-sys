@@ -11,8 +11,9 @@
                                 <tr>
                                     <th>Course Code</th>
                                     <th>Course Details</th>
-                                    <th>Course Faculty</th>
-                                    <th>Course Semester</th>
+                                    <th>Credit</th>
+                                    <th>Faculty</th>
+                                    <th>Semester</th>
                                     <th>Status</th>
                                     <th style="width: 0">Take</th>
                                     <th style="width: 0">Drop</th>
@@ -24,6 +25,7 @@
                                         <tr>
                                             <td><%= grade.courseCode %></td>
                                             <td><%= grade.courseDetails %></td>
+                                            <td><%= grade.courseCredit %></td>
                                             <td><%= grade.courseFacultyFirstName %> <%= grade.courseFacultyLastName %></td>
                                             <td><%= grade.semesterName %></td>
 
@@ -52,7 +54,15 @@
                                                     <input type="hidden" name="_id" value="<%= grade._id %>">
                                                     <!-- /CRUD Information -->
 
-                                                    <button class="btn btn-success"
+                                                    <% let gradeStatus = '' %>
+                                                    <% grade.courseStudent.forEach((course) => { %>
+                                                        <% if(course.courseStudentGradeStatus === true) { %>
+                                                            <% gradeStatus = 'disabled' %>
+                                                        <% } %>
+                                                    <% }); %>
+
+                                                    <button <%= gradeStatus %>
+                                                            class="btn btn-success"
                                                             type="submit">
                                                         <i class="bi bi-plus-circle-dotted"></i>
                                                     </button>

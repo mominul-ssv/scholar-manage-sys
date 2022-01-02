@@ -1,6 +1,7 @@
 const Faculty = require("../../model/facultySchema.js");
 const Course = require("../../model/courseSchema.js");
 const Grade = require("../../model/gradeSchema.js");
+const Scholarship = require("../../model/scholarshipSchema.js");
 
 // FACULTY ----------------------------------------------------------------------------------------------------- (Home)
 exports.faculty_dashboard_get = (req, res) => {
@@ -139,6 +140,7 @@ exports.faculty_courses_post = (req, res) => {
                                                 semesterName: courseSemester,
                                                 courseCode: courseCode,
                                                 courseDetails: foundCourse.courseDetails,
+                                                courseCredit: foundCourse.courseCredit,
                                                 courseFacultyEmail: email,
                                                 courseFacultyFirstName: firstName,
                                                 courseFacultyLastName: lastName,
@@ -224,29 +226,186 @@ exports.faculty_grades_post = (req, res) => {
 
             case 'FACULTY_STUDENT_GRADES_CHANGE': {
 
-                console.log(req.body);
+                const {_id, courseStudentId, letterGrade} = req.body;
 
                 Grade.updateOne(
-                    {_id: req.body._id, 'courseStudent.courseStudentId': req.body.courseStudentId},
+                    {
+                        _id: _id,
+                        'courseStudent.courseStudentId': courseStudentId
+                    },
                     {
                         $set: {
-                            'courseStudent.$.courseStudentGrade': req.body.letterGrade,
+                            'courseStudent.$.courseStudentGrade': letterGrade,
                             'courseStudent.$.courseStudentGradeStatus': true
-
                         }
                     }, (err) => {
                         if (!err) {
-                            Grade.findOne(
-                                {_id: req.body._id},
-                                (err, found) => {
-                                    if (!err) {
-                                        const sidebarNav = {grades: 'active'};
-                                        res.render('faculty/faculty-btn/faculty-grades-btn/faculty-grade-student.ejs', {
-                                            found,
-                                            sidebarNav
+                            // Update information for CGPA calculation
+                            Grade.findOne({_id: _id}, (err, foundGrade) => {
+                                if (!err) {
+                                    Scholarship.findOne(
+                                        {studentId: courseStudentId},
+                                        async (err, foundScholarship) => {
+                                            if (!err) {
+                                                if (foundScholarship === null) {
+                                                    const scholarship = new Scholarship({
+                                                        studentId: courseStudentId,
+                                                        courseCompleted: {
+                                                            courseCode: foundGrade.courseCode,
+                                                            courseDetails: foundGrade.courseDetails,
+                                                            courseCredit: foundGrade.courseCredit,
+                                                            courseGrade: letterGrade
+                                                        }
+                                                    });
+                                                    await scholarship.save();
+                                                    refresh();
+                                                } else {
+                                                    // Searching for the course in the collection
+                                                    let objStatus = false;
+                                                    foundScholarship.courseCompleted.forEach((found) => {
+                                                        if (found.courseCode === foundGrade.courseCode) {
+                                                            objStatus = true;
+                                                        }
+                                                    });
+
+                                                    if (objStatus === true) {
+                                                        Scholarship.updateOne(
+                                                            {
+                                                                studentId: courseStudentId,
+                                                                'courseCompleted.courseCode': foundGrade.courseCode
+                                                            },
+                                                            {
+                                                                $set: {
+                                                                    'courseCompleted.$.courseGrade': letterGrade,
+                                                                }
+                                                            },
+                                                            (err) => {
+                                                                if (!err) {
+                                                                    refresh();
+                                                                } else console.log(err);
+                                                            });
+                                                    } else if (objStatus === false) {
+                                                        Scholarship.updateOne(
+                                                            {studentId: courseStudentId},
+                                                            {
+                                                                $push: {
+                                                                    courseCompleted: {
+                                                                        courseCode: foundGrade.courseCode,
+                                                                        courseDetails: foundGrade.courseDetails,
+                                                                        courseCredit: foundGrade.courseCredit,
+                                                                        courseGrade: letterGrade
+                                                                    }
+                                                                }
+                                                            }, (err) => {
+                                                                if (!err) {
+                                                                    refresh();
+                                                                } else console.log(err);
+                                                            });
+                                                    }
+                                                }
+                                            } else console.log(err);
                                         });
-                                    } else console.log(err);
-                                });
+                                } else console.log(err);
+                            });
+
+                            // Refresh Webpage
+                            function refresh() {
+                                calculation();
+                            }
+
+                            // CGPA Calculation
+                            function calculation() {
+                                Scholarship.findOne(
+                                    {studentId: courseStudentId},
+                                    (err, foundScholarship) => {
+                                        if (!err) {
+                                            if (foundScholarship !== null) {
+                                                let sumGradePoint = 0.0;
+                                                let count = 0;
+                                                let pureCGPA = 0.0;
+                                                foundScholarship.courseCompleted.forEach((found) => {
+                                                    let gradePoint;
+                                                    switch (found.courseGrade) {
+                                                        case 'A': {
+                                                            gradePoint = 4.0;
+                                                            break;
+                                                        }
+                                                        case 'A-': {
+                                                            gradePoint = 3.7;
+                                                            break;
+                                                        }
+                                                        case 'B+': {
+                                                            gradePoint = 3.3;
+                                                            break;
+                                                        }
+                                                        case 'B': {
+                                                            gradePoint = 3.0;
+                                                            break;
+                                                        }
+                                                        case 'B-': {
+                                                            gradePoint = 2.7;
+                                                            break;
+                                                        }
+                                                        case 'C+': {
+                                                            gradePoint = 2.3;
+                                                            break;
+                                                        }
+                                                        case 'C': {
+                                                            gradePoint = 2.0;
+                                                            break;
+                                                        }
+                                                        case 'C-': {
+                                                            gradePoint = 1.7;
+                                                            break;
+                                                        }
+                                                        case 'D+': {
+                                                            gradePoint = 1.3;
+                                                            break;
+                                                        }
+                                                        case 'D': {
+                                                            gradePoint = 1.0;
+                                                            break;
+                                                        }
+                                                        default: {
+                                                            gradePoint = 0.0;
+                                                        }
+                                                    }
+                                                    sumGradePoint = sumGradePoint + gradePoint;
+                                                    count++;
+                                                });
+                                                if (count !== 0) {
+
+                                                    pureCGPA = sumGradePoint / count;
+                                                    pureCGPA = pureCGPA.toFixed(2);
+
+                                                    Scholarship.updateOne(
+                                                        {studentId: courseStudentId},
+                                                        {
+                                                            $set: {
+                                                                cgpa: pureCGPA
+                                                            }
+                                                        },
+                                                        (err) => {
+                                                            if (!err) {
+                                                                Grade.findOne(
+                                                                    {_id: _id},
+                                                                    (err, found) => {
+                                                                        if (!err) {
+                                                                            const sidebarNav = {grades: 'active'};
+                                                                            res.render('faculty/faculty-btn/faculty-grades-btn/faculty-grade-student.ejs', {
+                                                                                found,
+                                                                                sidebarNav
+                                                                            });
+                                                                        } else console.log(err);
+                                                                    });
+                                                            } else console.log(err);
+                                                        });
+                                                }
+                                            }
+                                        } else console.log(err);
+                                    });
+                            }
+
                         } else console.log(err);
                     });
             }

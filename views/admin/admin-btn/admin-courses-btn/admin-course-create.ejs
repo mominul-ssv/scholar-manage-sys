@@ -31,13 +31,25 @@
                     <input type="hidden" name="CRUD" value="ADMIN_CREATE_COURSE">
                     <!-- /CRUD Information -->
 
-                    <div class="col-12 mb-3">
+                    <div class="col-6 mb-3">
                         <label for="courseCode" class="form-label">Course Code</label>
                         <input type="text"
                                class="form-control"
                                id="courseCode"
                                name="courseCode"
                                placeholder="CSE327"
+                               required>
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <label for="courseCredit" class="form-label">Course Credit</label>
+                        <input type="number"
+                               class="form-control"
+                               id="courseCredit"
+                               name="courseCredit"
+                               placeholder="3"
+                               min="0"
+                               max="3"
                                required>
                     </div>
 

@@ -1,5 +1,6 @@
 const Student = require('../../model/studentSchema.js');
 const Grade = require("../../model/gradeSchema.js");
+const Scholarship = require("../../model/scholarshipSchema.js");
 
 // STUDENT ----------------------------------------------------------------------------------------------------- (Home)
 exports.student_dashboard_get = (req, res) => {
@@ -20,8 +21,12 @@ exports.student_profile_get = (req, res) => {
     if (req.session.studentAuth === true) {
         Student.findOne({studentId: req.session.studentLoginId}, (err, foundStudent) => {
             if (!err) {
-                const sidebarNav = {profile: 'active'};
-                res.render('student/student-profile', {foundStudent, sidebarNav});
+                Scholarship.findOne({studentId: req.session.studentLoginId}, (err, foundScholarship) => {
+                    if (!err) {
+                        const sidebarNav = {profile: 'active'};
+                        res.render('student/student-profile', {foundStudent, foundScholarship, sidebarNav});
+                    } else console.log(err);
+                });
             } else console.log(err);
         });
     }
@@ -55,7 +60,7 @@ exports.student_courses_get = (req, res) => {
             if (!err) {
                 const sidebarNav = {courses: 'active'};
                 const studentId = req.session.studentLoginId;
-                res.render('student/student-courses', {foundGrades,studentId, sidebarNav});
+                res.render('student/student-courses', {foundGrades, studentId, sidebarNav});
             } else console.log(err);
         });
     }
@@ -100,7 +105,7 @@ exports.student_courses_post = (req, res) => {
                                             res.redirect('/student-courses');
                                         }
                                     } else console.log(err);
-                            });
+                                });
                         } else console.log(err);
                     });
             }
@@ -121,9 +126,8 @@ exports.student_courses_post = (req, res) => {
                             }
                         }
                     },
-                    (err, found) => {
+                    (err) => {
                         if (!err) {
-                            console.log(found);
                             res.redirect('/student-courses');
                         } else console.log(err);
                     });
@@ -140,8 +144,14 @@ exports.student_courses_post = (req, res) => {
 // STUDENT --------------------------------------------------------------------------------------------------- (Grades)
 exports.student_grades_get = (req, res) => {
     if (req.session.studentAuth === true) {
-        const sidebarNav = {grades: 'active'};
-        res.render('student/student-grades', {sidebarNav});
+        Grade.find(
+            {'courseStudent.courseStudentId': req.session.studentLoginId},
+            (err, foundGrades) => {
+                if (!err) {
+                    const sidebarNav = {grades: 'active', studentId: req.session.studentLoginId};
+                    res.render('student/student-grades', {foundGrades, sidebarNav});
+                } else console.log(err);
+            });
     }
 }
 

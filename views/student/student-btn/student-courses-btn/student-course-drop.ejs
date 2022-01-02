@@ -1,5 +1,13 @@
 <!-- DROP Course (Button) -->
-<button type="button"
+<% let gradeStatus = '' %>
+<% grade.courseStudent.forEach((course) => { %>
+    <% if(course.courseStudentGradeStatus === true) { %>
+        <% gradeStatus = 'disabled' %>
+    <% } %>
+<% }); %>
+
+<button <%= gradeStatus %>
+        type="button"
         class="btn btn-danger"
         data-bs-toggle="modal"
         data-bs-target="#studentDropCourse<%= grade._id %>"><i class="bi bi-x-circle"></i>
