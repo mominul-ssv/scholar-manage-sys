@@ -39,8 +39,8 @@ exports.faculty_profile_post = (req, res) => {
 
             case 'FACULTY_READ_PROFILE': {
                 res.redirect('/faculty-profile');
-            }
                 break;
+            }
 
             case 'FACULTY_UPDATE_PROFILE': {
                 const {_id, phone, dob, citizenship, address} = req.body;
@@ -58,11 +58,10 @@ exports.faculty_profile_post = (req, res) => {
                             res.redirect('/faculty-profile');
                         } else console.log(err);
                     });
-            }
                 break;
+            }
 
             case 'FACULTY_UPDATE_PROFILE_STATUS': {
-
                 Faculty.findOne({email: req.session.facultyEmail}, (err, foundFaculty) => {
                     if (!err) {
                         Faculty.updateOne(
@@ -78,8 +77,8 @@ exports.faculty_profile_post = (req, res) => {
                             });
                     } else console.log(err);
                 });
-            }
                 break;
+            }
 
             default:
                 console.log("Error occurred in { faculty_profile_post }");
@@ -118,7 +117,6 @@ exports.faculty_courses_post = (req, res) => {
 
         switch (CRUD) {
 
-            // ADD Course
             case 'FACULTY_ADD_COURSE': {
                 const {courseCode, courseSemester, email, firstName, lastName} = req.body;
                 Grade.findOne(
@@ -153,16 +151,14 @@ exports.faculty_courses_post = (req, res) => {
                             }
                         } else console.log(err);
                     });
-            }
                 break;
+            }
 
-            // READ Course
             case 'FACULTY_READ_COURSES': {
                 res.redirect('/faculty-courses');
-            }
                 break;
+            }
 
-            // DELETE Course
             case 'FACULTY_DELETE_COURSE': {
                 const {_id} = req.body;
                 Grade.deleteOne({_id: _id}, (err) => {
@@ -170,8 +166,8 @@ exports.faculty_courses_post = (req, res) => {
                         res.redirect('/faculty-courses');
                     } else console.log(err);
                 });
-            }
                 break;
+            }
 
             default:
                 console.log("Error occurred in { faculty_courses_post }");
@@ -204,8 +200,8 @@ exports.faculty_grades_post = (req, res) => {
 
             case 'FACULTY_READ_GRADES': {
                 res.redirect('/faculty-grades');
-            }
                 break;
+            }
 
             case 'FACULTY_STUDENT_GRADES': {
                 Grade.findOne(
@@ -219,13 +215,11 @@ exports.faculty_grades_post = (req, res) => {
                             });
                         } else console.log(err);
                     });
-            }
                 break;
+            }
 
             case 'FACULTY_STUDENT_GRADES_CHANGE': {
-
                 const {_id, courseStudentId, letterGrade} = req.body;
-
                 Grade.updateOne(
                     {
                         _id: _id,
@@ -399,11 +393,10 @@ exports.faculty_grades_post = (req, res) => {
                                         } else console.log(err);
                                     });
                             }
-
                         } else console.log(err);
                     });
-            }
                 break;
+            }
 
             default:
                 console.log("Error occurred in { faculty_grades_post }");

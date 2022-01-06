@@ -1,3 +1,65 @@
 <%- include("student-partials/student-header.ejs") -%>
 
+<main class="main-dashboard pt-0">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 mt-2">
+                <div class="card pt-1">
+                    <div class="card-body">
+                        <table class="table table-hover table-striped" style="width: border-box">
+                            <thead>
+                                <tr>
+                                    <th>Scholarship Type</th>
+                                    <th>Tuition Reduction</th>
+                                    <th>Status</th>
+                                    <th>Application Request</th>
+                                    <th style="width: 0">Application</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>Merit Based</th>
+                                    <td><%= foundScholarship.meritAmount %></td>
+                                    <td>
+                                        <% if (foundScholarship.meritApplicationStatusCode === '100') { %>
+                                            Inactive
+                                        <% } else if (foundScholarship.meritApplicationStatusCode === '200') { %>
+                                            Pending!
+                                        <% } else if (foundScholarship.meritApplicationStatusCode === '300') { %>
+                                            Active
+                                        <% } %>
+                                    </td>
+                                    <td>
+                                        <% if (foundScholarship.meritApplicationRequest === false) { %>
+                                            N/A
+                                        <% } else { %>
+                                            Application Sent!
+                                        <% } %>
+                                    </td>
+                                    <td>
+                                        <% if (meritScholarship === true) { %>
+                                            <!-- APPLY Scholarship -->
+                                            <%- include("student-btn/student-scholarship-btn/student-scholarship-apply.ejs") %>
+                                            <!-- APPLY Scholarship -->
+                                        <% } else  { %>
+                                            N/A
+                                        <% } %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Need Based</th>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
 <%- include("student-partials/student-footer.ejs") -%>

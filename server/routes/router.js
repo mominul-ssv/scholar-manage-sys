@@ -94,6 +94,10 @@ router.route('/admin-courses')
     .get(adminController.admin_courses_get)
     .post(adminController.admin_courses_post)
 
+router.route('/admin-scholarship')
+    .get(adminController.admin_scholarship_get)
+    .post(adminController.admin_scholarship_post)
+
 // ======================= Logout Portal ======================= //
 router.route('/logout')
     .post(logoutController.logout_post)

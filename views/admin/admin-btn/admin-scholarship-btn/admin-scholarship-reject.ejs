@@ -1,14 +1,14 @@
-<!-- DELETE Student (Button) -->
+<!-- REJECT Merit Scholarship (Button) -->
 <button type="button"
         class="btn btn-danger"
         data-bs-toggle="modal"
-        data-bs-target="#deleteStudent<%= student.studentId %>"><i class="bi bi-trash2"></i>
+        data-bs-target="#meritReject">Reject
 </button>
-<!-- DELETE Student (Button) -->
+<!-- /REJECT Merit Scholarship (Button) -->
 
-<!-- DELETE Student (Floating Form) -->
+<!-- REJECT Merit Scholarship (Floating Form) -->
 <div class="modal fade"
-     id="deleteStudent<%= student.studentId %>"
+     id="meritReject"
      data-bs-backdrop="static"
      data-bs-keyboard="false"
      tabindex="-1"
@@ -18,29 +18,32 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h5 class="modal-title fw-bold text-muted" id="staticBackdropLabel">Delete Student <i class="bi bi-trash2"></i></h5>
+                <h5 class="modal-title fw-bold"
+                    id="staticBackdropLabel">
+                    Reject Merit Scholarship <i class="bi bi-x-circle"></i>
+                </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <div class="modal-body">
-                <form class="row" action="/admin-students" method="post">
+                <form class="row" action="/admin-scholarship" method="post">
 
                     <!-- CRUD Information -->
-                    <input type="hidden" name="CRUD" value="ADMIN_DELETE_STUDENT">
-                    <input type="hidden" name="studentId" value="<%= student.studentId %>">
+                    <input type="hidden" name="CRUD" value="ADMIN_MERIT_REJECT">
+                    <input type="hidden" name="studentId" value="<%= foundStudent.studentId %>">
                     <!-- /CRUD Information -->
 
                     <div class="text-center">
-                        <img src="/img/cross.png" width="80" height="80" alt="faculty-logo">
+                        <img src="/img/cross.png" width="80" height="80" alt="course-logo">
                         <h5 class="p-4 text-muted fw-bold">
-                            Do you really want to delete the student with id
-                            <label style="color: #b70c0c"><%= student.studentId %></label>?
+                            Do you really want to reject the merit scholarship of student with id
+                            <label style="color: #b70c0c"><%= foundStudent.studentId %></label>?
                         </h5>
                     </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-danger">Reject</button>
                     </div>
 
                 </form>
@@ -48,4 +51,4 @@
         </div>
     </div>
 </div>
-<!-- /DELETE Student (Floating Form) -->
+<!-- /REJECT Merit Scholarship (Floating Form) -->

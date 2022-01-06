@@ -164,13 +164,53 @@ exports.student_grades_post = (req, res) => {
 // STUDENT ---------------------------------------------------------------------------------------------- (Scholarship)
 exports.student_scholarship_get = (req, res) => {
     if (req.session.studentAuth === true) {
-        const sidebarNav = {scholarship: 'active'};
-        res.render('student/student-scholarship', {sidebarNav});
+        Scholarship.findOne(
+            {studentId: req.session.studentLoginId},
+            (err, foundScholarship) => {
+                if (!err) {
+                    let meritScholarship = false;
+                    if (foundScholarship.cgpa >= 3.5 && foundScholarship.creditsCompleted >= 12) {
+                        meritScholarship = true;
+                    }
+                    const sidebarNav = {scholarship: 'active'};
+                    res.render('student/student-scholarship', {foundScholarship, meritScholarship, sidebarNav});
+                } else console.log(err);
+            });
     }
 }
 
 exports.student_scholarship_post = (req, res) => {
     if (req.session.studentAuth === true) {
-        res.redirect('/student-scholarship');
+
+        const {CRUD} = req.body;
+        console.log(CRUD);
+
+        switch (CRUD) {
+
+            case 'STUDENT_MERIT_APPLY': {
+
+                Scholarship.updateOne(
+                    {studentId: req.session.studentLoginId},
+                    {
+                        $set: {
+                            meritApplicationRequest: true,
+                            meritApplicationStatusCode: 200
+                        }
+                    }, (err) => {
+                        if (!err) {
+                            res.redirect('/student-scholarship');
+                        } else console.log(err);
+                    });
+            }
+                break;
+
+            case 'STUDENT_READ_SCHOLARSHIP': {
+                res.redirect('/student-scholarship');
+            }
+                break;
+
+            default:
+                console.log("Error occurred in { student_scholarship_post }");
+        }
     }
 }

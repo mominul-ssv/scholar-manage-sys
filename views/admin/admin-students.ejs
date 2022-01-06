@@ -75,11 +75,11 @@
                                                 <% } %>
                                             </td>
                                             <td>
-                                                <form action="/admin-students" method="post">
+                                                <form action="/admin-scholarship" method="post">
 
                                                     <!-- CRUD Information -->
                                                     <input type="hidden" name="CRUD" value="ADMIN_STUDENT_DETAILS">
-                                                    <input type="hidden" name="student" value="<%= student %>">
+                                                    <input type="hidden" name="studentId" value="<%= student.studentId %>">
                                                     <!-- /CRUD Information -->
 
                                                     <button type="button"

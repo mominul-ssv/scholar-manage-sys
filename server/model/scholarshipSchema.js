@@ -24,7 +24,23 @@ let scholarshipSchema = new Schema({
     },
     creditsCompleted: {
         type: String
+    },
+    meritApplicationRequest: {
+        type: Boolean
+    },
+    meritApplicationStatusCode: {
+        type: String
+    },
+    meritAmount: {
+        type: String
     }
 });
 
 module.exports = mongoose.model('Scholarship', scholarshipSchema);
+
+/**
+ * meritApplicationStatusCode:
+ * 100 -> Not Applied
+ * 200 -> Pending
+ * 300 -> Approved
+ * */

@@ -1,0 +1,143 @@
+<%- include("admin-partials/admin-header.ejs") -%>
+
+<main class="main-dashboard">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 mt-2">
+                <div class="card">
+
+                    <!-- Card Header -->
+                    <div class="card-header fw-bold table-responsive text-center">
+                        <i class="bi bi-journal-bookmark-fill"></i> Student Information
+                    </div>
+                    <!-- /Card Header -->
+
+                    <!-- Card Body -->
+                    <div class="card-body table-responsive">
+
+                        <!-- Table -->
+                        <table class="table table-hover">
+
+                            <!-- Table Body -->
+                            <tbody>
+                                <tr>
+                                    <th>Name:</th>
+                                    <td><%= foundStudent.firstName %> <%= foundStudent.lastName %></td>
+                                </tr>
+                                <tr>
+                                    <th>ID:</th>
+                                    <td><%= foundStudent.studentId %></td>
+                                </tr>
+                                <tr>
+                                    <th>Entry Semester:</th>
+                                    <td><%= foundStudent.entrySemester %></td>
+                                </tr>
+                                <tr>
+                                    <th>Degree:</th>
+                                    <td><%= foundStudent.degree %></td>
+                                </tr>
+                                <tr>
+                                    <th>Major:</th>
+                                    <td><%= foundStudent.major %></td>
+                                </tr>
+                                <tr>
+                                    <th>Total Credits:</th>
+                                    <td><%= foundStudent.credits %></td>
+                                </tr>
+                                <tr>
+                                    <th>Credits Completed:</th>
+                                    <td><%= foundScholarship.creditsCompleted %></td>
+                                </tr>
+                                <tr>
+                                    <th>CGPA:</th>
+                                    <td><%= foundScholarship.cgpa %></td>
+                                </tr>
+                            </tbody>
+                            <!-- /Table Body -->
+
+                        </table>
+                        <!-- Table -->
+                    </div>
+                    <!-- /Card Header -->
+
+                    <!-- Card Header -->
+                    <div class="card-header fw-bold table-responsive text-center">
+                        <i class="bi bi-nut"></i> Scholarship
+                    </div>
+                    <!-- /Card Header -->
+
+                    <!-- Card Body -->
+                    <div class="card-body table-responsive">
+
+                        <!-- Table -->
+                        <table class="table table-hover">
+
+                            <!-- Table Header -->
+                            <thead>
+                                <tr>
+                                    <th>Scholarship Type</th>
+                                    <th>Tuition Reduction</th>
+                                    <th>Status</th>
+                                    <th class="text-center"><i class="bi bi-check-circle"></i></th>
+                                    <th class="text-center"><i class="bi bi-x-circle"></i></th>
+                                </tr>
+
+                            </thead>
+                            <!-- Table Header -->
+
+                            <!-- Table Body -->
+                            <tbody>
+                                <tr>
+                                    <th>Merit Based</th>
+
+                                    <!-- Tuition Reduction -->
+                                    <td><%= foundScholarship.meritAmount %></td>
+                                    <!-- /Tuition Reduction -->
+
+                                    <!-- Status & Accept -->
+                                    <% if (foundScholarship.meritApplicationStatusCode === '100') { %>
+                                        <td>Inactive</td>
+                                        <td class="text-center">N/A</td>
+                                    <% } else if (foundScholarship.meritApplicationStatusCode === '200') { %>
+                                        <td>Pending <i class="bi bi-exclamation-circle"></i></td>
+                                        <td class="text-center">
+                                            <%- include("admin-btn/admin-scholarship-btn/admin-scholarship-accept.ejs") %>
+                                        </td>
+                                    <% } else if (foundScholarship.meritApplicationStatusCode === '300') { %>
+                                        <td>Active</td>
+                                        <td class="text-center">N/A</td>
+                                    <% } %>
+                                    <!-- /Status & Accept -->
+
+                                    <!-- Reject -->
+                                    <td class="text-center">
+                                        <% if (foundScholarship.meritApplicationStatusCode === '100') { %>
+                                            N/A
+                                        <% } else { %>
+                                            <%- include("admin-btn/admin-scholarship-btn/admin-scholarship-reject.ejs") %>
+                                        <% } %>
+                                    </td>
+                                    <!-- /Reject -->
+                                </tr>
+                                <tr>
+                                    <th>Need Based</th>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                            <!-- /Table Body -->
+
+                        </table>
+                        <!-- Table -->
+                    </div>
+                    <!-- /Card Header -->
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<%- include("admin-partials/admin-footer.ejs") -%>

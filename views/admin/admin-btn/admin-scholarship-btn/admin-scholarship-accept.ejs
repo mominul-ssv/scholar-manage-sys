@@ -1,0 +1,64 @@
+<!-- ACCEPT Merit Scholarship (Button) -->
+<button type="button"
+        class="btn btn-success"
+        data-bs-toggle="modal"
+        data-bs-target="#meritAccept">Accept
+</button>
+<!-- /ACCEPT Merit Scholarship (Button) -->
+
+<!-- ACCEPT Merit Scholarship (Floating Form) -->
+<div class="modal fade"
+     id="meritAccept"
+     data-bs-backdrop="static"
+     data-bs-keyboard="false"
+     tabindex="-1"
+     aria-labelledby="staticBackdropLabel"
+     aria-hidden="true">
+    <div class="modal-dialog floating-card">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold"
+                    id="staticBackdropLabel">
+                    Merit Scholarship Application <i class="bi bi-check-circle"></i>
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <form class="row" action="/admin-scholarship" method="post">
+
+                    <!-- CRUD Information -->
+                    <input type="hidden" name="CRUD" value="ADMIN_MERIT_ACCEPT">
+                    <input type="hidden" name="studentId" value="<%= foundStudent.studentId %>">
+                    <!-- /CRUD Information -->
+
+                    <div>
+                        <table class="table table-hover table-responsive table-striped">
+                            <tr>
+                                <th style="text-align: left">Tuition Reduction:</th>
+                                <td style="text-align: right">
+                                    <label hidden for="inputState" class="form-label"></label>
+                                    <select id="inputState" class="form-select" name="scholarshipAmount" required>
+                                        <option value="">Choose...</option>
+                                        <option value="25%">25%</option>
+                                        <option value="50%">50%</option>
+                                        <option value="75%">75%</option>
+                                        <option value="100%">100%</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Accept</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /ACCEPT Merit Scholarship (Floating Form) -->

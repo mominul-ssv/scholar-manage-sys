@@ -69,7 +69,10 @@ exports.admin_students_post = (req, res) => {
                             const scholarship = new Scholarship({
                                 studentId: studentId,
                                 cgpa: '0.00',
-                                creditsCompleted: '0'
+                                creditsCompleted: '0',
+                                meritApplicationStatusCode: '100',
+                                meritApplicationRequest: false,
+                                meritAmount: 'N/A'
                             });
 
                             await student.save();
@@ -81,14 +84,14 @@ exports.admin_students_post = (req, res) => {
                         }
                     } else console.log(err);
                 });
-            }
                 break;
+            }
 
             // READ Student
             case 'ADMIN_READ_STUDENT': {
                 res.redirect('/admin-students');
-            }
                 break;
+            }
 
             // UPDATE Student
             case 'ADMIN_UPDATE_STUDENT': {
@@ -115,8 +118,8 @@ exports.admin_students_post = (req, res) => {
                             });
                     } else console.log(err);
                 });
-            }
                 break;
+            }
 
             // DELETE Student
             case 'ADMIN_DELETE_STUDENT': {
@@ -125,16 +128,8 @@ exports.admin_students_post = (req, res) => {
                         res.redirect('/admin-students');
                     } else console.log(err);
                 });
-            }
                 break;
-
-            // DETAILS Student
-            case 'ADMIN_STUDENT_DETAILS': {
-                const sidebarNav = {student: 'active'};
-                const foundStudent = req.body.student;
-                res.render('admin/admin-btn/admin-students-btn/admin-student-details', {foundStudent, sidebarNav});
             }
-                break;
 
             default:
                 console.log("Error occurred in { admin_students_post }");
@@ -192,14 +187,15 @@ exports.admin_faculties_post = (req, res) => {
                         }
                     } else console.log(err);
                 });
-            }
                 break;
+            }
+
 
             // READ Faculty
             case 'ADMIN_READ_FACULTY': {
                 res.redirect('/admin-faculties');
-            }
                 break;
+            }
 
             // UPDATE Faculty
             case 'ADMIN_UPDATE_FACULTY': {
@@ -224,8 +220,8 @@ exports.admin_faculties_post = (req, res) => {
                             });
                     } else console.log(err);
                 });
-            }
                 break;
+            }
 
             // DELETE Faculty
             case 'ADMIN_DELETE_FACULTY': {
@@ -234,8 +230,8 @@ exports.admin_faculties_post = (req, res) => {
                         res.redirect('/admin-faculties');
                     } else console.log(err);
                 });
-            }
                 break;
+            }
 
             default:
                 console.log("Error occurred in { admin_faculties_post }");
@@ -290,14 +286,14 @@ exports.admin_courses_post = (req, res) => {
                         }
                     } else console.log(err);
                 });
-            }
                 break;
+            }
 
             // READ Course
             case 'ADMIN_READ_COURSE': {
                 res.redirect('/admin-courses');
-            }
                 break;
+            }
 
             // UPDATE Course
             case 'ADMIN_UPDATE_COURSE': {
@@ -315,9 +311,8 @@ exports.admin_courses_post = (req, res) => {
                             res.redirect('/admin-courses');
                         } else console.log(err);
                     });
-
-            }
                 break;
+            }
 
             // DELETE Course
             case 'ADMIN_DELETE_COURSE': {
@@ -326,11 +321,86 @@ exports.admin_courses_post = (req, res) => {
                         res.redirect('/admin-courses');
                     } else console.log(err);
                 });
-            }
                 break;
+            }
 
             default:
                 console.log("Error occurred in { admin_courses_post }");
+        }
+    }
+}
+
+exports.admin_scholarship_get = (req, res) => {
+    if (req.session.adminAuth === true) {
+        const sidebarNav = {student: 'active'};
+        const studentId = req.session.studentId;
+
+        Student.findOne({studentId: studentId}, (err, foundStudent) => {
+            Scholarship.findOne({studentId: studentId}, (err, foundScholarship) => {
+                res.render('admin/admin-scholarship', {
+                    foundStudent,
+                    foundScholarship,
+                    sidebarNav
+                });
+            });
+        });
+    }
+}
+
+exports.admin_scholarship_post = (req, res) => {
+    if (req.session.adminAuth === true) {
+
+        const {CRUD} = req.body;
+        console.log(CRUD);
+
+        switch (CRUD) {
+
+            case 'ADMIN_STUDENT_DETAILS': {
+                req.session.studentId = req.body.studentId;
+                res.redirect('/admin-scholarship');
+                break;
+            }
+
+            case 'ADMIN_MERIT_ACCEPT': {
+                const {scholarshipAmount, studentId} = req.body;
+
+                Scholarship.findOneAndUpdate(
+                    {studentId: studentId},
+                    {
+                        $set: {
+                            meritApplicationRequest: false,
+                            meritApplicationStatusCode: 300,
+                            meritAmount: scholarshipAmount
+                        }
+                    },
+                    (err) => {
+                    if (!err) {
+                        res.redirect('/admin-scholarship');
+                    } else console.log(err);
+                });
+                break;
+            }
+
+            case 'ADMIN_MERIT_REJECT': {
+                Scholarship.findOneAndUpdate(
+                    {studentId: req.body.studentId},
+                    {
+                        $set: {
+                            meritApplicationStatusCode: 100,
+                            meritApplicationRequest: false,
+                            meritAmount: 'N/A'
+                        }
+                    },
+                    (err) => {
+                        if (!err) {
+                            res.redirect('/admin-scholarship');
+                        } else console.log(err);
+                    });
+                break;
+            }
+
+            default:
+                console.log("Error occurred in { admin_scholarship_post }");
         }
     }
 }
