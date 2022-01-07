@@ -365,12 +365,25 @@ exports.faculty_grades_post = (req, res) => {
                                                     pureCGPA = sumGradePoint / count;
                                                     pureCGPA = pureCGPA.toFixed(2);
 
+                                                    let meritApplicationStatusCode = foundScholarship.meritApplicationStatusCode;
+                                                    let meritApplicationRequest = foundScholarship.meritApplicationRequest;
+                                                    let meritAmount = foundScholarship.meritAmount;
+
+                                                    if (pureCGPA < 3.5) {
+                                                        meritApplicationStatusCode = 100
+                                                        meritApplicationRequest = false
+                                                        meritAmount = 'N/A'
+                                                    }
+
                                                     Scholarship.updateOne(
                                                         {studentId: courseStudentId},
                                                         {
                                                             $set: {
                                                                 cgpa: pureCGPA,
-                                                                creditsCompleted: sumCredit
+                                                                creditsCompleted: sumCredit,
+                                                                meritApplicationStatusCode: meritApplicationStatusCode,
+                                                                meritApplicationRequest: meritApplicationRequest,
+                                                                meritAmount: meritAmount
                                                             }
                                                         },
                                                         (err) => {
