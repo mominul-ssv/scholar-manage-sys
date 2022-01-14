@@ -10,7 +10,7 @@ const router = require('./server/routes/router');
 const app = express();
 
 // localhost:3000
-const PORT = process.env.PORT || 8080;
+let PORT = process.env.PORT;
 
 // mongoDB cloud connection
 connectDB().catch(err => console.log(err));
@@ -46,6 +46,10 @@ app.use(session({
 app.use('/', router);
 
 // Start the server
+if (PORT == null || PORT === "") {
+    PORT = 3000;
+}
+
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log('Server has started successfully.');
 });
