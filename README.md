@@ -14,8 +14,4 @@ npm install
 
 Please contact with the project contributors for the **config.env** file. 
 
-## Contributors
-1. Mominul Islam
-2. Shazia Mahazaben
-3. Tashfiha Faruk
-4. Emran Hossain
+
