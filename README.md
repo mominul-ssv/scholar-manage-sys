@@ -1,8 +1,9 @@
-# CSE327 Project
+# Dynamic Scholarship Management System
+### CSE327: Software Engineering
+- An advanced school/university management web application with a sophisticated dynamic scholarship management handler.
+- <b>Tools/Technology :</b> HTML5, CSS3, Bootstrap 5, JavaScript, Node.js, Express.js, MongoDB, Mongoose ODM
 
-Scholarship Management System
-
-## Installation
+### Installation
 
 Use [npm](https://docs.npmjs.com/downloading-and-installing-packages-locally) (node package manager) to install the **node modules**.
 
@@ -10,12 +11,6 @@ Use [npm](https://docs.npmjs.com/downloading-and-installing-packages-locally) (n
 npm install 
 ```
 
-## Security
+### Security
 
 Please contact with the project contributors for the **config.env** file. 
-
-## Contributors
-1. Mominul Islam
-2. Shazia Mahazaben
-3. Tashfiha Faruk
-4. Emran Hossain
